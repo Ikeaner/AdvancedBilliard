@@ -19,7 +19,7 @@ public class AdvancedBillard extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXML_GUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/FXML_GUI.fxml"));
         
         Scene scene = new Scene(root);
         

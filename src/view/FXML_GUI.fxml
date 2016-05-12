@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="advancedbillard.FXML_GUIController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.FXML_GUIController">
    <children>
       <BorderPane layoutX="236.0" layoutY="85.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -16,7 +16,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Advanced Billiard">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Beenden" />
+                    <MenuItem fx:id="termButton" mnemonicParsing="false" onAction="#terminieren" text="Beenden" />
                         <MenuItem mnemonicParsing="false" text="Speichern" />
                         <MenuItem mnemonicParsing="false" text="Laden" />
                   </items>
@@ -94,6 +94,8 @@
                                     <Slider />
                                     <Slider />
                                     <Slider />
+                                    <Button fx:id="anstossButton" mnemonicParsing="false" onAction="#anstoss" text="Stoß" />
+                                    <Button mnemonicParsing="false" text="Zurücksetzen" />
                                  </children>
                               </VBox>
                            </content>
