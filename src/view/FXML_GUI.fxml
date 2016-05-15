@@ -38,7 +38,7 @@
             </MenuBar>
          </top>
          <center>
-            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <Pane fx:id="playPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
          <right>
             <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="695.0" prefWidth="272.0" BorderPane.alignment="CENTER">
