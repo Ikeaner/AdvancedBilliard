@@ -30,54 +30,36 @@ public class FXML_GUIController implements Initializable {
     private MenuItem termButton;
     @FXML
     private Pane playPane;
-    
+
     private Circle k0;
     private Kugel kug0;
-    
+
     @FXML
     private void anstoss(ActionEvent event) {
-        
-        
+
         EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
-                
-     public void handle(ActionEvent event) {         
-         System.out.println("Anstoß versucht!");
-        move(kug0);
-         
-        }
-};
-KeyFrame f = new KeyFrame(Duration.millis(16.6), handler); Timeline timer = new Timeline(f);
-timer.setCycleCount(Timeline.INDEFINITE);
-timer.play();
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+            public void handle(ActionEvent event) {
+                System.out.println("Anstoß versucht!");
+                move(kug0);
+
+            }
+        };
+        KeyFrame f = new KeyFrame(Duration.millis(16.6), handler);
+        Timeline timer = new Timeline(f);
+        timer.setCycleCount(Timeline.INDEFINITE);
+        timer.play();
+
     }
-    
-    public void move(Kugel k)
-    {
-        for (double t=0; t<10; t++)
-        {
+
+    public void move(Kugel k) {
+        for (double t = 0; t < 10; t++) {
             k.bewegen(t);
             k0.setCenterX(k.getPosition().getX());
             k0.setCenterY(k.getPosition().getY());
         }
     }
-    
+
     @FXML
     private void terminieren(ActionEvent event) {
         System.out.println("TERMINIERT!");
@@ -87,9 +69,9 @@ timer.play();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        kug0 = new Kugel(50,50,20);
-        k0 = new Circle(50.0,50.0,20.0);
+        kug0 = new Kugel(50, 50, 20);
+        k0 = new Circle(50.0, 50.0, 20.0);
         playPane.getChildren().add(k0);
-    
+
     }
 }
