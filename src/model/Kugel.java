@@ -5,7 +5,12 @@
  */
 package model;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.util.Duration;
 
 /**
  *
@@ -39,8 +44,11 @@ public class Kugel{
         posX = x;
         posY = y;
         
+      
+        
+       
         position = new Point2D(x,y);
-        velocity = new Point2D(0,1);
+        velocity = new Point2D(0,0.1);
     }
     
     public void bewegen(double t)

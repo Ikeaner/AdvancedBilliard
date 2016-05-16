@@ -7,13 +7,17 @@ package control;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import model.Kugel;
 
 /**
@@ -32,8 +36,36 @@ public class FXML_GUIController implements Initializable {
     
     @FXML
     private void anstoss(ActionEvent event) {
-        System.out.println("Anstoß versucht!");
+        
+        
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+                
+     public void handle(ActionEvent event) {         
+         System.out.println("Anstoß versucht!");
         move(kug0);
+         
+        }
+};
+KeyFrame f = new KeyFrame(Duration.millis(16.6), handler); Timeline timer = new Timeline(f);
+timer.setCycleCount(Timeline.INDEFINITE);
+timer.play();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
     public void move(Kugel k)
