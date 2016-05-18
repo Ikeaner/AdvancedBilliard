@@ -5,6 +5,7 @@
  */
 package control;
 
+import javafx.geometry.Point2D;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
@@ -54,11 +55,13 @@ public class FXML_GUIController implements Initializable {
     }
 
     public void move(Kugel k) {
-        for (double t = 0; t < 10; t++) {
-            k.bewegen(t);
-            k0.setCenterX(k.getPosition().getX());
-            k0.setCenterY(k.getPosition().getY());
-        }
+      
+        Point2D anstoss = new Point2D(1,0);
+
+        k.bewegen(1,anstoss);
+        k0.setCenterX(k.getPosition().getX());
+        k0.setCenterY(k.getPosition().getY());
+
     }
 
     @FXML
