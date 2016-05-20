@@ -20,6 +20,7 @@ public class Kugel {
 
     private int rad;
     private int posX;
+    private double geschwindigkeit=1;
 
     public int getPosX() {
         return posX;
@@ -36,7 +37,7 @@ public class Kugel {
         return position;
     }
 
-    private Point2D velocity;
+    private Point2D richtung;
 
     public Kugel(int x, int y, int r) {
         rad = r;
@@ -44,10 +45,11 @@ public class Kugel {
         posY = y;
 
         position = new Point2D(x, y);
-        velocity = new Point2D(0, 0.1);
+        richtung = new Point2D(1, 1);
     }
 
-    public void bewegen(double t, Point2D anstoss) {
-        position = position.add(velocity.multiply(t)).add(anstoss.multiply(0.5).multiply(t));
+    public void bewegen(Point2D anstoss) {
+        geschwindigkeit = geschwindigkeit*1.01;
+        position = position.add(richtung.multiply(geschwindigkeit));
     }
 }

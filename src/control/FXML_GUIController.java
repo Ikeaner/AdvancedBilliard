@@ -58,7 +58,7 @@ public class FXML_GUIController implements Initializable {
       
         Point2D anstoss = new Point2D(1,0);
 
-        k.bewegen(1,anstoss);
+        k.bewegen(anstoss);
         k0.setCenterX(k.getPosition().getX());
         k0.setCenterY(k.getPosition().getY());
 
