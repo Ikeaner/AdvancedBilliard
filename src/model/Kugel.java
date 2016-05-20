@@ -53,15 +53,17 @@ public class Kugel {
     public void bewegen(Point2D anstoss) {
         double yPos = position.getY();
         double xPos = position.getX();
-        if(yPos>675||yPos<25)
+        if(yPos>675||yPos<20)
         {
           yy = richtung.getY()*-1;
-                
+          geschwindigkeit = geschwindigkeit-0.5;        
+          System.out.println("Oben oder Unten bumm");
         }
-        if(xPos>980||xPos<20)
+        if(xPos>980||xPos<=20)
         {
-          xx = richtung.getX()*-1;
-                
+          xx = richtung.getX()*-1;       
+          geschwindigkeit = geschwindigkeit-0.5;      
+          System.out.println("Links oder Rechts bumm");
         }
         richtung = new Point2D(xx, yy);
         geschwindigkeit = geschwindigkeit*1.01;
