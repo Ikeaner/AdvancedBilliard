@@ -32,6 +32,8 @@ public class Kugel {
     private int posY;
 
     private Point2D position;
+    private double xx=-0.5;
+    private double yy=0.77;
 
     public Point2D getPosition() {
         return position;
@@ -45,10 +47,23 @@ public class Kugel {
         posY = y;
 
         position = new Point2D(x, y);
-        richtung = new Point2D(1, 1);
+        richtung = new Point2D(xx, yy);
     }
 
     public void bewegen(Point2D anstoss) {
+        double yPos = position.getY();
+        double xPos = position.getX();
+        if(yPos>675||yPos<25)
+        {
+          yy = richtung.getY()*-1;
+                
+        }
+        if(xPos>980||xPos<20)
+        {
+          xx = richtung.getX()*-1;
+                
+        }
+        richtung = new Point2D(xx, yy);
         geschwindigkeit = geschwindigkeit*1.01;
         position = position.add(richtung.multiply(geschwindigkeit));
     }
