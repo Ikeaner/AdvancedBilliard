@@ -39,10 +39,10 @@ public class Simulation {
         Kugel k2 = new Kugel(200, 100, 25);
         kugeln.add(k1);
         kugeln.add(k2);
+        
     }
 
     public ArrayList<Kugel> getKugeln() {
         return kugeln;
     }
-
 }
