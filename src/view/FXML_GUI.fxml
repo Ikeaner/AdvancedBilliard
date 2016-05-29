@@ -51,57 +51,11 @@
                                                     <content>
                                                         <ScrollPane prefHeight="200.0" prefWidth="200.0">
                                                             <content>
-                                                                <GridPane alignment="CENTER" prefHeight="300.0">
+                                                                <GridPane fx:id="kugelGrid">
                                                                     <columnConstraints>
                                                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                     </columnConstraints>
-                                                                    <rowConstraints>
-                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                    </rowConstraints>
-                                                                    <children>
-                                                                        <Circle fill="RED" radius="35.0" stroke="BLACK" strokeType="INSIDE">
-                                                                            <GridPane.margin>
-                                                                                <Insets left="15.0" />
-                                                                            </GridPane.margin>
-                                                                        </Circle>
-                                                                        <Circle fill="#339cff" radius="35.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1">
-                                                                            <GridPane.margin>
-                                                                                <Insets left="15.0" />
-                                                                            </GridPane.margin>
-                                                                        </Circle>
-                                                                        <Label text="Material" GridPane.columnIndex="1">
-                                                                            <GridPane.margin>
-                                                                                <Insets bottom="50.0" />
-                                                                            </GridPane.margin>
-                                                                        </Label>
-                                                                        <Label text="Material" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                                            <opaqueInsets>
-                                                                                <Insets />
-                                                                            </opaqueInsets>
-                                                                            <GridPane.margin>
-                                                                                <Insets bottom="50.0" />
-                                                                            </GridPane.margin>
-                                                                        </Label>
-                                                                        <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                        <Circle fill="#e1ff00" radius="35.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2">
-                                                                            <GridPane.margin>
-                                                                                <Insets left="15.0" />
-                                                                            </GridPane.margin>
-                                                                        </Circle>
-                                                                        <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                        <Label text="Material" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                                                            <opaqueInsets>
-                                                                                <Insets />
-                                                                            </opaqueInsets>
-                                                                            <GridPane.margin>
-                                                                                <Insets bottom="50.0" />
-                                                                            </GridPane.margin>
-                                                                        </Label>
-                                                                        <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
-                                                                    </children>
                                                                 </GridPane>
                                                             </content>
                                                         </ScrollPane>
@@ -109,7 +63,30 @@
                                                 </Tab>
                                                 <Tab text="Hindernisse">
                                                     <content>
-                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                                            <content>
+                                                                <GridPane prefHeight="318.0" prefWidth="267.0">
+                                                                    <columnConstraints>
+                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                    </columnConstraints>
+                                                                    <rowConstraints>
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                    </rowConstraints>
+                                                                    <children>
+                                                                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="41.0" stroke="BLACK" strokeType="INSIDE" width="128.0" />
+                                                                        <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                                                                        <Label text="Material" GridPane.columnIndex="1">
+                                                                            <GridPane.margin>
+                                                                                <Insets bottom="50.0" />
+                                                                            </GridPane.margin>
+                                                                        </Label>
+                                                                    </children>
+                                                                </GridPane>
+                                                            </content>
+                                                        </ScrollPane>
                                                     </content>
                                                 </Tab>
                                             </tabs>
@@ -141,7 +118,7 @@
                                                                 <Insets bottom="10.0" />
                                                             </GridPane.margin>
                                                         </Label>
-                                                        <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                        <ComboBox disable="true" prefWidth="150.0" promptText="Standard" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                     </children>
                                                 </GridPane>
                                                 <Label text="Größe">
@@ -149,28 +126,28 @@
                                                         <Font size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Slider />
-                                                <Label text="\%" />
+                                                <Slider fx:id="groSlider" />
+                                                <Label fx:id="groSliAnz" text="\%" />
                                                 <Label text="Stoßwinkel">
                                                     <font>
                                                         <Font size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Slider />
-                                                <Label text="\%" />
+                                                <Slider fx:id="stoWinSlider" />
+                                                <Label fx:id="stoWinSliAnz" text="\%" />
                                                 <Label text="Stoßkraft">
                                                     <font>
                                                         <Font size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Slider />
-                                                <Label text="\%" />
+                                                <Slider fx:id="stoKraSlider" />
+                                                <Label fx:id="stoKraSliAnz" text="\%" />
                                                 <Button fx:id="anstossButton" disable="true" mnemonicParsing="false" onAction="#anstoss" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: green;" text="Anstoß!" textFill="WHITE">
                                                     <VBox.margin>
                                                         <Insets top="10.0" />
                                                     </VBox.margin>
                                                 </Button>
-                                                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: red;" text="Zurücksetzen" textFill="WHITE">
+                                                <Button disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: red;" text="Zurücksetzen" textFill="WHITE">
                                                     <VBox.margin>
                                                         <Insets top="10.0" />
                                                     </VBox.margin>

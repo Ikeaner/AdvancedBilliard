@@ -8,8 +8,10 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Klasse für die jeweiligen Level. Level = Simulation in unserem Programmkontext
- * beinhält Listen für Kugeln, Objekte, Löcher. Hat eine Stoßkugel.
+ * Klasse für die jeweiligen Level. Level = Simulation in unserem
+ * Programmkontext beinhält Listen für Kugeln, Objekte, Löcher. Hat eine
+ * Stoßkugel.
+ *
  * @author Tom
  */
 public class Simulation {
@@ -37,9 +39,13 @@ public class Simulation {
 
         Kugel k1 = new Kugel(100, 150, 30);
         Kugel k2 = new Kugel(200, 100, 25);
+        Kugel k3 = new Kugel(150, 300, 30);
+        Kugel k4 = new Kugel(200, 300, 25);
         kugeln.add(k1);
         kugeln.add(k2);
-        
+        kugeln.add(k3);
+        kugeln.add(k4);
+
     }
 
     public ArrayList<Kugel> getKugeln() {

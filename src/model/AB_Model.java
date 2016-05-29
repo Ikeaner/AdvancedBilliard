@@ -35,6 +35,7 @@ public class AB_Model extends Observable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         setChanged();
         notifyObservers();
     }
