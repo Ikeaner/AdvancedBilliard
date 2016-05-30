@@ -20,7 +20,7 @@ public class Simulation {
     private ArrayList<Objekt> hindernisse = new ArrayList<Objekt>();
     private ArrayList<Loch> löcher = new ArrayList<Loch>();
 
-    private Kugel stosskugel = new Kugel(30, 30, 20);
+    private Kugel stosskugel = new Kugel(150, 300, 1);
 
     public Kugel getStosskugel() {
         return stosskugel;

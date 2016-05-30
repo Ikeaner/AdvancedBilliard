@@ -165,13 +165,13 @@ public class FXML_GUIController implements Initializable, Observer {
             }
             num++;
         }
-
+        
         anstossButton.setDisable(false);
         groSlider.setDisable(false);
         stoKraSlider.setDisable(false);
         stoWinSlider.setDisable(false);
     }
-
+    
     //Button Aktionen für Simulationauswahl
     @FXML
     private void sim1Auswaehlen(ActionEvent event) {
@@ -214,8 +214,9 @@ public class FXML_GUIController implements Initializable, Observer {
     public void move(Kugel k) {
 
         Point2D anstoss = new Point2D(1, 0);
-
-        k.bewegen(anstoss);
+        double radi = getRadi();
+        double stoWi = getStoWi();
+        k.bewegen(anstoss,radi,stoWi);
         circles.get(0).setCenterX(k.getPosition().getX());
         circles.get(0).setCenterY(k.getPosition().getY());
 
@@ -236,6 +237,16 @@ public class FXML_GUIController implements Initializable, Observer {
         fileChooser.setTitle("Lade deinen Spielstand");
         fileChooser.showOpenDialog(root.getScene().getWindow());
     }
+    
+    public final double getRadi() { 
+         
+            return groSlider.valueProperty().get();  
+    } 
+    
+    public final double getStoWi() { 
+         
+            return stoWinSlider.valueProperty().get();  
+    } 
 
     //öffnet den Saver
     /*

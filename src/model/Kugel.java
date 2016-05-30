@@ -24,8 +24,8 @@ public class Kugel {
     private double geschwindigkeit = 1;
     private Point2D richtung;
     private Point2D position;
-    private double xx = -25;
-    private double yy = 37;
+    private double xx = -0.5;
+    private double yy = 0.5;
     Collision col = new Collision();
 
     public Kugel(int x, int y, int r) {
@@ -37,17 +37,18 @@ public class Kugel {
         richtung = new Point2D(xx, yy);
     }
 
-    public void bewegen(Point2D anstoss) {
+    public void bewegen(Point2D anstoss,double radi,double stoWi) {
         double yPos = position.getY();
         double xPos = position.getX();
+        markusMethode(stoWi);
         col.checkCollision(xPos, yPos, 100, 150);
         
-        if (yPos > 480 && geschwindigkeit > 0 || yPos < 20 && geschwindigkeit > 0) {
+        if (yPos > 480-radi && geschwindigkeit > 0 || yPos-radi < 20 && geschwindigkeit > 0) {
             yy = richtung.getY() * -1;
             geschwindigkeit = geschwindigkeit *0.96;
             System.out.println("Oben oder Unten bumm");
         }
-        if (xPos > 730 && geschwindigkeit > 0 || xPos <= 20 && geschwindigkeit > 0 ) {
+        if (xPos > 730-radi && geschwindigkeit > 0 || xPos-radi <= 20 && geschwindigkeit > 0 ) {
             xx = richtung.getX() * -1;
             geschwindigkeit = geschwindigkeit * 0.96;
             System.out.println("Links oder Rechts bumm");
@@ -80,5 +81,12 @@ public class Kugel {
 
     public Point2D getPosition() {
         return position;
+    }
+    
+    public void markusMethode(double winkel){
+        //der double wird dir den Winkel weitergeben den du im slider eingestellt hast
+        // bleibt dir also nur noch deine Rechnung die du als x und y Koordinate speicherst
+        // das sind die variablen xx und yy in Zeile 27 und 28
+        System.out.println(winkel);
     }
 }
