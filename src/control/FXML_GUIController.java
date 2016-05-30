@@ -26,10 +26,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import model.AB_Model;
 import model.Kugel;
@@ -39,6 +41,9 @@ import model.Kugel;
  * @author Tom
  */
 public class FXML_GUIController implements Initializable, Observer {
+
+    @FXML
+    private AnchorPane root;
 
     @FXML
     private MenuItem termButton;
@@ -102,6 +107,7 @@ public class FXML_GUIController implements Initializable, Observer {
 
         //Erstellt einen Kreis für jede Kugel
         for (Kugel k : model.getCurrentSimulation().getKugeln()) {
+
             int posX = k.getPosX();
             int posY = k.getPosY();
             int rad = k.getRad();
@@ -118,6 +124,9 @@ public class FXML_GUIController implements Initializable, Observer {
 
             if (num != 0) {
                 cEins = new Circle(30);
+            } else {
+                //bindet den Radius der weißen Kugel an den Sliderwert
+                c.radiusProperty().bind(groSlider.valueProperty());
             }
 
             switch (num) {
@@ -140,6 +149,10 @@ public class FXML_GUIController implements Initializable, Observer {
                     c.setFill(Color.YELLOW);
                     cEins.setFill(Color.YELLOW);
                     break;
+                case (5):
+                    c.setFill(Color.PINK);
+                    cEins.setFill(Color.PINK);
+                    break;
             }
 
             Label beschreibung = new Label("Material");
@@ -154,6 +167,9 @@ public class FXML_GUIController implements Initializable, Observer {
         }
 
         anstossButton.setDisable(false);
+        groSlider.setDisable(false);
+        stoKraSlider.setDisable(false);
+        stoWinSlider.setDisable(false);
     }
 
     //Button Aktionen für Simulationauswahl
@@ -189,6 +205,9 @@ public class FXML_GUIController implements Initializable, Observer {
         timer.setCycleCount(Timeline.INDEFINITE);
         timer.play();
         anstossButton.setDisable(true);
+        groSlider.setDisable(true);
+        stoKraSlider.setDisable(true);
+        stoWinSlider.setDisable(true);
     }
 
     //bewegt die Kugel und updated die beiden kreis positionen.
@@ -208,4 +227,23 @@ public class FXML_GUIController implements Initializable, Observer {
         System.out.println("TERMINIERT!");
         Platform.exit();
     }
+
+    //öffnet den LoaderF
+    @FXML
+    private void loadFile(ActionEvent event) {
+        System.out.println("loadfile");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Lade deinen Spielstand");
+        fileChooser.showOpenDialog(root.getScene().getWindow());
+    }
+
+    //öffnet den Saver
+    /*
+    private void saveFile(ActionEvent event) {
+        System.out.println("saveFile");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Speichere deinen Spielstand");
+        File file = fileChooser.showSaveDialog(root.getScene().getWindow());
+    }
+     */
 }

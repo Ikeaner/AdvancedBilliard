@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.FXML_GUIController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.FXML_GUIController">
     <children>
         <BorderPane layoutX="236.0" layoutY="85.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <top>
@@ -18,7 +18,7 @@
                         <Menu mnemonicParsing="false" text="Advanced Billiard">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="Speichern" />
-                                <MenuItem mnemonicParsing="false" text="Laden" />
+                                <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Laden" />
                                 <MenuItem fx:id="termButton" mnemonicParsing="false" onAction="#terminieren" text="Beenden" />
                             </items>
                         </Menu>
@@ -126,21 +126,21 @@
                                                         <Font size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Slider fx:id="groSlider" />
+                                                <Slider fx:id="groSlider" disable="true" />
                                                 <Label fx:id="groSliAnz" text="\%" />
                                                 <Label text="Stoßwinkel">
                                                     <font>
                                                         <Font size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Slider fx:id="stoWinSlider" />
+                                                <Slider fx:id="stoWinSlider" disable="true" />
                                                 <Label fx:id="stoWinSliAnz" text="\%" />
                                                 <Label text="Stoßkraft">
                                                     <font>
                                                         <Font size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Slider fx:id="stoKraSlider" />
+                                                <Slider fx:id="stoKraSlider" disable="true" />
                                                 <Label fx:id="stoKraSliAnz" text="\%" />
                                                 <Button fx:id="anstossButton" disable="true" mnemonicParsing="false" onAction="#anstoss" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: green;" text="Anstoß!" textFill="WHITE">
                                                     <VBox.margin>

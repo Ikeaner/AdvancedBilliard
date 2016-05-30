@@ -41,10 +41,12 @@ public class Simulation {
         Kugel k2 = new Kugel(200, 100, 25);
         Kugel k3 = new Kugel(150, 300, 30);
         Kugel k4 = new Kugel(200, 300, 25);
+        Kugel k5 = new Kugel(400, 300, 20);
         kugeln.add(k1);
         kugeln.add(k2);
         kugeln.add(k3);
         kugeln.add(k4);
+        kugeln.add(k5);
 
     }
 
