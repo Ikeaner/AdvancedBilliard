@@ -5,6 +5,8 @@
  */
 package model;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -24,8 +26,8 @@ public class Kugel {
     private double geschwindigkeit = 1;
     private Point2D richtung;
     private Point2D position;
-    private double xx = -0.5;
-    private double yy = 0.5;
+    private double xx ;
+    private double yy ;
     Collision col = new Collision();
 
     public Kugel(int x, int y, int r) {
@@ -83,10 +85,11 @@ public class Kugel {
         return position;
     }
     
+    // Winkelberechnung für Slider Stoßwinkel
     public void markusMethode(double winkel){
-        //der double wird dir den Winkel weitergeben den du im slider eingestellt hast
-        // bleibt dir also nur noch deine Rechnung die du als x und y Koordinate speicherst
-        // das sind die variablen xx und yy in Zeile 27 und 28
-        System.out.println(winkel);
+        double x;
+        double y;
+        xx = sin(Math.toRadians(winkel+90)); //Math.toRadians grad in rad da cos in rad rechnet
+        yy = cos(Math.toRadians(winkel+90));
     }
 }
