@@ -73,9 +73,8 @@ public class Kugel {
         position = position.add(richtung.multiply(geschwindigkeit));
     }
     public double Reibung(double radi){
-        double radius = radi;
         double pi = 1.333333333333333333*Math.PI;
-        double vol = pi * Math.pow(radius, 3);
+        double vol = pi * Math.pow(radi, 3);
         //System.out.println(mass);
         double mass = (0.5 * vol)/1000;
         //System.out.println(mass);
