@@ -31,6 +31,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import model.AB_Model;
@@ -104,7 +105,11 @@ public class FXML_GUIController implements Initializable, Observer {
     public void update(Observable AB_Model, Object obj) {
 
         circles.clear();
-
+        Rectangle rect1 = new Rectangle(350, 110, 50, 200);
+        rect1.setArcWidth(5);
+        rect1.setArcHeight(5);
+        rect1.setFill(Color.BLUE);
+        
         //Erstellt einen Kreis für jede Kugel
         for (Kugel k : model.getCurrentSimulation().getKugeln()) {
 
@@ -115,7 +120,9 @@ public class FXML_GUIController implements Initializable, Observer {
             circles.add(c);
             playPane.getChildren().add(c);
         }
-
+        playPane.getChildren().add(rect1);
+        
+        
         //Gibt den Kreisen Farbe je nach ihrer Nummer
         int num = 0;
         for (Circle c : circles) {
@@ -152,7 +159,9 @@ public class FXML_GUIController implements Initializable, Observer {
                 case (5):
                     c.setFill(Color.PINK);
                     cEins.setFill(Color.PINK);
+                    
                     break;
+                    
             }
 
             Label beschreibung = new Label("Material");
@@ -216,7 +225,8 @@ public class FXML_GUIController implements Initializable, Observer {
         Point2D anstoss = new Point2D(1, 0);
         double radi = getRadi();
         double stoWi = getStoWi();
-        k.bewegen(anstoss,radi,stoWi);
+        double stoKra = getStoKra();
+        k.bewegen(anstoss,radi,stoWi,stoKra);
         circles.get(0).setCenterX(k.getPosition().getX());
         circles.get(0).setCenterY(k.getPosition().getY());
 
@@ -246,6 +256,10 @@ public class FXML_GUIController implements Initializable, Observer {
     public final double getStoWi() { 
          
             return stoWinSlider.valueProperty().get();  
+    } 
+     public final double getStoKra() { 
+         
+            return stoKraSlider.valueProperty().get();  
     } 
 
     //öffnet den Saver

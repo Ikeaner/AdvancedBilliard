@@ -5,6 +5,8 @@
  */
 package model;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -24,9 +26,10 @@ public class Kugel {
     private double geschwindigkeit = 1;
     private Point2D richtung;
     private Point2D position;
-    private double xx = -0.5;
-    private double yy = 0.5;
-    Collision col = new Collision();
+    private double xx;
+    private double yy;
+    Kollision col = new Kollision();
+    private boolean bereitsBerechnet = false;
 
     public Kugel(int x, int y, int r) {
         rad = r;
@@ -37,20 +40,25 @@ public class Kugel {
         richtung = new Point2D(xx, yy);
     }
 
-    public void bewegen(Point2D anstoss,double radi,double stoWi) {
+    public void bewegen(Point2D anstoss,double radi,double stoWi,double stoKra) {
         double yPos = position.getY();
         double xPos = position.getX();
-        markusMethode(stoWi);
-        col.checkCollision(xPos, yPos, 100, 150);
+        
+        if (bereitsBerechnet == false){
+        stossWinKraft(stoWi,stoKra);
+        }
+        double rollReib = Reibung(radi);
+        
+        col.checkKollision(xPos, yPos,radi, 100, 150);
         
         if (yPos > 480-radi && geschwindigkeit > 0 || yPos-radi < 20 && geschwindigkeit > 0) {
             yy = richtung.getY() * -1;
-            geschwindigkeit = geschwindigkeit *0.96;
+            geschwindigkeit = geschwindigkeit -0.01;
             System.out.println("Oben oder Unten bumm");
         }
         if (xPos > 730-radi && geschwindigkeit > 0 || xPos-radi <= 20 && geschwindigkeit > 0 ) {
             xx = richtung.getX() * -1;
-            geschwindigkeit = geschwindigkeit * 0.96;
+            geschwindigkeit = geschwindigkeit -0.01;
             System.out.println("Links oder Rechts bumm");
         }
         richtung = new Point2D(xx, yy);
@@ -58,10 +66,26 @@ public class Kugel {
             geschwindigkeit = 0;
         }
         else{
-        geschwindigkeit = geschwindigkeit * 0.999;
+        //double bremswirkung = 1- (0.01/radi*rollReib);  
+        double bremswirkung = 0.999;
+        geschwindigkeit = geschwindigkeit * bremswirkung;
         }        
         position = position.add(richtung.multiply(geschwindigkeit));
     }
+    public double Reibung(double radi){
+        double radius = radi;
+        double pi = 1.333333333333333333*Math.PI;
+        double vol = pi * Math.pow(radius, 3);
+        //System.out.println(mass);
+        double mass = (0.5 * vol)/1000;
+        //System.out.println(mass);
+        double Fn = (mass * Math.pow(9.81, 1));
+        //System.out.println(Fn);
+        double Rn = Fn * 0.025;
+        //System.out.println(Rn);
+        return Rn;
+    }
+    
 
     public int getRad() {
         return rad;
@@ -83,10 +107,11 @@ public class Kugel {
         return position;
     }
     
-    public void markusMethode(double winkel){
-        //der double wird dir den Winkel weitergeben den du im slider eingestellt hast
-        // bleibt dir also nur noch deine Rechnung die du als x und y Koordinate speicherst
-        // das sind die variablen xx und yy in Zeile 27 und 28
-        System.out.println(winkel);
+    public void stossWinKraft(double winkel,double stoKra){
+        xx = sin(Math.toRadians(winkel+90)); //Math.toRadians grad in rad da cos in rad rechnet
+        yy = cos(Math.toRadians(winkel+90));
+        xx = xx*stoKra/10;
+        yy = yy*stoKra/10;
+        bereitsBerechnet = true;
     }
 }
