@@ -105,7 +105,7 @@ public class FXML_GUIController implements Initializable, Observer {
     public void update(Observable AB_Model, Object obj) {
 
         circles.clear();
-        Rectangle rect1 = new Rectangle(350, 110, 50, 200);
+        Rectangle rect1 = new Rectangle(450, 110, 50, 200);
         rect1.setArcWidth(5);
         rect1.setArcHeight(5);
         rect1.setFill(Color.BLUE);

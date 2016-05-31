@@ -28,7 +28,7 @@ public class Kollision {
     double radCol = weissRad + rotRad;
     double xColCirc = (weissPosX - rotPosX);
     double yColCirc = (weissPosY - rotPosY);
-    double rectX = 350;
+    double rectX = 450;
     double rectY = 110;
     double rectW = 50;
     double rectH = 200;   

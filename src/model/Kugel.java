@@ -53,12 +53,10 @@ public class Kugel {
         
         if (yPos > 480-radi && geschwindigkeit > 0 || yPos-radi < 20 && geschwindigkeit > 0) {
             yy = richtung.getY() * -1;
-            geschwindigkeit = geschwindigkeit -0.01;
             System.out.println("Oben oder Unten bumm");
         }
         if (xPos > 730-radi && geschwindigkeit > 0 || xPos-radi <= 20 && geschwindigkeit > 0 ) {
-            xx = richtung.getX() * -1;
-            geschwindigkeit = geschwindigkeit -0.01;
+            xx = richtung.getX() * -1;;
             System.out.println("Links oder Rechts bumm");
         }
         richtung = new Point2D(xx, yy);
@@ -66,8 +64,8 @@ public class Kugel {
             geschwindigkeit = 0;
         }
         else{
-        //double bremswirkung = 1- (0.01/radi*rollReib);  
-        double bremswirkung = 0.999;
+        double bremswirkung = 1- (0.01/radi*rollReib);  
+        //double bremswirkung = 0.999;
         geschwindigkeit = geschwindigkeit * bremswirkung;
         }        
         position = position.add(richtung.multiply(geschwindigkeit));
@@ -109,8 +107,8 @@ public class Kugel {
     public void stossWinKraft(double winkel,double stoKra){
         xx = sin(Math.toRadians(winkel+90)); //Math.toRadians grad in rad da cos in rad rechnet
         yy = cos(Math.toRadians(winkel+90));
-        xx = xx*stoKra/10;
-        yy = yy*stoKra/10;
+        xx = xx*stoKra;
+        yy = yy*stoKra;
         bereitsBerechnet = true;
     }
 }
