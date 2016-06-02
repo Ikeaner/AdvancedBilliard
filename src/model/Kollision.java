@@ -9,6 +9,9 @@ import static com.sun.javafx.util.Utils.clamp;
 import control.FXML_GUIController;
 import java.awt.Rectangle;
 import static java.lang.Math.abs;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import javafx.geometry.Point2D;
 
 /**
  *
@@ -18,7 +21,8 @@ import static java.lang.Math.abs;
 public class Kollision {
 
     FXML_GUIController asd = new FXML_GUIController();
-    public void checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY){
+    
+    public Point2D checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double xx,double yy){
     double weissPosX = wPosX;
     double weissPosY = wPosY;
     double weissRad = wRad;
@@ -32,17 +36,34 @@ public class Kollision {
     double rectY = 110;
     double rectW = 50;
     double rectH = 200;   
+    double ablenkungY=0;
+    double ablenkungX=0;
 
     if(weissPosX > rectX-weissRad&& weissPosX < rectX+rectW+weissRad){
        if (weissPosY > rectY-weissRad&& weissPosY < rectY+rectH+weissRad){
-           System.out.println("Kollision mit Rechteck");
+          // System.out.println("Kollision mit Rechteck");
        } 
     }
   
     
     if ((radCol*radCol) > (xColCirc*xColCirc) + (yColCirc*yColCirc)){
-        System.out.println("Kollision mit rotem Kreis");
+        
+        
+        double ax = wPosX-rPosX;
+        double ay = wPosY-rPosY;
+        double colAngle = Math.atan2(ay, ax);
+        System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
+        double speed = Math.sqrt(xx*xx+yy*yy);
+        double rVektor = Math.atan2(yy, xx);
+        ablenkungY = speed*Math.sin(rVektor-colAngle);
+        ablenkungX = speed*Math.cos(rVektor-colAngle);
+        return new Point2D(ablenkungX,ablenkungY);
+        //System.out.println("Kollision mit rotem Kreis");
         }
+    else{
+        return new Point2D(0,0);
+    }
+        
     }
     
 }

@@ -30,6 +30,7 @@ public class Kugel {
     private double yy;
     Kollision col = new Kollision();
     private boolean bereitsBerechnet = false;
+    private Point2D noChange = new Point2D(0,0);
 
     public Kugel(int x, int y, int r) {
         rad = r;
@@ -49,7 +50,7 @@ public class Kugel {
         }
         double rollReib = Reibung(radi);
         
-        col.checkKollision(xPos, yPos,radi, 100, 150);
+        Point2D ablenkung = col.checkKollision(xPos, yPos,radi, 100, 150,xx,yy);
         
         if (yPos > 480-radi && geschwindigkeit > 0 || yPos-radi < 20 && geschwindigkeit > 0) {
             yy = richtung.getY() * -1;
@@ -59,7 +60,15 @@ public class Kugel {
             xx = richtung.getX() * -1;;
             System.out.println("Links oder Rechts bumm");
         }
+        
+        
+        if (ablenkung.getX() != 0 &&ablenkung.getY() != 0){
+            xx = ablenkung.getX();
+            yy = ablenkung.getY();
+        }
         richtung = new Point2D(xx, yy);
+        
+        
         if (geschwindigkeit < 0.005){
             geschwindigkeit = 0;
         }
