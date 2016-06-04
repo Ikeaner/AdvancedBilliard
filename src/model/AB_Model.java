@@ -16,6 +16,15 @@ public class AB_Model extends Observable {
 
     private static ArrayList<Simulation> simulationen = new ArrayList<Simulation>();
     private static Simulation currentSimulation;
+    private static Simulation previousSimulation = new Simulation(0);
+
+    public static Simulation getPreviousSimulation() {
+        return previousSimulation;
+    }
+
+    public static void setPreviousSimulation(Simulation previousSimulation) {
+        AB_Model.previousSimulation = previousSimulation;
+    }
 
     public AB_Model() {
 
