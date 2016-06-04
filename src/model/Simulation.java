@@ -15,6 +15,8 @@ import java.util.ArrayList;
  * @author Tom
  */
 public class Simulation {
+    
+    private String ID;
 
     private ArrayList<Kugel> kugeln = new ArrayList<Kugel>();
     private ArrayList<Objekt> hindernisse = new ArrayList<Objekt>();
@@ -30,17 +32,30 @@ public class Simulation {
         this.stosskugel = stosskugel;
     }
 
-    public Simulation() {
-        ladeKugeln();
+    public Simulation(int i) {
+        
+        switch (i)
+        {
+            case 1: ladeKugeln1();
+            break;
+            
+            case 2: ladeKugeln2();
+            break;
+            
+            case 3: ladeKugeln3();
+            break;
+        }
+        
+        ID = Integer.toString(i);
     }
 
-    private void ladeKugeln() {
+    private void ladeKugeln1() {
         kugeln.add(stosskugel);
 
         Kugel k1 = new Kugel(100, 150, 30);
         Kugel k2 = new Kugel(200, 100, 25);
-        Kugel k3 = new Kugel(150, 300, 30);
-        Kugel k4 = new Kugel(200, 300, 25);
+        Kugel k3 = new Kugel(600, 300, 30);
+        Kugel k4 = new Kugel(300, 300, 25);
         Kugel k5 = new Kugel(400, 300, 20);
         kugeln.add(k1);
         kugeln.add(k2);
@@ -50,7 +65,45 @@ public class Simulation {
 
     }
 
+    private void ladeKugeln2() {
+        kugeln.add(stosskugel);
+
+        Kugel k1 = new Kugel(100, 150, 30);
+        Kugel k2 = new Kugel(200, 100, 25);
+        Kugel k3 = new Kugel(600, 300, 30);
+        Kugel k4 = new Kugel(300, 300, 25);
+        Kugel k5 = new Kugel(400, 300, 20);
+        kugeln.add(k1);
+        kugeln.add(k2);
+        kugeln.add(k3);
+        kugeln.add(k4);
+        kugeln.add(k5);
+
+    }
+    
+    private void ladeKugeln3() {
+        kugeln.add(stosskugel);
+
+        Kugel k1 = new Kugel(100, 150, 30);
+        Kugel k2 = new Kugel(200, 100, 25);
+        Kugel k3 = new Kugel(600, 300, 30);
+        Kugel k4 = new Kugel(300, 300, 25);
+        Kugel k5 = new Kugel(400, 300, 20);
+        kugeln.add(k1);
+        kugeln.add(k2);
+        kugeln.add(k3);
+        kugeln.add(k4);
+        kugeln.add(k5);
+
+    }
+    
     public ArrayList<Kugel> getKugeln() {
         return kugeln;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return ID;
     }
 }

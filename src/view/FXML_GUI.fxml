@@ -12,32 +12,6 @@
 <AnchorPane id="AnchorPane" fx:id="root" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.FXML_GUIController">
     <children>
         <BorderPane layoutX="236.0" layoutY="85.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <top>
-                <MenuBar BorderPane.alignment="CENTER">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="Advanced Billiard">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Speichern" />
-                                <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Laden" />
-                                <MenuItem fx:id="termButton" mnemonicParsing="false" onAction="#terminieren" text="Beenden" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Simulation">
-                            <items>
-                                <MenuItem fx:id="sim1" mnemonicParsing="false" onAction="#sim1Auswaehlen" text="Simulation 1" />
-                                <MenuItem fx:id="sim2" mnemonicParsing="false" onAction="#sim2Auswaehlen" text="Simulation 2" />
-                                <MenuItem fx:id="sim3" mnemonicParsing="false" onAction="#sim3Auswaehlen" text="Simulation 3" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Hilfe">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Tutorial" />
-                                <MenuItem mnemonicParsing="false" text="Über..." />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </top>
             <right>
                 <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="695.0" prefWidth="272.0" BorderPane.alignment="CENTER">
                     <items>
@@ -164,9 +138,9 @@
             <center>
                 <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(95,60,20);" BorderPane.alignment="CENTER">
                     <top>
-                        <BorderPane prefHeight="103.0" prefWidth="1008.0" BorderPane.alignment="CENTER">
+                        <BorderPane prefHeight="103.0" prefWidth="1008.0" style="-fx-background-color: rgb(95,60,20);" BorderPane.alignment="CENTER">
                             <left>
-                                <Label prefHeight="53.0" prefWidth="210.0" text="Simulation X" textFill="WHITE" BorderPane.alignment="CENTER">
+                                <Label fx:id="simNameLabel" prefHeight="53.0" prefWidth="210.0" text="Simulation" textFill="WHITE" BorderPane.alignment="CENTER">
                                     <font>
                                         <Font size="36.0" />
                                     </font>
@@ -200,14 +174,44 @@
                         </BorderPane>
                     </top>
                     <center>
-                        <Pane prefHeight="400.0" prefWidth="500.0" BorderPane.alignment="CENTER">
-                            <children>
-                                <Pane fx:id="playPane" layoutX="129.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: GREEN; -fx-border-color: rgb(60,35,20); -fx-border-width: 20; -fx-border-radius: 25; -fx-background-radius: 35;" />
-                            </children>
-                        </Pane>
+                        <ScrollPane fx:id="scrollPane" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: rgb(95,60,20);" BorderPane.alignment="CENTER">
+                           <content>
+                        <StackPane style="-fx-background-color: rgb(95,60,20);">
+                           <children>
+                                         <Pane fx:id="playPane" layoutX="129.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: GREEN; -fx-border-color: rgb(60,35,20); -fx-border-width: 20; -fx-border-radius: 25; -fx-background-radius: 35;" />
+                           </children>
+                        </StackPane>
+                           </content>
+                        </ScrollPane>
                     </center>
                 </BorderPane>
             </center>
+         <top>
+                <MenuBar BorderPane.alignment="CENTER">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Advanced Billiard">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Speichern" />
+                                <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Laden" />
+                                <MenuItem fx:id="termButton" mnemonicParsing="false" onAction="#terminieren" text="Beenden" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Simulation">
+                            <items>
+                                <MenuItem fx:id="sim1" mnemonicParsing="false" onAction="#sim1Auswaehlen" text="Simulation 1" />
+                                <MenuItem fx:id="sim2" mnemonicParsing="false" onAction="#sim2Auswaehlen" text="Simulation 2" />
+                                <MenuItem fx:id="sim3" mnemonicParsing="false" onAction="#sim3Auswaehlen" text="Simulation 3" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Hilfe">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Tutorial" />
+                                <MenuItem mnemonicParsing="false" onAction="#about" text="Über..." />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+         </top>
         </BorderPane>
     </children>
 </AnchorPane>

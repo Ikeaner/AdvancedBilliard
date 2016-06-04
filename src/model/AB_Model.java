@@ -24,8 +24,12 @@ public class AB_Model extends Observable {
     }
 
     private void ladeSimulationen() {
-        Simulation sim1 = new Simulation();
+        Simulation sim1 = new Simulation(1);
+        Simulation sim2 = new Simulation(2);
+        Simulation sim3 = new Simulation(3);
         simulationen.add(sim1);
+        simulationen.add(sim2);
+        simulationen.add(sim3);
 
     }
 
