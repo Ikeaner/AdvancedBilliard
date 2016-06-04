@@ -209,7 +209,7 @@ public class FXML_GUIController implements Initializable, Observer {
                 move(model.getCurrentSimulation().getStosskugel());
             }
         };
-        KeyFrame f = new KeyFrame(Duration.millis(16.6), handler);
+        KeyFrame f = new KeyFrame(Duration.millis(1.66), handler);
         Timeline timer = new Timeline(f);
         timer.setCycleCount(Timeline.INDEFINITE);
         timer.play();

@@ -62,7 +62,7 @@ public class Kugel {
         }
         
         
-        if (ablenkung.getX() != 0 &&ablenkung.getY() != 0){
+        if (ablenkung.getX() != 0 ||ablenkung.getY() != 0){
             xx = ablenkung.getX();
             yy = ablenkung.getY();
         }
@@ -114,10 +114,10 @@ public class Kugel {
     }
     
     public void stossWinKraft(double winkel,double stoKra){
-        xx = sin(Math.toRadians(winkel+90)); //Math.toRadians grad in rad da cos in rad rechnet
-        yy = cos(Math.toRadians(winkel+90));
-        xx = xx*stoKra;
-        yy = yy*stoKra;
+        xx = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
+        yy = cos(Math.toRadians(winkel));
+        xx = xx*stoKra/10;
+        yy = yy*stoKra/10;
         bereitsBerechnet = true;
     }
 }

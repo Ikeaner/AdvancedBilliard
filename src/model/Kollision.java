@@ -43,7 +43,7 @@ public class Kollision {
           // System.out.println("Kollision mit Rechteck");
        } 
     }
-    if ((radCol*radCol)*10 < (xColCirc*xColCirc) + (yColCirc*yColCirc)){
+    if ((radCol*radCol)*2 < (xColCirc*xColCirc) + (yColCirc*yColCirc)){
         alreadyCol = 2;
     
     }
@@ -57,11 +57,17 @@ public class Kollision {
         System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
         double speed = Math.sqrt(xx*xx+yy*yy);
         double rVektor = Math.atan2(yy, xx);
-        ablenkungY = speed*Math.sin(rVektor-colAngle);
-        ablenkungX = speed*Math.cos(rVektor-colAngle);      
+        ablenkungY = speed*Math.cos(rVektor+colAngle);
+        ablenkungX = speed*Math.sin(rVektor-colAngle);      
         return new Point2D(ablenkungX,ablenkungY);
         //System.out.println("Kollision mit rotem Kreis");
         
+        /*        errechnen der differenz der x positionen beider kugeln  ax
+        errechnen der differenz der y positionen beider kugeln  ay
+        collisionswinkel errechenen mit atan2(ay,ax)
+        richtungsvektor/winkel der weißen kugel bestimmen  atan2(yrichtung,xrichtung) rVektor
+        ablenkungY = sin(rVektor-collisionswinkel)
+        ablenkungX = cos (rVektor-collisionswinkel)   */     
         }
     else{
         return new Point2D(0,0);
