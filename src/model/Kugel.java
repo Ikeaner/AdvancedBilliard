@@ -7,11 +7,13 @@ package model;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.geometry.Point3D;
 import javafx.util.Duration;
 
 /**
@@ -30,27 +32,48 @@ public class Kugel {
     private double yy;
     Kollision col = new Kollision();
     private boolean bereitsBerechnet = false;
-    private Point2D noChange = new Point2D(0,0);
+    private double nextBallX;
+    private double nextBallY;
+    private double nextBallRad;
 
     public Kugel(int x, int y, int r) {
         rad = r;
-        posX = x;
+        posX = x;     
         posY = y;
-
-        position = new Point2D(x, y);
-        richtung = new Point2D(xx, yy);
+        position = new Point2D(posX,posY);
     }
 
-    public void bewegen(Point2D anstoss,double radi,double stoWi,double stoKra) {
+    public void bewegen(Point2D anstoss,double radi,double stoWi,double stoKra,int index) {
         double yPos = position.getY();
         double xPos = position.getX();
-        
+
+        double rollReib = Reibung(radi);
         if (bereitsBerechnet == false){
         stossWinKraft(stoWi,stoKra);
         }
-        double rollReib = Reibung(radi);
         
-        Point2D ablenkung = col.checkKollision(xPos, yPos,radi, 100, 150,xx,yy);
+        for (int circNum=0;circNum<Simulation.getXValue().size();circNum++)
+        {  
+            if (circNum!=index){
+            nextBallX = (double) (Integer)(Simulation.getXValue().get(circNum));
+            nextBallY = (double) (Integer)(Simulation.getYValue().get(circNum));
+            nextBallRad = (double) (Integer)(Simulation.getRadValue().get(circNum));
+            // System.out.println(nextBallX+"   "+nextBallY+"    "+circNum);
+            }
+       
+        
+     
+        Point2D ablenkung = col.checkKollision(xPos, yPos,radi, nextBallX, nextBallY,nextBallRad,xx,yy);
+         if (ablenkung.getX() != 0 ||ablenkung.getY() != 0){
+            xx = ablenkung.getX();
+            yy = ablenkung.getY();
+            
+        }
+        }
+        
+        
+        
+        
         
         if (yPos > 480-radi && geschwindigkeit > 0 || yPos-radi < 20 && geschwindigkeit > 0) {
             yy = richtung.getY() * -1;
@@ -62,10 +85,7 @@ public class Kugel {
         }
         
         
-        if (ablenkung.getX() != 0 ||ablenkung.getY() != 0){
-            xx = ablenkung.getX();
-            yy = ablenkung.getY();
-        }
+       
         richtung = new Point2D(xx, yy);
         
         
@@ -109,7 +129,7 @@ public class Kugel {
         return posY;
     }
 
-    public Point2D getPosition() {
+    public Point2D getPosition(int x) {
         return position;
     }
     

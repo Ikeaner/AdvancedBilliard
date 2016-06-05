@@ -72,6 +72,8 @@ public class FXML_GUIController implements Initializable, Observer {
     private ArrayList<Circle> circles = new ArrayList<Circle>();
 
     private ObservableList<String> materialien = FXCollections.observableArrayList("Standard", "Holz", "Eisen");
+    
+    private int index = 0;
 
     //Initialisiert den Controller. Erstellt ein model und fügt diesen Controller als Observer hinzu.
     @Override
@@ -112,7 +114,7 @@ public class FXML_GUIController implements Initializable, Observer {
         
         //Erstellt einen Kreis für jede Kugel
         for (Kugel k : model.getCurrentSimulation().getKugeln()) {
-
+            
             int posX = k.getPosX();
             int posY = k.getPosY();
             int rad = k.getRad();
@@ -206,7 +208,10 @@ public class FXML_GUIController implements Initializable, Observer {
         EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                move(model.getCurrentSimulation().getStosskugel());
+                //move(model.getCurrentSimulation().getStosskugel());
+                for (index=0;index<=5;index++){
+                move(model.getCurrentSimulation().getKugeln().get(index));
+                }
             }
         };
         KeyFrame f = new KeyFrame(Duration.millis(1.66), handler);
@@ -223,12 +228,12 @@ public class FXML_GUIController implements Initializable, Observer {
     public void move(Kugel k) {
 
         Point2D anstoss = new Point2D(1, 0);
-        double radi = getRadi();
-        double stoWi = getStoWi();
-        double stoKra = getStoKra();
-        k.bewegen(anstoss,radi,stoWi,stoKra);
-        circles.get(0).setCenterX(k.getPosition().getX());
-        circles.get(0).setCenterY(k.getPosition().getY());
+        double radi = getRadi(index);
+        double stoWi = getStoWi(index);
+        double stoKra = getStoKra(index);
+        k.bewegen(anstoss,radi,stoWi,stoKra,index);
+        circles.get(index).setCenterX(k.getPosition(index).getX());
+        circles.get(index).setCenterY(k.getPosition(index).getY());
 
     }
 
@@ -248,18 +253,46 @@ public class FXML_GUIController implements Initializable, Observer {
         fileChooser.showOpenDialog(root.getScene().getWindow());
     }
     
-    public final double getRadi() { 
-         
+    public final double getRadi(int x) { 
+            if (x == 0){
             return groSlider.valueProperty().get();  
+            }
+            if (x == 1){
+            return (double) (Integer)(model.getCurrentSimulation().getRadValue().get(1));
+            }
+            if (x == 2){
+            return (double) (Integer)(model.getCurrentSimulation().getRadValue().get(2));
+            }
+            if (x == 3){
+            return (double) (Integer)(model.getCurrentSimulation().getRadValue().get(3));
+            }
+            if (x == 4){
+            return (double) (Integer)(model.getCurrentSimulation().getRadValue().get(4));
+            }
+            if (x == 5){
+            return (double) (Integer)(model.getCurrentSimulation().getRadValue().get(5));
+            }
+            else{
+                return 0;
+            }
+            
     } 
     
-    public final double getStoWi() { 
-         
-            return stoWinSlider.valueProperty().get();  
+    public final double getStoWi(int x) { 
+            if (x == 0){
+            return stoWinSlider.valueProperty().get();
+            }
+            else{
+                return 0;
+            }
     } 
-     public final double getStoKra() { 
-         
+     public final double getStoKra(int x) { 
+            if (x == 0){
             return stoKraSlider.valueProperty().get();  
+            }
+            else{
+                return 0;
+            }
     } 
 
     //öffnet den Saver
