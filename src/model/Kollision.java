@@ -21,16 +21,11 @@ import javafx.geometry.Point2D;
 public class Kollision {
      int alreadyCol=0;
     FXML_GUIController asd = new FXML_GUIController();
-    public Point2D checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double xx,double yy){
-    double weissPosX = wPosX;
-    double weissPosY = wPosY;
+    public Point2D checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy){
     double weissRad = wRad;
-    double rotPosX = rPosX;
-    double rotPosY = rPosY;
-    double rotRad = 30;
-    double radCol = weissRad + rotRad;
-    double xColCirc = (weissPosX - rotPosX);
-    double yColCirc = (weissPosY - rotPosY);
+    double radCol = weissRad + rRad;
+    double xColCirc = (wPosX - rPosX);
+    double yColCirc = (wPosY - rPosY);
     double rectX = 450;
     double rectY = 110;
     double rectW = 50;
@@ -38,8 +33,8 @@ public class Kollision {
     double ablenkungY=0;
     double ablenkungX=0;
   
-    if(weissPosX > rectX-weissRad&& weissPosX < rectX+rectW+weissRad){
-       if (weissPosY > rectY-weissRad&& weissPosY < rectY+rectH+weissRad){
+    if(wPosX > rectX-weissRad&& wPosX < rectX+rectW+weissRad){
+       if (wPosY > rectY-weissRad&& wPosY < rectY+rectH+weissRad){
           // System.out.println("Kollision mit Rechteck");
        } 
     }
@@ -57,11 +52,10 @@ public class Kollision {
         System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
         double speed = Math.sqrt(xx*xx+yy*yy);
         double rVektor = Math.atan2(yy, xx);
-        ablenkungY = speed*Math.sin(rVektor-colAngle);
-        ablenkungX = speed*Math.cos(rVektor-colAngle);      
-        return new Point2D(ablenkungX,ablenkungY);
-        //System.out.println("Kollision mit rotem Kreis");
-        
+        ablenkungY = speed*Math.cos(rVektor+colAngle);
+        ablenkungX = speed*Math.sin(rVektor-colAngle);
+        System.out.println(speed);
+        return new Point2D(ablenkungX,ablenkungY);       
         }
     else{
         return new Point2D(0,0);

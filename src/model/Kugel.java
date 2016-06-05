@@ -7,11 +7,13 @@ package model;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.geometry.Point3D;
 import javafx.util.Duration;
 
 /**
@@ -30,8 +32,9 @@ public class Kugel {
     private double yy;
     Kollision col = new Kollision();
     private boolean bereitsBerechnet = false;
-    private Point2D noChange = new Point2D(0,0);
+    private Point2D noChange = new Point2D(0, 0);
     private int material;
+    private Simulation sim;
 
     public int getMaterial() {
         return material;
@@ -44,59 +47,69 @@ public class Kugel {
         this.material = material;
         System.out.println(Integer.toString(material));
     }
+    private double nextBallX;
+    private double nextBallY;
+    private double nextBallRad;
 
-    public Kugel(int x, int y, int r) {
+    public Kugel(int x, int y, int r, Simulation s) {
         rad = r;
         posX = x;
         posY = y;
-
-        position = new Point2D(x, y);
-        richtung = new Point2D(xx, yy);
+        position = new Point2D(posX, posY);
+        sim = s;
     }
 
-    public void bewegen(Point2D anstoss,double radi,double stoWi,double stoKra) {
+    public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra, int index) {
         double yPos = position.getY();
         double xPos = position.getX();
-        
-        if (bereitsBerechnet == false){
-        stossWinKraft(stoWi,stoKra);
-        }
+
         double rollReib = Reibung(radi);
-        
-        Point2D ablenkung = col.checkKollision(xPos, yPos,radi, 100, 150,xx,yy);
-        
-        if (yPos > 480-radi && geschwindigkeit > 0 || yPos-radi < 20 && geschwindigkeit > 0) {
+        if (bereitsBerechnet == false) {
+            stossWinKraft(stoWi, stoKra);
+        }
+
+        for (Kugel k : sim.getKugeln()) {
+            if (sim.getKugeln().indexOf(k) != index) {
+                nextBallX = k.getPosX();
+                nextBallY = k.getPosY();
+                nextBallRad = k.getRad();
+                // System.out.println(nextBallX+"   "+nextBallY+"    "+circNum);
+            }
+
+            Point2D ablenkung = col.checkKollision(xPos, yPos, radi, nextBallX, nextBallY, nextBallRad, xx, yy);
+            if (ablenkung.getX() != 0 || ablenkung.getY() != 0) {
+                xx = ablenkung.getX();
+                yy = ablenkung.getY();
+
+            }
+        }
+
+        if (yPos > 480 - radi && geschwindigkeit > 0 || yPos - radi < 20 && geschwindigkeit > 0) {
             yy = richtung.getY() * -1;
             System.out.println("Oben oder Unten bumm");
         }
-        if (xPos > 730-radi && geschwindigkeit > 0 || xPos-radi <= 20 && geschwindigkeit > 0 ) {
+        if (xPos > 730 - radi && geschwindigkeit > 0 || xPos - radi <= 20 && geschwindigkeit > 0) {
             xx = richtung.getX() * -1;;
             System.out.println("Links oder Rechts bumm");
         }
-        
-        
-        if (ablenkung.getX() != 0 &&ablenkung.getY() != 0){
-            xx = ablenkung.getX();
-            yy = ablenkung.getY();
-        }
+
         richtung = new Point2D(xx, yy);
-        
-        
-        if (geschwindigkeit < 0.005){
+
+        if (geschwindigkeit < 0.005) {
             geschwindigkeit = 0;
+        } else {
+            double bremswirkung = 1 - (0.01 / radi * rollReib);
+            //double bremswirkung = 0.999;
+            geschwindigkeit = geschwindigkeit * bremswirkung;
         }
-        else{
-        double bremswirkung = 1- (0.01/radi*rollReib);  
-        //double bremswirkung = 0.999;
-        geschwindigkeit = geschwindigkeit * bremswirkung;
-        }        
         position = position.add(richtung.multiply(geschwindigkeit));
     }
-    public double Reibung(double radi){
-        double pi = 1.333333333333333333*Math.PI;
+
+    public double Reibung(double radi) {
+        double pi = 1.333333333333333333 * Math.PI;
         double vol = pi * Math.pow(radi, 3);
         //System.out.println(mass);
-        double mass = (0.5 * vol)/1000;
+        double mass = (0.5 * vol) / 1000;
         //System.out.println(mass);
         double Fn = (mass * Math.pow(9.81, 1));
         //System.out.println(Fn);
@@ -121,15 +134,15 @@ public class Kugel {
         return posY;
     }
 
-    public Point2D getPosition() {
+    public Point2D getPosition(int x) {
         return position;
     }
-    
-    public void stossWinKraft(double winkel,double stoKra){
-        xx = sin(Math.toRadians(winkel+90)); //Math.toRadians grad in rad da cos in rad rechnet
-        yy = cos(Math.toRadians(winkel+90));
-        xx = xx*stoKra;
-        yy = yy*stoKra;
+
+    public void stossWinKraft(double winkel, double stoKra) {
+        xx = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
+        yy = cos(Math.toRadians(winkel));
+        xx = xx * stoKra / 10;
+        yy = yy * stoKra / 10;
         bereitsBerechnet = true;
     }
 }

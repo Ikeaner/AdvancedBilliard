@@ -160,10 +160,14 @@ public class FXML_GUIController implements Initializable, Observer {
         EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                move(model.getCurrentSimulation().getStosskugel());
+                //move(model.getCurrentSimulation().getStosskugel());
+
+                for (Kugel k : model.getCurrentSimulation().getKugeln()) {
+                    move(k);
+                }
             }
         };
-        KeyFrame f = new KeyFrame(Duration.millis(16.6), handler);
+        KeyFrame f = new KeyFrame(Duration.millis(1.66), handler);
         Timeline timer = new Timeline(f);
         timer.setCycleCount(Timeline.INDEFINITE);
         timer.play();
@@ -176,13 +180,15 @@ public class FXML_GUIController implements Initializable, Observer {
     //bewegt die Kugel und updated die beiden kreis positionen.
     public void move(Kugel k) {
 
+        int index = model.getCurrentSimulation().getKugeln().indexOf(k);
+        
         Point2D anstoss = new Point2D(1, 0);
-        double radi = getRadi();
-        double stoWi = getStoWi();
-        double stoKra = getStoKra();
-        k.bewegen(anstoss, radi, stoWi, stoKra);
-        circles.get(0).setCenterX(k.getPosition().getX());
-        circles.get(0).setCenterY(k.getPosition().getY());
+        double radi = getRadi(index);
+        double stoWi = getStoWi(index);
+        double stoKra = getStoKra(index);
+        k.bewegen(anstoss, radi, stoWi, stoKra, index);
+        circles.get(index).setCenterX(k.getPosition(index).getX());
+        circles.get(index).setCenterY(k.getPosition(index).getY());
 
     }
 
@@ -353,7 +359,7 @@ public class FXML_GUIController implements Initializable, Observer {
                     model.getCurrentSimulation().getHindernisse().get(rectangles.indexOf(r)).setMaterial(new_value.intValue());
                 }
             });
-            
+
             hindernisGrid.setVgap(5);
 
             hindernisGrid.add(rEins, 0, num2 * 2, 1, 2);
@@ -393,6 +399,31 @@ public class FXML_GUIController implements Initializable, Observer {
     public final double getStoKra() {
 
         return stoKraSlider.valueProperty().get();
+    }
+
+    public final double getRadi(int x) {
+        if (x == 0) {
+            return groSlider.valueProperty().get();
+        } else {
+            return model.getCurrentSimulation().getKugeln().get(x).getRad();
+        }
+
+    }
+
+    public final double getStoWi(int x) {
+        if (x == 0) {
+            return stoWinSlider.valueProperty().get();
+        } else {
+            return 0;
+        }
+    }
+
+    public final double getStoKra(int x) {
+        if (x == 0) {
+            return stoKraSlider.valueProperty().get();
+        } else {
+            return 0;
+        }
     }
 
     //öffnet den Saver
