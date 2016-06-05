@@ -31,6 +31,19 @@ public class Kugel {
     Kollision col = new Kollision();
     private boolean bereitsBerechnet = false;
     private Point2D noChange = new Point2D(0,0);
+    private int material;
+
+    public int getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(int material) {
+        //0 = Standard
+        //1 = Holz
+        //2 = Eisen
+        this.material = material;
+        System.out.println(Integer.toString(material));
+    }
 
     public Kugel(int x, int y, int r) {
         rad = r;
@@ -91,7 +104,6 @@ public class Kugel {
         //System.out.println(Rn);
         return Rn;
     }
-    
 
     public int getRad() {
         return rad;

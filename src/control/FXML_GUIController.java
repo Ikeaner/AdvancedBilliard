@@ -15,6 +15,8 @@ import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -274,7 +276,27 @@ public class FXML_GUIController implements Initializable, Observer {
             }
 
             Label beschreibung = new Label("Material");
-            ComboBox cbx = new ComboBox(materialien);
+            ChoiceBox cbx = new ChoiceBox(materialien);
+            cbx.setValue("Standard");
+            cbx.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue ov, Number value, Number new_value) {
+                    System.out.println(new_value.toString());
+
+                    switch (new_value.intValue()) {
+                        case 0:
+                            c.setFill(Color.WHITE);
+                            break;
+                        case 1:
+                            c.setFill(Color.BROWN);
+                            break;
+                        case 2:
+                            c.setFill(Color.GRAY);
+                            break;
+                    }
+                    model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).setMaterial(new_value.intValue());
+                }
+            });
 
             kugelGrid.setVgap(5);
 
@@ -309,8 +331,29 @@ public class FXML_GUIController implements Initializable, Observer {
             rEins = new Rectangle(75, 50);
 
             Label beschreibung = new Label("Material");
-            ComboBox cbx = new ComboBox(materialien);
+            ChoiceBox cbx = new ChoiceBox(materialien);
 
+            cbx.setValue("Holz");
+            cbx.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue ov, Number value, Number new_value) {
+                    System.out.println(new_value.toString());
+
+                    switch (new_value.intValue()) {
+                        case 0:
+                            r.setFill(Color.WHITE);
+                            break;
+                        case 1:
+                            r.setFill(Color.BROWN);
+                            break;
+                        case 2:
+                            r.setFill(Color.GRAY);
+                            break;
+                    }
+                    model.getCurrentSimulation().getHindernisse().get(rectangles.indexOf(r)).setMaterial(new_value.intValue());
+                }
+            });
+            
             hindernisGrid.setVgap(5);
 
             hindernisGrid.add(rEins, 0, num2 * 2, 1, 2);

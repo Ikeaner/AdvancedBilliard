@@ -16,6 +16,19 @@ public class Objekt {
     private int posY;
     private int dimX;
     private int dimY;
+    private int material;
+
+    public int getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(int material) {
+        //0 = Standard
+        //1 = Holz
+        //2 = Eisen
+        this.material = material;
+        System.out.println(Integer.toString(material));
+    }
 
     public String getArt() {
         return art;
@@ -56,14 +69,13 @@ public class Objekt {
     public void setDimY(int dimY) {
         this.dimY = dimY;
     }
-    
-    public Objekt(String art, int posX, int posY, int dimX, int dimY)
-    {
+
+    public Objekt(String art, int posX, int posY, int dimX, int dimY) {
         this.art = art;
         this.posX = posX;
         this.posY = posY;
         this.dimX = dimX;
         this.dimY = dimY;
     }
-    
+
 }
