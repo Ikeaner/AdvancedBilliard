@@ -38,7 +38,7 @@ public class Kollision {
           // System.out.println("Kollision mit Rechteck");
        } 
     }
-    if ((radCol*radCol)*10 < (xColCirc*xColCirc) + (yColCirc*yColCirc)){
+    if ((radCol*radCol)*2 < (xColCirc*xColCirc) + (yColCirc*yColCirc)){
         alreadyCol = 2;
     
     }

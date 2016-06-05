@@ -80,17 +80,17 @@ public class Kugel {
             if (ablenkung.getX() != 0 || ablenkung.getY() != 0) {
                 xx = ablenkung.getX();
                 yy = ablenkung.getY();
-
+                break;
             }
         }
 
         if (yPos > 480 - radi && geschwindigkeit > 0 || yPos - radi < 20 && geschwindigkeit > 0) {
             yy = richtung.getY() * -1;
-            System.out.println("Oben oder Unten bumm");
+            //System.out.println("Oben oder Unten bumm");
         }
         if (xPos > 730 - radi && geschwindigkeit > 0 || xPos - radi <= 20 && geschwindigkeit > 0) {
             xx = richtung.getX() * -1;;
-            System.out.println("Links oder Rechts bumm");
+            //System.out.println("Links oder Rechts bumm");
         }
 
         richtung = new Point2D(xx, yy);
