@@ -98,8 +98,8 @@ public class Kugel {
         if (geschwindigkeit < 0.005) {
             geschwindigkeit = 0;
         } else {
-            double bremswirkung = 1 - (0.01 / radi * rollReib);
-            //double bremswirkung = 0.999;
+            //double bremswirkung = 1 - (0.01 / radi * rollReib);
+            double bremswirkung = 1;
             geschwindigkeit = geschwindigkeit * bremswirkung;
         }
         position = position.add(richtung.multiply(geschwindigkeit));

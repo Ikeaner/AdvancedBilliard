@@ -52,8 +52,8 @@ public class Kollision {
         System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
         double speed = Math.sqrt(xx*xx+yy*yy);
         double rVektor = Math.atan2(yy, xx);
-        ablenkungY = speed*Math.cos(rVektor+colAngle);
-        ablenkungX = speed*Math.sin(rVektor-colAngle);
+        ablenkungX = speed*Math.cos(rVektor-colAngle);
+        ablenkungY = speed*Math.sin(rVektor-colAngle);
         System.out.println(speed);
         return new Point2D(ablenkungX,ablenkungY);       
         }
