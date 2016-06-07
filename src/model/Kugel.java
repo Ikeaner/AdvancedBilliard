@@ -86,25 +86,28 @@ public class Kugel {
             if (ablenkung[0] != 0 || ablenkung[1] != 0) {
                 xx[index] = ablenkung[0];
                 yy[index] = ablenkung[1];
-                xx[sim.getKugeln().indexOf(k)] = ablenkung[2];
-                yy[sim.getKugeln().indexOf(k)] = ablenkung[3];
+                xx[sim.getKugeln().indexOf(k)] = ablenkung[0]*-1;
+                yy[sim.getKugeln().indexOf(k)] = ablenkung[1]*-1;
                 break;
                 
             }
         }
-
-        if (position[index].getY() > 480 - radi && geschwindigkeit > 0 || position[index].getY() - radi < 20 && geschwindigkeit > 0) {
-            yy[index] = yy[index] * -1;
+        for (int i=0;i<=5;i++){
+        if (position[i].getY() > 480 - radi && geschwindigkeit > 0 || position[i].getY() - radi < 20 && geschwindigkeit > 0) {
+            yy[i] = yy[i] * -1;
             //System.out.println("Oben oder Unten bumm");
         }
-        if (position[index].getX() > 730 - radi && geschwindigkeit > 0 || position[index].getX() - radi <= 20 && geschwindigkeit > 0) {
-            xx[index] = xx[index] * -1;;
+        if (position[i].getX() > 730 - radi && geschwindigkeit > 0 || position[i].getX() - radi <= 20 && geschwindigkeit > 0) {
+            xx[i] = xx[i] * -1;;
             //System.out.println("Links oder Rechts bumm");
         }
-
+         }
         richtung[0] = new Point2D(xx[0], yy[0]);
         richtung[1] = new Point2D(xx[1], yy[1]);
         richtung[2] = new Point2D(xx[2], yy[2]);
+        richtung[3] = new Point2D(xx[3], yy[3]);
+        richtung[4] = new Point2D(xx[4], yy[4]);
+        richtung[5] = new Point2D(xx[5], yy[5]);
 
         if (geschwindigkeit < 0.005) {
             geschwindigkeit = 0;
@@ -116,6 +119,9 @@ public class Kugel {
         position[0] = position[0].add(richtung[0].multiply(geschwindigkeit));
         position[1] = position[1].add(richtung[1].multiply(geschwindigkeit));
         position[2] = position[2].add(richtung[2].multiply(geschwindigkeit));
+        position[3] = position[3].add(richtung[3].multiply(geschwindigkeit));
+        position[4] = position[4].add(richtung[4].multiply(geschwindigkeit));
+        position[5] = position[5].add(richtung[5].multiply(geschwindigkeit));
         
     }
 
