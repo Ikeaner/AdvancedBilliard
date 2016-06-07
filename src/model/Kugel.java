@@ -25,11 +25,14 @@ public class Kugel {
     private int rad;
     private int posX;
     private int posY;
+    int colBall;
     private double geschwindigkeit = 1;
-    private Point2D richtung;
-    private Point2D position;
+    private Point2D[] richtung= new Point2D[6];
+    private Point2D[] position=new Point2D[6] ;
     private double xx;
     private double yy;
+    private double yyy;
+    private double xxx;
     Kollision col = new Kollision();
     private boolean bereitsBerechnet = false;
     private Point2D noChange = new Point2D(0, 0);
@@ -51,17 +54,17 @@ public class Kugel {
     private double nextBallY;
     private double nextBallRad;
 
-    public Kugel(int x, int y, int r, Simulation s) {
+    public Kugel(int x, int y, int r, Simulation s,int index) {
         rad = r;
         posX = x;
         posY = y;
-        position = new Point2D(posX, posY);
+        position[index] = new Point2D(posX, posY);
         sim = s;
     }
 
     public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra, int index) {
-        double yPos = position.getY();
-        double xPos = position.getX();
+        double yPos = position[index].getY();
+        double xPos = position[index].getX();
 
         double rollReib = Reibung(radi);
         if (bereitsBerechnet == false) {
@@ -76,24 +79,29 @@ public class Kugel {
                 // System.out.println(nextBallX+"   "+nextBallY+"    "+circNum);
             }
 
-            Point2D ablenkung = col.checkKollision(xPos, yPos, radi, nextBallX, nextBallY, nextBallRad, xx, yy);
-            if (ablenkung.getX() != 0 || ablenkung.getY() != 0) {
-                xx = ablenkung.getX();
-                yy = ablenkung.getY();
+            double ablenkung[] = col.checkKollision(xPos, yPos, radi, nextBallX, nextBallY, nextBallRad, xx, yy);
+            if (ablenkung[0] != 0 || ablenkung[0] != 0) {
+                xx = ablenkung[0];
+                yy = ablenkung[1];
+                yyy=ablenkung[2];
+                xxx=ablenkung[3];
+                richtung[1] = new Point2D(xxx, yyy);
                 break;
+                
             }
         }
 
         if (yPos > 480 - radi && geschwindigkeit > 0 || yPos - radi < 20 && geschwindigkeit > 0) {
-            yy = richtung.getY() * -1;
+            yy = richtung[index].getY() * -1;
             //System.out.println("Oben oder Unten bumm");
         }
         if (xPos > 730 - radi && geschwindigkeit > 0 || xPos - radi <= 20 && geschwindigkeit > 0) {
-            xx = richtung.getX() * -1;;
+            xx = richtung[index].getX() * -1;;
             //System.out.println("Links oder Rechts bumm");
         }
 
-        richtung = new Point2D(xx, yy);
+        richtung[index] = new Point2D(xx, yy);
+        
 
         if (geschwindigkeit < 0.005) {
             geschwindigkeit = 0;
@@ -102,7 +110,7 @@ public class Kugel {
             double bremswirkung = 1;
             geschwindigkeit = geschwindigkeit * bremswirkung;
         }
-        position = position.add(richtung.multiply(geschwindigkeit));
+        position[index] = position[index].add(richtung[index].multiply(geschwindigkeit));
     }
 
     public double Reibung(double radi) {
@@ -135,7 +143,7 @@ public class Kugel {
     }
 
     public Point2D getPosition(int x) {
-        return position;
+        return position[x];
     }
 
     public void stossWinKraft(double winkel, double stoKra) {

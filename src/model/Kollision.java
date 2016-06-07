@@ -11,6 +11,7 @@ import java.awt.Rectangle;
 import static java.lang.Math.abs;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import java.lang.reflect.Array;
 import javafx.geometry.Point2D;
 
 /**
@@ -19,9 +20,11 @@ import javafx.geometry.Point2D;
  */
 
 public class Kollision {
-     int alreadyCol=0;
+    int alreadyCol=0;
     FXML_GUIController asd = new FXML_GUIController();
-    public Point2D checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy){
+    
+    
+    public double[] checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy){
     double weissRad = wRad;
     double radCol = weissRad + rRad;
     double xColCirc = (wPosX - rPosX);
@@ -55,10 +58,10 @@ public class Kollision {
         ablenkungX = speed*Math.cos(rVektor-colAngle);
         ablenkungY = speed*Math.sin(rVektor-colAngle);
         System.out.println(speed);
-        return new Point2D(ablenkungX,ablenkungY);       
+        return new double[]{ablenkungX,ablenkungY,10,10}; 
         }
     else{
-        return new Point2D(0,0);
+        return new double[]{0,0,0,0};
     }
     }
     
