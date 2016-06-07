@@ -7,14 +7,8 @@ package model;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
-import java.util.ArrayList;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.geometry.Point3D;
-import javafx.util.Duration;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -38,6 +32,15 @@ public class Kugel {
     private Point2D noChange = new Point2D(0, 0);
     private int material;
     private Simulation sim;
+    private Color color;
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
     public int getMaterial() {
         return material;

@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -49,10 +50,9 @@ import model.Objekt;
  * @author Tom
  */
 public class FXML_GUIController implements Initializable, Observer {
-
+    
     @FXML
     private AnchorPane root;
-
     @FXML
     private MenuItem termButton;
     @FXML
@@ -73,14 +73,16 @@ public class FXML_GUIController implements Initializable, Observer {
     private Label stoKraSliAnz;
     @FXML
     private GridPane kugelGrid;
-
+    
     private AB_Model model;
-
+    
     private ArrayList<Circle> circles = new ArrayList<Circle>();
     private ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
     private ArrayList<Circle> holes = new ArrayList<Circle>();
-
+    private ArrayList<ChoiceBox> cbxs = new ArrayList<ChoiceBox>();
+    
     private ObservableList<String> materialien = FXCollections.observableArrayList("Standard", "Holz", "Eisen");
+    
     @FXML
     private MenuItem sim1;
     @FXML
@@ -95,6 +97,10 @@ public class FXML_GUIController implements Initializable, Observer {
     private ScrollPane kugelEinsScrollPane;
     @FXML
     private GridPane hindernisGrid;
+    @FXML
+    private TitledPane einstellungsFenster;
+    @FXML
+    private ChoiceBox anstossKugelMat;
 
     //Initialisiert den Controller. Erstellt ein model und fügt diesen Controller als Observer hinzu.
     @Override
@@ -108,17 +114,17 @@ public class FXML_GUIController implements Initializable, Observer {
 
     //initialisiert Slider. Setzt ihre maximalen und minimalen Werte und verbindet die Anzeigefelder.
     private void initSliders() {
-
+        
         groSlider.setValue(5);
         groSlider.setMax(50);
         groSlider.setMin(1);
         groSliAnz.textProperty().bindBidirectional(groSlider.valueProperty(), NumberFormat.getNumberInstance());
-
+        
         stoWinSlider.setValue(0);
         stoWinSlider.setMax(360);
         stoWinSlider.setMin(0);
         stoWinSliAnz.textProperty().bindBidirectional(stoWinSlider.valueProperty(), NumberFormat.getNumberInstance());
-
+        
         stoKraSlider.setValue(10);
         stoKraSlider.setMax(100);
         stoKraSlider.setMin(1);
@@ -140,12 +146,12 @@ public class FXML_GUIController implements Initializable, Observer {
     private void sim1Auswaehlen(ActionEvent event) {
         model.setCurrentSimulation(0);
     }
-
+    
     @FXML
     private void sim2Auswaehlen(ActionEvent event) {
         model.setCurrentSimulation(1);
     }
-
+    
     @FXML
     private void sim3Auswaehlen(ActionEvent event) {
         model.setCurrentSimulation(2);
@@ -154,9 +160,9 @@ public class FXML_GUIController implements Initializable, Observer {
     //Anstoß. Startet einen Timer und führt jedes Frame move() aus. 
     @FXML
     private void anstoss(ActionEvent event) {
-
+        
         System.out.println("Anstoß!");
-
+        
         EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -171,15 +177,22 @@ public class FXML_GUIController implements Initializable, Observer {
         Timeline timer = new Timeline(f);
         timer.setCycleCount(Timeline.INDEFINITE);
         timer.play();
+        
         anstossButton.setDisable(true);
         groSlider.setDisable(true);
         stoKraSlider.setDisable(true);
         stoWinSlider.setDisable(true);
+        sim1.setDisable(true);
+        sim2.setDisable(true);
+        sim3.setDisable(true);
+        for (ChoiceBox c : cbxs) {
+            c.setDisable(true);
+        }
     }
 
     //bewegt die Kugel und updated die beiden kreis positionen.
     public void move(Kugel k) {
-
+        
         int index = model.getCurrentSimulation().getKugeln().indexOf(k);
         
         Point2D anstoss = new Point2D(1, 0);
@@ -189,7 +202,6 @@ public class FXML_GUIController implements Initializable, Observer {
         k.bewegen(anstoss, radi, stoWi, stoKra, index);
         circles.get(index).setCenterX(k.getPosition(index).getX());
         circles.get(index).setCenterY(k.getPosition(index).getY());
-
     }
 
     //beendet das Programm
@@ -207,34 +219,36 @@ public class FXML_GUIController implements Initializable, Observer {
         fileChooser.setTitle("Lade deinen Spielstand");
         fileChooser.showOpenDialog(root.getScene().getWindow());
     }
-
+    
     @FXML
     private void about(ActionEvent event) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Über...");
         alert.setHeaderText("Über Advanced Billiard");
         alert.setContentText("Version: 1.0, Programm von Tom Quinders, Alexander Dmitriev, Jaqueline Timmermann und Markus Roth");
-
+        
         alert.showAndWait();
     }
-
+    
     private void levelLaden() {
         System.out.println("level geladen");
-
+        
         model.setPreviousSimulation(model.getCurrentSimulation());
-
+        
         circles.clear();
         rectangles.clear();
         holes.clear();
+        cbxs.clear();
         playPane.getChildren().clear();
         kugelGrid.getChildren().clear();
         hindernisGrid.getChildren().clear();
-
+        
         simNameLabel.setText("Simulation " + model.getCurrentSimulation().toString());
+        einstellungsFenster.setText("Simulation " + model.getCurrentSimulation().toString() + " Einstellungen");
 
         //Erstellt einen Kreis für jede Kugel
         for (Kugel k : model.getCurrentSimulation().getKugeln()) {
-
+            
             int posX = k.getPosX();
             int posY = k.getPosY();
             int rad = k.getRad();
@@ -245,16 +259,16 @@ public class FXML_GUIController implements Initializable, Observer {
         //Gibt den Kreisen Farbe je nach ihrer Nummer
         int num = 0;
         for (Circle c : circles) {
-
+            
             Circle cEins = null;
-
+            
             if (num != 0) {
                 cEins = new Circle(30);
             } else {
                 //bindet den Radius der weißen Kugel an den Sliderwert
                 c.radiusProperty().bind(groSlider.valueProperty());
             }
-
+            
             switch (num) {
                 case (0):
                     c.setFill(Color.WHITE);
@@ -280,33 +294,36 @@ public class FXML_GUIController implements Initializable, Observer {
                     cEins.setFill(Color.PINK);
                     break;
             }
-
-            Label beschreibung = new Label("Material");
-            ChoiceBox cbx = new ChoiceBox(materialien);
-            cbx.setValue("Standard");
-            cbx.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue ov, Number value, Number new_value) {
-                    System.out.println(new_value.toString());
-
-                    switch (new_value.intValue()) {
-                        case 0:
-                            c.setFill(Color.WHITE);
-                            break;
-                        case 1:
-                            c.setFill(Color.BROWN);
-                            break;
-                        case 2:
-                            c.setFill(Color.GRAY);
-                            break;
-                    }
-                    model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).setMaterial(new_value.intValue());
-                }
-            });
-
+            model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).setColor((Color) c.getFill());
+            
             kugelGrid.setVgap(5);
-
+            
             if (num != 0) {
+                Label beschreibung = new Label("Material");
+                ChoiceBox cbx = new ChoiceBox(materialien);
+                cbx.setValue("Standard");
+                cbx.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue ov, Number value, Number new_value) {
+                        System.out.println(new_value.toString());
+                        
+                        switch (new_value.intValue()) {
+                            case 0:
+                                c.setFill(model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).getColor());
+                                break;
+                            case 1:
+                                c.setFill(Color.BROWN);
+                                break;
+                            case 2:
+                                c.setFill(Color.GRAY);
+                                break;
+                        }
+                        model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).setMaterial(new_value.intValue());
+                    }
+                });
+                
+                cbxs.add(cbx);
+                
                 kugelGrid.add(cEins, 0, (num - 1) * 2, 1, 2);
                 kugelGrid.add(beschreibung, 1, (num - 1) * 2);
                 kugelGrid.add(cbx, 1, (num - 1) * 2 + 1);
@@ -314,9 +331,35 @@ public class FXML_GUIController implements Initializable, Observer {
             num++;
         }
 
-        //Erstellt einen Kreis für jede Kugel
-        for (Objekt o : model.getCurrentSimulation().getHindernisse()) {
+        //enabled den Material Picker für Anstosskugel
+        Circle anstossCircle = circles.get(0);
+        anstossKugelMat.setDisable(false);
+        anstossKugelMat.setItems(materialien);
+        anstossKugelMat.setValue("Standard");
+        anstossKugelMat.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue ov, Number value, Number new_value) {
+                System.out.println(new_value.toString());
+                
+                switch (new_value.intValue()) {
+                    case 0:
+                        anstossCircle.setFill(Color.WHITE);
+                        break;
+                    case 1:
+                        anstossCircle.setFill(Color.BROWN);
+                        break;
+                    case 2:
+                        anstossCircle.setFill(Color.GRAY);
+                        break;
+                }
+                model.getCurrentSimulation().getKugeln().get(circles.indexOf(anstossCircle)).setMaterial(new_value.intValue());
+            }
+        });
+        cbxs.add(anstossKugelMat);
 
+        //Erstellt ein Rechteck für jedes Hindernis
+        for (Objekt o : model.getCurrentSimulation().getHindernisse()) {
+            
             int posX = o.getPosX();
             int posY = o.getPosY();
             int width = o.getDimX();
@@ -328,23 +371,26 @@ public class FXML_GUIController implements Initializable, Observer {
             playPane.getChildren().add(r);
         }
 
-        //Gibt den Kreisen Farbe je nach ihrer Nummer
+        //Gibt den Rechtecken die Holz Farbe
         int num2 = 0;
+        hindernisGrid.setVgap(5);
         for (Rectangle r : rectangles) {
-
-            Rectangle rEins = null;
-
-            rEins = new Rectangle(75, 50);
-
+            
+            Rectangle rEins = new Rectangle(75, 50);
+            rEins.setFill(Color.BROWN);
+            
             Label beschreibung = new Label("Material");
             ChoiceBox cbx = new ChoiceBox(materialien);
-
+            
             cbx.setValue("Holz");
+            r.setFill(Color.BROWN);
+            model.getCurrentSimulation().getHindernisse().get(rectangles.indexOf(r)).setMaterial(1);
+            
             cbx.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue ov, Number value, Number new_value) {
                     System.out.println(new_value.toString());
-
+                    
                     switch (new_value.intValue()) {
                         case 0:
                             r.setFill(Color.WHITE);
@@ -359,57 +405,57 @@ public class FXML_GUIController implements Initializable, Observer {
                     model.getCurrentSimulation().getHindernisse().get(rectangles.indexOf(r)).setMaterial(new_value.intValue());
                 }
             });
-
-            hindernisGrid.setVgap(5);
-
+            
+            cbxs.add(cbx);
+            
             hindernisGrid.add(rEins, 0, num2 * 2, 1, 2);
             hindernisGrid.add(beschreibung, 1, num2 * 2);
             hindernisGrid.add(cbx, 1, (num2 * 2) + 1);
-
+            
             num2++;
         }
-
+        
         for (Loch l : model.getCurrentSimulation().getLöcher()) {
-
+            
             int posX = l.getPosX();
             int posY = l.getPosY();
             int rad = l.getRad();
             Circle c = new Circle(posX, posY, rad);
-
+            
             holes.add(c);
             playPane.getChildren().add(c);
         }
-
+        
         anstossButton.setDisable(false);
         groSlider.setDisable(false);
         stoKraSlider.setDisable(false);
         stoWinSlider.setDisable(false);
     }
-
+    
     public final double getRadi() {
-
+        
         return groSlider.valueProperty().get();
     }
-
+    
     public final double getStoWi() {
-
+        
         return stoWinSlider.valueProperty().get();
     }
-
+    
     public final double getStoKra() {
-
+        
         return stoKraSlider.valueProperty().get();
     }
-
+    
     public final double getRadi(int x) {
         if (x == 0) {
             return groSlider.valueProperty().get();
         } else {
             return model.getCurrentSimulation().getKugeln().get(x).getRad();
         }
-
+        
     }
-
+    
     public final double getStoWi(int x) {
         if (x == 0) {
             return stoWinSlider.valueProperty().get();
@@ -417,7 +463,7 @@ public class FXML_GUIController implements Initializable, Observer {
             return 0;
         }
     }
-
+    
     public final double getStoKra(int x) {
         if (x == 0) {
             return stoKraSlider.valueProperty().get();
