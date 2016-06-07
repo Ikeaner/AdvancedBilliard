@@ -58,7 +58,7 @@ public class Kollision {
         ablenkungX = speed*Math.cos(rVektor-colAngle);
         ablenkungY = speed*Math.sin(rVektor-colAngle);
         System.out.println(speed);
-        return new double[]{ablenkungX,ablenkungY,10,10}; 
+        return new double[]{ablenkungX,ablenkungY,0.1,0.1}; 
         }
     else{
         return new double[]{0,0,0,0};

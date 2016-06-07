@@ -21,12 +21,10 @@ public class Kugel {
     private int posY;
     int colBall;
     private double geschwindigkeit = 1;
-    private Point2D[] richtung= new Point2D[6];
-    private Point2D[] position=new Point2D[6] ;
-    private double xx;
-    private double yy;
-    private double yyy;
-    private double xxx;
+    private static Point2D[] richtung= new Point2D[6];
+    private static Point2D[] position=new Point2D[6] ;
+    private double[] xx=new double[6];
+    private double[] yy=new double[6];
     Kollision col = new Kollision();
     private boolean bereitsBerechnet = false;
     private Point2D noChange = new Point2D(0, 0);
@@ -62,7 +60,9 @@ public class Kugel {
         posX = x;
         posY = y;
         position[index] = new Point2D(posX, posY);
+        richtung[index] = new Point2D(0, 0);
         sim = s;
+        
     }
 
     public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra, int index) {
@@ -76,35 +76,35 @@ public class Kugel {
 
         for (Kugel k : sim.getKugeln()) {
             if (sim.getKugeln().indexOf(k) != index) {
-                nextBallX = k.getPosX();
-                nextBallY = k.getPosY();
+                nextBallX = position[sim.getKugeln().indexOf(k)].getX();
+                nextBallY = position[sim.getKugeln().indexOf(k)].getY();
                 nextBallRad = k.getRad();
                 // System.out.println(nextBallX+"   "+nextBallY+"    "+circNum);
             }
 
-            double ablenkung[] = col.checkKollision(xPos, yPos, radi, nextBallX, nextBallY, nextBallRad, xx, yy);
-            if (ablenkung[0] != 0 || ablenkung[0] != 0) {
-                xx = ablenkung[0];
-                yy = ablenkung[1];
-                yyy=ablenkung[2];
-                xxx=ablenkung[3];
-                richtung[1] = new Point2D(xxx, yyy);
+            double ablenkung[] = col.checkKollision(xPos, yPos, radi, nextBallX, nextBallY, nextBallRad, xx[index], yy[index]);
+            if (ablenkung[0] != 0 || ablenkung[1] != 0) {
+                xx[index] = ablenkung[0];
+                yy[index] = ablenkung[1];
+                xx[sim.getKugeln().indexOf(k)] = ablenkung[2];
+                yy[sim.getKugeln().indexOf(k)] = ablenkung[3];
                 break;
                 
             }
         }
 
-        if (yPos > 480 - radi && geschwindigkeit > 0 || yPos - radi < 20 && geschwindigkeit > 0) {
-            yy = richtung[index].getY() * -1;
+        if (position[index].getY() > 480 - radi && geschwindigkeit > 0 || position[index].getY() - radi < 20 && geschwindigkeit > 0) {
+            yy[index] = yy[index] * -1;
             //System.out.println("Oben oder Unten bumm");
         }
-        if (xPos > 730 - radi && geschwindigkeit > 0 || xPos - radi <= 20 && geschwindigkeit > 0) {
-            xx = richtung[index].getX() * -1;;
+        if (position[index].getX() > 730 - radi && geschwindigkeit > 0 || position[index].getX() - radi <= 20 && geschwindigkeit > 0) {
+            xx[index] = xx[index] * -1;;
             //System.out.println("Links oder Rechts bumm");
         }
 
-        richtung[index] = new Point2D(xx, yy);
-        
+        richtung[0] = new Point2D(xx[0], yy[0]);
+        richtung[1] = new Point2D(xx[1], yy[1]);
+        richtung[2] = new Point2D(xx[2], yy[2]);
 
         if (geschwindigkeit < 0.005) {
             geschwindigkeit = 0;
@@ -113,7 +113,10 @@ public class Kugel {
             double bremswirkung = 1;
             geschwindigkeit = geschwindigkeit * bremswirkung;
         }
-        position[index] = position[index].add(richtung[index].multiply(geschwindigkeit));
+        position[0] = position[0].add(richtung[0].multiply(geschwindigkeit));
+        position[1] = position[1].add(richtung[1].multiply(geschwindigkeit));
+        position[2] = position[2].add(richtung[2].multiply(geschwindigkeit));
+        
     }
 
     public double Reibung(double radi) {
@@ -150,10 +153,10 @@ public class Kugel {
     }
 
     public void stossWinKraft(double winkel, double stoKra) {
-        xx = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
-        yy = cos(Math.toRadians(winkel));
-        xx = xx * stoKra / 10;
-        yy = yy * stoKra / 10;
+        xx[0] = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
+        yy[0] = cos(Math.toRadians(winkel));
+        xx[0] = xx[0] * stoKra / 10;
+        yy[0] = yy[0] * stoKra / 10;
         bereitsBerechnet = true;
     }
 }

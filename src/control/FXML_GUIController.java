@@ -194,7 +194,6 @@ public class FXML_GUIController implements Initializable, Observer {
     public void move(Kugel k) {
         
         int index = model.getCurrentSimulation().getKugeln().indexOf(k);
-        
         Point2D anstoss = new Point2D(1, 0);
         double radi = getRadi(index);
         double stoWi = getStoWi(index);
