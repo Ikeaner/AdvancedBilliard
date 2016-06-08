@@ -66,8 +66,7 @@ public class Kugel {
     }
 
     public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra, int index) {
-        double yPos = position[index].getY();
-        double xPos = position[index].getX();
+
 
         double rollReib = Reibung(radi);
         if (bereitsBerechnet == false) {
@@ -80,10 +79,10 @@ public class Kugel {
                 nextBallY = position[sim.getKugeln().indexOf(k)].getY();
                 nextBallRad = k.getRad();
                 // System.out.println(nextBallX+"   "+nextBallY+"    "+circNum);
-            }
+            
 
-            double ablenkung[] = col.checkKollision(xPos, yPos, radi, nextBallX, nextBallY, nextBallRad, xx[index], yy[index]);
-            if (ablenkung[0] != 0 || ablenkung[1] != 0) {
+            double ablenkung[] = col.checkKollision(position[index].getX(), position[index].getY(), radi, nextBallX, nextBallY, nextBallRad, xx[index], yy[index]);
+            if (ablenkung[0 ]!= 0 || ablenkung[1] != 0) {
                 xx[index] = ablenkung[0];
                 yy[index] = ablenkung[1];
                 xx[sim.getKugeln().indexOf(k)] = ablenkung[0]*-1;
@@ -91,7 +90,9 @@ public class Kugel {
                 break;
                 
             }
+            }
         }
+        
         for (int i=0;i<=5;i++){
         if (position[i].getY() > 480 - radi && geschwindigkeit > 0 || position[i].getY() - radi < 20 && geschwindigkeit > 0) {
             yy[i] = yy[i] * -1;
@@ -101,14 +102,12 @@ public class Kugel {
             xx[i] = xx[i] * -1;;
             //System.out.println("Links oder Rechts bumm");
         }
-         }
-        richtung[0] = new Point2D(xx[0], yy[0]);
-        richtung[1] = new Point2D(xx[1], yy[1]);
-        richtung[2] = new Point2D(xx[2], yy[2]);
-        richtung[3] = new Point2D(xx[3], yy[3]);
-        richtung[4] = new Point2D(xx[4], yy[4]);
-        richtung[5] = new Point2D(xx[5], yy[5]);
-
+        }
+        
+        for (int i=0;i<=5;i++){
+        richtung[i] = new Point2D(xx[i], yy[i]);
+        }
+        
         if (geschwindigkeit < 0.005) {
             geschwindigkeit = 0;
         } else {
@@ -116,13 +115,10 @@ public class Kugel {
             double bremswirkung = 1;
             geschwindigkeit = geschwindigkeit * bremswirkung;
         }
-        position[0] = position[0].add(richtung[0].multiply(geschwindigkeit));
-        position[1] = position[1].add(richtung[1].multiply(geschwindigkeit));
-        position[2] = position[2].add(richtung[2].multiply(geschwindigkeit));
-        position[3] = position[3].add(richtung[3].multiply(geschwindigkeit));
-        position[4] = position[4].add(richtung[4].multiply(geschwindigkeit));
-        position[5] = position[5].add(richtung[5].multiply(geschwindigkeit));
         
+        for (int i=0;i<=5;i++){
+        position[i] = position[i].add(richtung[i].multiply(geschwindigkeit));
+        }
     }
 
     public double Reibung(double radi) {

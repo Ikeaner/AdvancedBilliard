@@ -25,8 +25,8 @@ public class Kollision {
     
     
     public double[] checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy){
-    double weissRad = wRad;
-    double radCol = weissRad + rRad;
+    double radCol = wRad + rRad;
+    double radColAgain = wRad + rRad +15;
     double xColCirc = (wPosX - rPosX);
     double yColCirc = (wPosY - rPosY);
     double rectX = 450;
@@ -36,12 +36,12 @@ public class Kollision {
     double ablenkungY=0;
     double ablenkungX=0;
   
-    if(wPosX > rectX-weissRad&& wPosX < rectX+rectW+weissRad){
-       if (wPosY > rectY-weissRad&& wPosY < rectY+rectH+weissRad){
+    if(wPosX > rectX-wRad&& wPosX < rectX+rectW+wRad){
+       if (wPosY > rectY-wRad&& wPosY < rectY+rectH+wRad){
           // System.out.println("Kollision mit Rechteck");
        } 
     }
-    if ((radCol*radCol)*2 < (xColCirc*xColCirc) + (yColCirc*yColCirc)){
+    if ((radColAgain*radColAgain) < (xColCirc*xColCirc) + (yColCirc*yColCirc)){
         alreadyCol = 2;
     
     }
@@ -58,10 +58,10 @@ public class Kollision {
         ablenkungX = speed*Math.cos(rVektor-colAngle);
         ablenkungY = speed*Math.sin(rVektor-colAngle);
         System.out.println(speed);
-        return new double[]{ablenkungX,ablenkungY,0.1,0.1}; 
+        return new double[]{ablenkungX,ablenkungY}; 
         }
     else{
-        return new double[]{0,0,0,0};
+        return new double[]{0,0};
     }
     }
     
