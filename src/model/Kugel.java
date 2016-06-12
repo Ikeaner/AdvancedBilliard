@@ -71,7 +71,7 @@ public class Kugel {
         if (bereitsBerechnet == false) {
             stossWinKraft(stoWi, stoKra, radiSlider);
         }
-        thisloop:
+        thisLoop:
         for (int i =0; i < sim.getKugeln().size();i++){
         for (Kugel k : sim.getKugeln()) {
             if (sim.getKugeln().indexOf(k) != i) {
@@ -81,7 +81,7 @@ public class Kugel {
                 yy[i] = ablenkung[1];
                 xx[sim.getKugeln().indexOf(k)] = ablenkung[2];
                 yy[sim.getKugeln().indexOf(k)] = ablenkung[3];
-                break thisloop;
+                break thisLoop;
                 
             }
             }
