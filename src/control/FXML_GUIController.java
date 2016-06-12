@@ -38,6 +38,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import model.AB_Model;
@@ -383,6 +384,7 @@ public class FXML_GUIController implements Initializable, Observer {
             int width = o.getDimX();
             int height = o.getDimY();
             Rectangle r = new Rectangle(posX, posY, width, height);
+            r.getTransforms().add(new Rotate(45,0,0)); //Drehen Drehachse linke Ecke
             r.setArcHeight(5);
             r.setArcWidth(5);
             rectangles.add(r);
@@ -421,6 +423,8 @@ public class FXML_GUIController implements Initializable, Observer {
                             break;
                     }
                     model.getCurrentSimulation().getHindernisse().get(rectangles.indexOf(r)).setMaterial(new_value.intValue());
+                   
+                    
                 }
             });
             

@@ -9,6 +9,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+
+
+
+
+
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
+
+
+
+
+
+
+
+
+
 /**
  * Klasse für die jeweiligen Level. Level = Simulation in unserem
  * Programmkontext beinhält Listen für Kugeln, Objekte, Löcher. Hat eine
@@ -84,7 +102,9 @@ public class Simulation {
         löcher.add(l1);
         löcher.add(l2);
         
-        Objekt o1 = new Objekt("WAND", 300, 100, 50, 100);
+        Objekt o1 = new Objekt("WAND",300,-100,50,100); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
+        
+        
         hindernisse.add(o1);
     }
 
