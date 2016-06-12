@@ -20,9 +20,10 @@ import javafx.geometry.Point2D;
  */
 
 public class Kollision {
-    private  boolean[] alreadyCol=new boolean[30];  
+    public boolean[] alreadyCol=new boolean[30];  
     public static int alreadyDone = 0;
     FXML_GUIController asd = new FXML_GUIController();
+    
     
     
     public double[] checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy,double xx2,double yy2,int b1,int b2){
@@ -46,18 +47,20 @@ public class Kollision {
           // System.out.println("Kollision mit Rechteck");
        } 
     }
-    if ((radColAgain*radColAgain) < (xColCirc*xColCirc) + (yColCirc*yColCirc)&&alreadyCol[index] ==true){
+    if ((radColAgain*radColAgain) < (xColCirc*xColCirc) + (yColCirc*yColCirc)){
         alreadyCol[index] = false;
     
     }
     if ((radCol*radCol) > (xColCirc*xColCirc) + (yColCirc*yColCirc)&&alreadyCol[index]==false){
-     
+                  
+   
         alreadyCol[index]=true;
+        //System.out.println(alreadyCol[index]);
         //System.out.println(alreadyCol[index]+"   "+index);
         double ax = wPosX-rPosX;
         double ay = wPosY-rPosY;
         double colAngle = Math.atan2(ay, ax);
-        System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
+        //System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
         double speed = Math.sqrt(xx*xx+yy*yy);
         double rVektor  = Math.atan2(yy ,xx );
         double rVektor2 = Math.atan2(yy2,xx2);
@@ -66,42 +69,16 @@ public class Kollision {
         double ablenkungX2 = speed*Math.cos(rVektor2-colAngle);
         double ablenkungY2 = speed*Math.sin(rVektor2-colAngle);
         return new double[]{ablenkungX,ablenkungY,ablenkungX2,ablenkungY2}; 
-        }
-    else{
-        return new double[]{0,0,0,0};
+        }   
+    
+        return new double[]{0,0,0,0};   
     }
-    }
+    
     public void initBools(){
-    alreadyCol [0] = false;
-    alreadyCol [1] = false;
-    alreadyCol [2] = false;
-    alreadyCol [3] = false;
-    alreadyCol [4] = false;
-    alreadyCol [5] = false;
-    alreadyCol [6] = false;
-    alreadyCol [7] = false;
-    alreadyCol [8] = false;
-    alreadyCol [9] = false;
-    alreadyCol [10] = false;
-    alreadyCol [11] = false;
-    alreadyCol [12] = false;
-    alreadyCol [13] = false;
-    alreadyCol [14] = false;
-    alreadyCol [15] = false;
-    alreadyCol [16] = false;
-    alreadyCol [17] = false;
-    alreadyCol [18] = false;
-    alreadyCol [19] = false;
-    alreadyCol [20] = false;
-    alreadyCol [21] = false;
-    alreadyCol [22] = false;
-    alreadyCol [23] = false;
-    alreadyCol [24] = false;
-    alreadyCol [25] = false;
-    alreadyCol [26] = false;
-    alreadyCol [27] = false;
-    alreadyCol [28] = false;
-    alreadyCol [29] = false;
+        for (int i = 0;i< alreadyCol.length;i++)
+        {
+        alreadyCol [i] = false;
+        }
     
     alreadyDone = 1;  
     }

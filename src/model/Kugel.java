@@ -60,8 +60,7 @@ public class Kugel {
         position[index] = new Point2D(posX, posY);
         richtung[index] = new Point2D(0, 0);
         radius[index] = r;
-        sim = s;
-        
+        sim = s;      
     }
 
     public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra,double radiSlider) {
@@ -76,7 +75,7 @@ public class Kugel {
         for (Kugel k : sim.getKugeln()) {
             if (sim.getKugeln().indexOf(k) != i) {
             double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], position[sim.getKugeln().indexOf(k)].getX(), position[sim.getKugeln().indexOf(k)].getY(), radius[sim.getKugeln().indexOf(k)], xx[i], yy[i],xx[sim.getKugeln().indexOf(k)],yy[sim.getKugeln().indexOf(k)], i,sim.getKugeln().indexOf(k) );
-            if (ablenkung[0]!= 0 || ablenkung[1] != 0 ||ablenkung[2]!=0||ablenkung[3]!=0) {
+            if (ablenkung[0]!= 0) {
                 xx[i] = ablenkung[0];
                 yy[i] = ablenkung[1];
                 xx[sim.getKugeln().indexOf(k)] = ablenkung[2];
