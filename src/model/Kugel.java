@@ -25,6 +25,7 @@ public class Kugel {
     private static Point2D[] position=new Point2D[6] ;
     private double[] xx=new double[6];
     private double[] yy=new double[6];
+    private static double[] radius=new double[6];
     Kollision col = new Kollision();
     private boolean bereitsBerechnet = false;
     private Point2D noChange = new Point2D(0, 0);
@@ -61,6 +62,7 @@ public class Kugel {
         posY = y;
         position[index] = new Point2D(posX, posY);
         richtung[index] = new Point2D(0, 0);
+        radius[index] = r;
         sim = s;
         
     }
@@ -72,33 +74,33 @@ public class Kugel {
         if (bereitsBerechnet == false) {
             stossWinKraft(stoWi, stoKra);
         }
-
+        for (int i =0; i < sim.getKugeln().size();i++){
         for (Kugel k : sim.getKugeln()) {
-            if (sim.getKugeln().indexOf(k) != index) {
+            if (sim.getKugeln().indexOf(k) != i) {
                 nextBallX = position[sim.getKugeln().indexOf(k)].getX();
                 nextBallY = position[sim.getKugeln().indexOf(k)].getY();
-                nextBallRad = k.getRad();
+                nextBallRad = radius[sim.getKugeln().indexOf(k)];
                 // System.out.println(nextBallX+"   "+nextBallY+"    "+circNum);
             
 
-            double ablenkung[] = col.checkKollision(position[index].getX(), position[index].getY(), radi, nextBallX, nextBallY, nextBallRad, xx[index], yy[index]);
+            double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], nextBallX, nextBallY, nextBallRad, xx[i], yy[i], i,sim.getKugeln().indexOf(k) );
             if (ablenkung[0 ]!= 0 || ablenkung[1] != 0) {
-                xx[index] = ablenkung[0];
-                yy[index] = ablenkung[1];
+                xx[i] = ablenkung[0];
+                yy[i] = ablenkung[1];
                 xx[sim.getKugeln().indexOf(k)] = ablenkung[0]*-1;
                 yy[sim.getKugeln().indexOf(k)] = ablenkung[1]*-1;
-                break;
+                //break;
                 
             }
             }
         }
-        
+        }
         for (int i=0;i<=5;i++){
-        if (position[i].getY() > 480 - radi && geschwindigkeit > 0 || position[i].getY() - radi < 20 && geschwindigkeit > 0) {
+        if (position[i].getY() > 480 - radius[i] && geschwindigkeit > 0 || position[i].getY() - radius[i] < 20 && geschwindigkeit > 0) {
             yy[i] = yy[i] * -1;
             //System.out.println("Oben oder Unten bumm");
         }
-        if (position[i].getX() > 730 - radi && geschwindigkeit > 0 || position[i].getX() - radi <= 20 && geschwindigkeit > 0) {
+        if (position[i].getX() > 730 - radius[i] && geschwindigkeit > 0 || position[i].getX() - radius[i] <= 20 && geschwindigkeit > 0) {
             xx[i] = xx[i] * -1;;
             //System.out.println("Links oder Rechts bumm");
         }
