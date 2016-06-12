@@ -25,9 +25,9 @@ public class Kollision {
     FXML_GUIController asd = new FXML_GUIController();
     
     
-    public double[] checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy,int b1,int b2){
+    public double[] checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy,double xx2,double yy2,int b1,int b2){
     double radCol = wRad + rRad;
-    double radColAgain = wRad + rRad +5;
+    double radColAgain = wRad + rRad +150;
     double xColCirc = (wPosX - rPosX);
     double yColCirc = (wPosY - rPosY);
     double rectX = 450;
@@ -36,12 +36,13 @@ public class Kollision {
     double rectH = 200;   
     double ablenkungY=0;
     double ablenkungX=0;
+    double ablenkungY2=0;
+    double ablenkungX2=0;
     
     if (alreadyDone == 0){
         initBools();
     }
     int index = setBools(b1,b2);
-    //System.out.println(index);
     
   
     if(wPosX > rectX-wRad&& wPosX < rectX+rectW+wRad){
@@ -55,21 +56,24 @@ public class Kollision {
     }
     if ((radCol*radCol) > (xColCirc*xColCirc) + (yColCirc*yColCirc)&&alreadyCol[index]==false){
      
-        
+        alreadyCol[index]=true;
+        //System.out.println(alreadyCol[index]+"   "+index);
         double ax = wPosX-rPosX;
         double ay = wPosY-rPosY;
         double colAngle = Math.atan2(ay, ax);
         System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
         double speed = Math.sqrt(xx*xx+yy*yy);
         double rVektor = Math.atan2(yy, xx);
+        double rVektor2 = Math.atan2(yy2,xx2);
         ablenkungX = speed*Math.cos(rVektor-colAngle);
         ablenkungY = speed*Math.sin(rVektor-colAngle);
-        System.out.println(speed);
-        alreadyCol[index]=true;
-        return new double[]{ablenkungX,ablenkungY}; 
+        
+        ablenkungX2 = speed*Math.cos(rVektor2-colAngle);
+        ablenkungY2 = speed*Math.sin(rVektor2-colAngle);
+        return new double[]{ablenkungX,ablenkungY,ablenkungX2,ablenkungY2}; 
         }
     else{
-        return new double[]{0,0};
+        return new double[]{0,0,0,0};
     }
     }
     public void initBools(){
@@ -131,7 +135,7 @@ public class Kollision {
         //----------------------------------------------------------------------------------------------------
         if (ballOne == 1 && ballTwo == 0)
         {
-            return 5;
+            return 0;
         }
         if (ballOne == 1 && ballTwo == 2)
         {
@@ -152,11 +156,11 @@ public class Kollision {
         //----------------------------------------------------------------------------------------------------
         if (ballOne == 2 && ballTwo == 0)
         {
-            return 10;
+            return 1;
         }
         if (ballOne == 2 && ballTwo == 1)
         {
-            return 11;
+            return 6;
         }
         if (ballOne == 2 && ballTwo == 3)
         {
@@ -173,15 +177,15 @@ public class Kollision {
         //----------------------------------------------------------------------------------------------------
         if (ballOne == 3 && ballTwo == 0)
         {
-            return 15;
+            return 2;
         }
         if (ballOne == 3 && ballTwo == 1)
         {
-            return 16;
+            return 7;
         }
         if (ballOne == 3 && ballTwo == 2)
         {
-            return 17;
+            return 12;
         }
         if (ballOne == 3 && ballTwo == 4)
         {
@@ -194,19 +198,19 @@ public class Kollision {
         //----------------------------------------------------------------------------------------------------
         if (ballOne == 4 && ballTwo == 0)
         {
-            return 20;
+            return 3;
         }
         if (ballOne == 4 && ballTwo == 1)
         {
-            return 21;
+            return 8;
         }
         if (ballOne == 4 && ballTwo == 2)
         {
-            return 22;
+            return 13;
         }
         if (ballOne == 4 && ballTwo == 3)
         {
-            return 23;
+            return 18;
         }
         if (ballOne == 4 && ballTwo == 5)
         {
@@ -215,23 +219,23 @@ public class Kollision {
         //----------------------------------------------------------------------------------------------------
         if (ballOne == 5 && ballTwo == 0)
         {
-            return 25;
+            return 4;
         }
         if (ballOne == 5 && ballTwo == 1)
         {
-            return 26;
+            return 9;
         }
         if (ballOne == 5 && ballTwo == 2)
         {
-            return 27;
+            return 14;
         }
         if (ballOne == 5 && ballTwo == 3)
         {
-            return 28;
+            return 19;
         }
         if (ballOne == 5 && ballTwo == 4)
         {
-            return 29;
+            return 24;
         }
         //---------------------------------------------------------------------------------------------------- 
         return 55555;      

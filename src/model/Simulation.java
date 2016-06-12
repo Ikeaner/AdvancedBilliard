@@ -96,16 +96,16 @@ public class Simulation {
         kugeln.add(k1);
         kugeln.add(k2);
         
-        Loch l1 = new Loch(500,200,k1.getRad());
-        Loch l2 = new Loch(300,300,k2.getRad());
+       Loch l1 = new Loch(500,200,k1.getRad());
+       Loch l2 = new Loch(300,300,k2.getRad());
         
-        löcher.add(l1);
-        löcher.add(l2);
+       löcher.add(l1);
+       löcher.add(l2);
         
-        Objekt o1 = new Objekt("WAND",300,-100,50,100); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
+       Objekt o1 = new Objekt("WAND",300,-100,50,100); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
         
         
-        hindernisse.add(o1);
+       hindernisse.add(o1);
     }
 
     public ArrayList<Objekt> getHindernisse() {

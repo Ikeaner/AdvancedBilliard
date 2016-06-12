@@ -52,9 +52,6 @@ public class Kugel {
         this.material = material;
         System.out.println(Integer.toString(material));
     }
-    private double nextBallX;
-    private double nextBallY;
-    private double nextBallRad;
 
     public Kugel(int x, int y, int r, Simulation s,int index) {
         rad = r;
@@ -67,35 +64,29 @@ public class Kugel {
         
     }
 
-    public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra, int index) {
+    public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra,double radiSlider) {
 
 
         double rollReib = Reibung(radi);
         if (bereitsBerechnet == false) {
-            stossWinKraft(stoWi, stoKra);
+            stossWinKraft(stoWi, stoKra, radiSlider);
         }
         for (int i =0; i < sim.getKugeln().size();i++){
         for (Kugel k : sim.getKugeln()) {
             if (sim.getKugeln().indexOf(k) != i) {
-                nextBallX = position[sim.getKugeln().indexOf(k)].getX();
-                nextBallY = position[sim.getKugeln().indexOf(k)].getY();
-                nextBallRad = radius[sim.getKugeln().indexOf(k)];
-                // System.out.println(nextBallX+"   "+nextBallY+"    "+circNum);
-            
-
-            double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], nextBallX, nextBallY, nextBallRad, xx[i], yy[i], i,sim.getKugeln().indexOf(k) );
-            if (ablenkung[0 ]!= 0 || ablenkung[1] != 0) {
+            double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], position[sim.getKugeln().indexOf(k)].getX(), position[sim.getKugeln().indexOf(k)].getY(), radius[sim.getKugeln().indexOf(k)], xx[i], yy[i],xx[sim.getKugeln().indexOf(k)],yy[sim.getKugeln().indexOf(k)], i,sim.getKugeln().indexOf(k) );
+            if (ablenkung[0]!= 0 || ablenkung[1] != 0 ||ablenkung[2]!=0||ablenkung[3]!=0) {
                 xx[i] = ablenkung[0];
                 yy[i] = ablenkung[1];
                 xx[sim.getKugeln().indexOf(k)] = ablenkung[0]*-1;
                 yy[sim.getKugeln().indexOf(k)] = ablenkung[1]*-1;
-                //break;
+                break;
                 
             }
             }
         }
         }
-        for (int i=0;i<=5;i++){
+        for (int i=0;i<sim.getKugeln().size();i++){
         if (position[i].getY() > 480 - radius[i] && geschwindigkeit > 0 || position[i].getY() - radius[i] < 20 && geschwindigkeit > 0) {
             yy[i] = yy[i] * -1;
             //System.out.println("Oben oder Unten bumm");
@@ -106,7 +97,7 @@ public class Kugel {
         }
         }
         
-        for (int i=0;i<=5;i++){
+        for (int i=0;i<sim.getKugeln().size();i++){
         richtung[i] = new Point2D(xx[i], yy[i]);
         }
         
@@ -118,7 +109,7 @@ public class Kugel {
             geschwindigkeit = geschwindigkeit * bremswirkung;
         }
         
-        for (int i=0;i<=5;i++){
+        for (int i=0;i<sim.getKugeln().size();i++){
         position[i] = position[i].add(richtung[i].multiply(geschwindigkeit));
         }
     }
@@ -156,9 +147,10 @@ public class Kugel {
         return position[x];
     }
 
-    public void stossWinKraft(double winkel, double stoKra) {
+    public void stossWinKraft(double winkel, double stoKra,double radiW) {
         xx[0] = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
         yy[0] = cos(Math.toRadians(winkel));
+        radius[0] = radiW; 
         xx[0] = xx[0] * stoKra / 10;
         yy[0] = yy[0] * stoKra / 10;
         bereitsBerechnet = true;

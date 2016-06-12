@@ -218,7 +218,8 @@ public class FXML_GUIController implements Initializable, Observer {
         double radi = getRadi(index);
         double stoWi = getStoWi(index);
         double stoKra = getStoKra(index);
-        k.bewegen(anstoss, radi, stoWi, stoKra, index);
+        double radiSlider = getRadi(0);
+        k.bewegen(anstoss, radi, stoWi, stoKra,radiSlider);
         circles.get(index).setCenterX(k.getPosition(index).getX());
         circles.get(index).setCenterY(k.getPosition(index).getY());
     }
