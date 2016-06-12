@@ -71,6 +71,7 @@ public class Kugel {
         if (bereitsBerechnet == false) {
             stossWinKraft(stoWi, stoKra, radiSlider);
         }
+        thisloop:
         for (int i =0; i < sim.getKugeln().size();i++){
         for (Kugel k : sim.getKugeln()) {
             if (sim.getKugeln().indexOf(k) != i) {
@@ -78,22 +79,30 @@ public class Kugel {
             if (ablenkung[0]!= 0 || ablenkung[1] != 0 ||ablenkung[2]!=0||ablenkung[3]!=0) {
                 xx[i] = ablenkung[0];
                 yy[i] = ablenkung[1];
-                xx[sim.getKugeln().indexOf(k)] = ablenkung[0]*-1;
-                yy[sim.getKugeln().indexOf(k)] = ablenkung[1]*-1;
-                break;
+                xx[sim.getKugeln().indexOf(k)] = ablenkung[2];
+                yy[sim.getKugeln().indexOf(k)] = ablenkung[3];
+                break thisloop;
                 
             }
             }
         }
         }
         for (int i=0;i<sim.getKugeln().size();i++){
-        if (position[i].getY() > 480 - radius[i] && geschwindigkeit > 0 || position[i].getY() - radius[i] < 20 && geschwindigkeit > 0) {
+        if (position[i].getY() > 480 - radius[i] && geschwindigkeit > 0 && yy[i]>0) {
             yy[i] = yy[i] * -1;
-            //System.out.println("Oben oder Unten bumm");
+            //System.out.println("Unten bumm");
         }
-        if (position[i].getX() > 730 - radius[i] && geschwindigkeit > 0 || position[i].getX() - radius[i] <= 20 && geschwindigkeit > 0) {
-            xx[i] = xx[i] * -1;;
-            //System.out.println("Links oder Rechts bumm");
+        if (position[i].getY() - radius[i] <= 20 && geschwindigkeit > 0 && yy[i]<0){
+            yy[i] = yy[i] * -1;
+            //System.out.println("Oben bumm");
+        }
+        if (position[i].getX() > 730 - radius[i] && geschwindigkeit > 0 && xx[i]>0) {
+            xx[i] = xx[i] * -1;
+            //System.out.println("Rechts bumm");
+        }
+        if (position[i].getX() - radius[i] <= 20 && geschwindigkeit > 0 && xx[i]<0){
+            xx[i] = xx[i] * -1;
+            //System.out.println("Links bumm");
         }
         }
         

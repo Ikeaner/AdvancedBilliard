@@ -20,24 +20,20 @@ import javafx.geometry.Point2D;
  */
 
 public class Kollision {
-    private boolean[] alreadyCol=new boolean[30];  
+    private  boolean[] alreadyCol=new boolean[30];  
     public static int alreadyDone = 0;
     FXML_GUIController asd = new FXML_GUIController();
     
     
     public double[] checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy,double xx2,double yy2,int b1,int b2){
     double radCol = wRad + rRad;
-    double radColAgain = wRad + rRad +150;
+    double radColAgain = wRad + rRad +15;
     double xColCirc = (wPosX - rPosX);
     double yColCirc = (wPosY - rPosY);
     double rectX = 450;
     double rectY = 110;
     double rectW = 50;
     double rectH = 200;   
-    double ablenkungY=0;
-    double ablenkungX=0;
-    double ablenkungY2=0;
-    double ablenkungX2=0;
     
     if (alreadyDone == 0){
         initBools();
@@ -63,13 +59,12 @@ public class Kollision {
         double colAngle = Math.atan2(ay, ax);
         System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
         double speed = Math.sqrt(xx*xx+yy*yy);
-        double rVektor = Math.atan2(yy, xx);
+        double rVektor  = Math.atan2(yy ,xx );
         double rVektor2 = Math.atan2(yy2,xx2);
-        ablenkungX = speed*Math.cos(rVektor-colAngle);
-        ablenkungY = speed*Math.sin(rVektor-colAngle);
-        
-        ablenkungX2 = speed*Math.cos(rVektor2-colAngle);
-        ablenkungY2 = speed*Math.sin(rVektor2-colAngle);
+        double ablenkungX  = speed*Math.cos(rVektor-colAngle);
+        double ablenkungY  = speed*Math.sin(rVektor-colAngle);        
+        double ablenkungX2 = speed*Math.cos(rVektor2-colAngle);
+        double ablenkungY2 = speed*Math.sin(rVektor2-colAngle);
         return new double[]{ablenkungX,ablenkungY,ablenkungX2,ablenkungY2}; 
         }
     else{
