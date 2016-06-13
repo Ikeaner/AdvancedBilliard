@@ -6,26 +6,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-
-
-
-
-
-
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
-
-
-
-
-
-
-
-
 
 /**
  * Klasse für die jeweiligen Level. Level = Simulation in unserem
@@ -41,6 +21,54 @@ public class Simulation {
     private ArrayList<Kugel> kugeln = new ArrayList<Kugel>();
     private ArrayList<Objekt> hindernisse = new ArrayList<Objekt>();
     private ArrayList<Loch> löcher = new ArrayList<Loch>();
+
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void checkLöcher() {
+
+        for (Kugel k : kugeln) {
+            for (Loch l : löcher) {
+                int posX = (int) k.getPosition(kugeln.indexOf(k)).getX();
+                int posY = (int) k.getPosition(kugeln.indexOf(k)).getY();
+
+                int centerX = l.getPosX();
+                int centerY = l.getPosY();
+                int rad = l.getRad();
+
+                if (Math.sqrt(Math.pow((centerX - posX), 2) + Math.pow((centerY - posY), 2)) < rad) {
+                    
+                    if (k.getRad() == l.getRad()) {
+                        System.out.println("in hole");
+                        k.setXx(kugeln.indexOf(k), 0);
+                        k.setYy(kugeln.indexOf(k), 0);
+                        k.setPosition(kugeln.indexOf(k), 1500, 1500);
+                        k.setIsInHole(true);
+                        k.setIsInRightHole(true);
+                    }
+                    else if(k.getRad() < l.getRad()) {
+                        System.out.println("wrong hole");
+                        k.setXx(kugeln.indexOf(k), 0);
+                        k.setYy(kugeln.indexOf(k), 0);
+                        k.setPosition(kugeln.indexOf(k), 1500, 1500);
+                        k.setIsInHole(true);
+                    }
+                    else if(k.getRad() > l.getRad()) {
+                        System.out.println("over hole");
+                    }
+                }
+            }
+        }
+
+    }
+    
+    public void checkStatus()
+    {
+        
+    }
 
     public String getID() {
         return ID;
@@ -58,7 +86,7 @@ public class Simulation {
         this.löcher = löcher;
     }
 
-    private Kugel stosskugel = new Kugel(150, 300, 1,this,0);
+    private Kugel stosskugel = new Kugel(150, 300, 1, this, 0);
 
     public Kugel getStosskugel() {
         return stosskugel;
@@ -90,22 +118,21 @@ public class Simulation {
     private void ladeObjekte1() {
         kugeln.add(stosskugel);
 
-        Kugel k1 = new Kugel(100, 150, 30,this,1);
-        Kugel k2 = new Kugel(200, 100, 25,this,2);
+        Kugel k1 = new Kugel(100, 150, 30, this, 1);
+        Kugel k2 = new Kugel(200, 100, 25, this, 2);
 
         kugeln.add(k1);
         kugeln.add(k2);
-        
-       Loch l1 = new Loch(500,200,k1.getRad());
-       Loch l2 = new Loch(300,300,k2.getRad());
-        
-       löcher.add(l1);
-       löcher.add(l2);
-        
-       Objekt o1 = new Objekt("WAND",300,-100,50,100); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
-        
-        
-       hindernisse.add(o1);
+
+        Loch l1 = new Loch(500, 200, k1.getRad());
+        Loch l2 = new Loch(300, 300, k2.getRad());
+
+        löcher.add(l1);
+        löcher.add(l2);
+
+        Objekt o1 = new Objekt("WAND", 300, -100, 50, 100); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
+
+        hindernisse.add(o1);
     }
 
     public ArrayList<Objekt> getHindernisse() {
@@ -119,9 +146,9 @@ public class Simulation {
     private void ladeObjekte2() {
         kugeln.add(stosskugel);
 
-        Kugel k1 = new Kugel(100, 150, 30,this,1);
-        Kugel k2 = new Kugel(200, 100, 25,this,2);
-        Kugel k3 = new Kugel(600, 300, 30,this,3);
+        Kugel k1 = new Kugel(100, 150, 30, this, 1);
+        Kugel k2 = new Kugel(200, 100, 25, this, 2);
+        Kugel k3 = new Kugel(600, 300, 30, this, 3);
 
         kugeln.add(k1);
         kugeln.add(k2);
@@ -131,11 +158,11 @@ public class Simulation {
     private void ladeObjekte3() {
         kugeln.add(stosskugel);
 
-        Kugel k1 = new Kugel(100, 150, 30,this,1);
-        Kugel k2 = new Kugel(200, 100, 25,this,2);
-        Kugel k3 = new Kugel(600, 300, 30,this,3);
-        Kugel k4 = new Kugel(300, 300, 25,this,4);
-        Kugel k5 = new Kugel(400, 400, 20,this,5);
+        Kugel k1 = new Kugel(100, 150, 30, this, 1);
+        Kugel k2 = new Kugel(200, 100, 25, this, 2);
+        Kugel k3 = new Kugel(600, 300, 30, this, 3);
+        Kugel k4 = new Kugel(300, 300, 25, this, 4);
+        Kugel k5 = new Kugel(400, 400, 20, this, 5);
         kugeln.add(k1);
         kugeln.add(k2);
         kugeln.add(k3);
@@ -160,18 +187,18 @@ public class Simulation {
         radiusValue.add(k3.getRad());
         radiusValue.add(k4.getRad());
         radiusValue.add(k5.getRad());
-*/
-        
+         */
+
     }
 
-    public  ArrayList<Kugel> getKugeln() {
+    public ArrayList<Kugel> getKugeln() {
         return kugeln;
     }
 
     @Override
     public String toString() {
         return ID;
-    
+
         /*
     public static ArrayList getXValue() {
         return (ArrayList) xValue;
