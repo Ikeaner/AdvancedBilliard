@@ -26,7 +26,8 @@ public class Kugel {
     private double[] xx=new double[6];
     private double[] yy=new double[6];
     private double[] rollReib = new double[6];
-    private static double[] radius=new double[6];
+    private static double[] masse = new double[6];
+    private static double[] radius = new double[6];
     Kollision col = new Kollision();
     private boolean bereitsBerechnet = false;
     private Point2D noChange = new Point2D(0, 0);
@@ -61,10 +62,9 @@ public class Kugel {
         position[index] = new Point2D(posX, posY);
         richtung[index] = new Point2D(0, 0);
         radius[index] = r;
-        yy[1]=0.0000000000000000001;
-        xx[1]=0.0000000000000000001;
         sim = s;      
         rollReib[index] = Reibung(r);
+        masse[index] = Masse(r);
     }
 
     public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra,double radiSlider) {
@@ -78,12 +78,12 @@ public class Kugel {
         for (int i =0; i < sim.getKugeln().size();i++){
         for (int a =0; a < sim.getKugeln().size();a++) {
             if (a != i) {
-            double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], position[a].getX(), position[a].getY(), radius[a], xx[i], yy[i],xx[a],yy[a], i,a );
+            double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], position[a].getX(), position[a].getY(), radius[a], xx[i], yy[i],xx[a],yy[a], i,a,masse[i],masse[a] );
             if (ablenkung[0]!= 0) {
                 xx[i] = ablenkung[0];
                 yy[i] = ablenkung[1];
-                xx[a] = ablenkung[2];
-                yy[a] = ablenkung[3];              
+                xx[a] = ablenkung[2]*-1;
+                yy[a] = ablenkung[3]*-1;          
                 break thisLoop;
                 
             }
@@ -138,6 +138,14 @@ public class Kugel {
         //System.out.println(Rn);
         return Rn;
     }
+    
+        public double Masse(double radi) {
+        double pi = 1.333333333333333333 * Math.PI;
+        double vol = pi * Math.pow(radi, 3);
+        //System.out.println(mass);
+        double mass = (2 * vol) / 1000;
+        return mass;
+        }
 
     public int getRad() {
         return rad;
@@ -163,8 +171,31 @@ public class Kugel {
         xx[0] = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
         yy[0] = cos(Math.toRadians(winkel));
         radius[0] = radiW; 
-        xx[0] = xx[0] * stoKra / 10;
-        yy[0] = yy[0] * stoKra / 10;
+        masse[0] = Masse(radiW);
+        xx[0] = xx[0] * stoKra/10;
+        yy[0] = yy[0] * stoKra/10;
+        xx[1] = 0;
+        yy[1] = 0;
+        xx[2] = 0;
+        yy[2] = 0;
+        xx[3] = 0;
+        yy[3] = 0;
+        xx[4] = 0;
+        yy[4] = 0;
+        xx[5] = 0;
+        yy[5] = 0;
+        
         bereitsBerechnet = true;
     }
 }
+
+/*
+strecke = geschwindigkeit mal zeit PLUS 1/2beschleunigungmalzeit^2
+xx u. yy * 0.001 + 1/2
+
+
+
+
+
+
+*/

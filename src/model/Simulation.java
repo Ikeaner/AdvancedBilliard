@@ -135,7 +135,7 @@ public class Simulation {
         Kugel k2 = new Kugel(200, 100, 25,this,2);
         Kugel k3 = new Kugel(600, 300, 30,this,3);
         Kugel k4 = new Kugel(300, 300, 25,this,4);
-        Kugel k5 = new Kugel(400, 300, 20,this,5);
+        Kugel k5 = new Kugel(400, 400, 20,this,5);
         kugeln.add(k1);
         kugeln.add(k2);
         kugeln.add(k3);

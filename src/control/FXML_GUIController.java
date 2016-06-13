@@ -133,7 +133,7 @@ public class FXML_GUIController implements Initializable, Observer {
         stoWinSliAnz.textProperty().bindBidirectional(stoWinSlider.valueProperty(), NumberFormat.getNumberInstance());
         
         stoKraSlider.setValue(10);
-        stoKraSlider.setMax(100);
+        stoKraSlider.setMax(20);
         stoKraSlider.setMin(1);
         stoKraSliAnz.textProperty().bindBidirectional(stoKraSlider.valueProperty(), NumberFormat.getNumberInstance());
         

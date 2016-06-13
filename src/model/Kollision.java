@@ -26,7 +26,7 @@ public class Kollision {
     
     
     
-    public double[] checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy,double xx2,double yy2,int b1,int b2){
+    public double[] checkKollision(double wPosX,double wPosY,double wRad, double rPosX,double rPosY,double rRad,double xx,double yy,double xx2,double yy2,int b1,int b2,double masse1,double masse2){
     double radCol = wRad + rRad;
     double radColAgain = wRad + rRad +15;
     double xColCirc = (wPosX - rPosX);
@@ -63,20 +63,32 @@ public class Kollision {
         double ax = wPosX-rPosX;
         double ay = wPosY-rPosY;
         double colAngle = Math.atan2(ay, ax);
-        //System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
-        double speed = Math.sqrt(xx*xx+yy*yy);
+        System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
+        double speed1 = Math.sqrt(xx*xx+yy*yy);
+        double speed2 = Math.sqrt(xx2*xx2+yy2*yy2);
         double rVektor  = Math.atan2(yy ,xx );
-        double rVektor2 = Math.atan2(yy2,xx2);
-        double ablenkungX  = speed*Math.cos(rVektor-colAngle);
-        double ablenkungY  = speed*Math.sin(rVektor-colAngle);        
-        double ablenkungX2 = speed*Math.cos(rVektor2-colAngle);
-        double ablenkungY2 = speed*Math.sin(rVektor2-colAngle);
-        return new double[]{ablenkungX,ablenkungY,ablenkungX2,ablenkungY2}; 
+        double ablenkungX  = speed1*Math.cos(rVektor-colAngle);
+        double ablenkungY  = speed1*Math.sin(rVektor-colAngle);        
+        double ablenkungX2 = speed2*Math.cos(rVektor-colAngle);
+        double ablenkungY2 = speed2*Math.sin(rVektor-colAngle);
+        //System.out.println(masse1+"   "+masse2);
+        double speedX = (ablenkungX *(masse1-masse2)+ (2* masse2*ablenkungX2)) / (masse1 + masse2);
+        double speedY = (ablenkungY *(masse1-masse2)+ (2* masse2*ablenkungY2)) / (masse1 + masse2);
+        double speedX2 = (ablenkungX2 *(masse2-masse1)+ (2* masse1*ablenkungX)) / (masse1 + masse2);
+        double speedY2 = (ablenkungY2 *(masse2-masse1)+ (2* masse1*ablenkungY)) / (masse1 + masse2);   
+        
+        
+        return new double[]{speedX,speedY,speedX2,speedY2}; 
         }   
     
         return new double[]{0,0,0,0};   
     }
-    
+
+   // newVelX1 = (firstBall.speed.x * (firstBall.mass – secondBall.mass) + (2 * secondBall.mass * secondBall.speed.x)) / (firstBall.mass + secondBall.mass);
+  //  newVelY1 = (firstBall.speed.y * (firstBall.mass – secondBall.mass) + (2 * secondBall.mass * secondBall.speed.y)) / (firstBall.mass + secondBall.mass);
+  //  newVelX2 = (secondBall.speed.x * (secondBall.mass – firstBall.mass) + (2 * firstBall.mass * firstBall.speed.x)) / (firstBall.mass + secondBall.mass);
+  //  newVelY2 = (secondBall.speed.y * (secondBall.mass – firstBall.mass) + (2 * firstBall.mass * firstBall.speed.y)) / (firstBall.mass + secondBall.mass);
+
     /*    public void initBools(){
     for (int i = 0;i< alreadyCol.length;i++)
     {
