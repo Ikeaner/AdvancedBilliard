@@ -25,6 +25,7 @@ public class Kugel {
     private static Point2D[] position=new Point2D[6] ;
     private double[] xx=new double[6];
     private double[] yy=new double[6];
+    private double[] rollReib = new double[6];
     private static double[] radius=new double[6];
     Kollision col = new Kollision();
     private boolean bereitsBerechnet = false;
@@ -60,26 +61,29 @@ public class Kugel {
         position[index] = new Point2D(posX, posY);
         richtung[index] = new Point2D(0, 0);
         radius[index] = r;
+        yy[1]=0.0000000000000000001;
+        xx[1]=0.0000000000000000001;
         sim = s;      
+        rollReib[index] = Reibung(r);
     }
 
     public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra,double radiSlider) {
 
 
-        double rollReib = Reibung(radi);
+        
         if (bereitsBerechnet == false) {
             stossWinKraft(stoWi, stoKra, radiSlider);
         }
         thisLoop:
         for (int i =0; i < sim.getKugeln().size();i++){
-        for (Kugel k : sim.getKugeln()) {
-            if (sim.getKugeln().indexOf(k) != i) {
-            double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], position[sim.getKugeln().indexOf(k)].getX(), position[sim.getKugeln().indexOf(k)].getY(), radius[sim.getKugeln().indexOf(k)], xx[i], yy[i],xx[sim.getKugeln().indexOf(k)],yy[sim.getKugeln().indexOf(k)], i,sim.getKugeln().indexOf(k) );
+        for (int a =0; a < sim.getKugeln().size();a++) {
+            if (a != i) {
+            double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], position[a].getX(), position[a].getY(), radius[a], xx[i], yy[i],xx[a],yy[a], i,a );
             if (ablenkung[0]!= 0) {
                 xx[i] = ablenkung[0];
                 yy[i] = ablenkung[1];
-                xx[sim.getKugeln().indexOf(k)] = ablenkung[2];
-                yy[sim.getKugeln().indexOf(k)] = ablenkung[3];
+                xx[a] = ablenkung[2];
+                yy[a] = ablenkung[3];              
                 break thisLoop;
                 
             }
@@ -112,8 +116,8 @@ public class Kugel {
         if (geschwindigkeit < 0.005) {
             geschwindigkeit = 0;
         } else {
-            //double bremswirkung = 1 - (0.01 / radi * rollReib);
-            double bremswirkung = 1;
+            double bremswirkung = 1 *0.9999;
+            //double bremswirkung = 1;
             geschwindigkeit = geschwindigkeit * bremswirkung;
         }
         
