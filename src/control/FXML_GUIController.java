@@ -81,8 +81,8 @@ public class FXML_GUIController implements Initializable, Observer {
     private ArrayList<Circle> circles = new ArrayList<Circle>();
     private ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
     private ArrayList<Circle> holes = new ArrayList<Circle>();
-    private ArrayList<ChoiceBox> cbxs = new ArrayList<ChoiceBox>();
-
+    private ArrayList<ChoiceBox> cbxs = new ArrayList<ChoiceBox>();    
+    
     private ObservableList<String> materialien = FXCollections.observableArrayList("Standard", "Holz", "Eisen");
 
     @FXML
@@ -194,7 +194,13 @@ public class FXML_GUIController implements Initializable, Observer {
                         move(k);
                     }
                     model.getCurrentSimulation().checkLöcher();
-                    model.getCurrentSimulation().checkStatus();
+                    int i = model.getCurrentSimulation().checkStatus();
+
+                    if (i == 1) {
+                        gewonnen();
+                    } else if (i == 2) {
+                        falschesLoch();
+                    }
                 }
             };
             KeyFrame f = new KeyFrame(Duration.millis(1.66), handler);
@@ -226,11 +232,39 @@ public class FXML_GUIController implements Initializable, Observer {
         }
     }
 
+    public void gewonnen() {
+        timer.stop();
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Level " + model.getCurrentSimulation().toString() + " geschafft!");
+        alert.setHeaderText(null);
+        alert.setContentText("Sie haben das Level geschafft! Hierfür haben Sie " + " Versuche benötigt.");
+
+        alert.show();
+    }
+
+    public void falschesLoch() {
+        timer.stop();
+
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Level " + model.getCurrentSimulation().toString() + " nicht geschafft...");
+        alert.setHeaderText(null);
+        alert.setContentText("Eine Kugel ist in ein falsches Loch gefallen. Achten Sie darauf, dass Kugeln in gleich große Löcher fallen!");
+
+        alert.show();
+
+        model.getCurrentSimulation().reload();
+        timer.stop();
+        levelLaden();
+        anstossButton.setText("Anstoß!");
+        
+        //versuche++;
+    }
+
     @FXML
     private void reset() {
         if (resetButton.getText().equals("Zurücksetzen")) {
             levelLaden();
-        } else if (resetButton.getText().equals("Abbrechen")) {            
+        } else if (resetButton.getText().equals("Abbrechen")) {
             model.getCurrentSimulation().reload();
             timer.stop();
             levelLaden();

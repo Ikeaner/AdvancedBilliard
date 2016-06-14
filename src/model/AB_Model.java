@@ -18,6 +18,7 @@ public class AB_Model extends Observable {
     private static Simulation currentSimulation;
     private static Simulation previousSimulation = new Simulation(0);
 
+
     public static Simulation getPreviousSimulation() {
         return previousSimulation;
     }
