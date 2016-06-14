@@ -125,7 +125,8 @@ public class Simulation {
         Loch l2 = new Loch(300, 300, k2.getRad());
 
         löcher.add(l1);
-        löcher.add(l2);
+        löcher.add(l2);       
+        Kugel.bereitsBerechnet = false;
 
         Objekt o1 = new Objekt("WAND", 300, -100, 50, 100); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
 
@@ -168,7 +169,8 @@ public class Simulation {
 
         kugeln.add(k1);
         kugeln.add(k2);
-        kugeln.add(k3);
+        kugeln.add(k3);        
+        Kugel.bereitsBerechnet = false;
     }
 
     private void ladeObjekte3() {
@@ -184,6 +186,7 @@ public class Simulation {
         kugeln.add(k3);
         kugeln.add(k4);
         kugeln.add(k5);
+        Kugel.bereitsBerechnet = false;
         /*
         xValue.add(stosskugel.getPosX());
         xValue.add(k1.getPosX());

@@ -230,9 +230,9 @@ public class FXML_GUIController implements Initializable, Observer {
     private void reset() {
         if (resetButton.getText().equals("Zurücksetzen")) {
             levelLaden();
-        } else if (resetButton.getText().equals("Abbrechen")) {
-            timer.stop();
+        } else if (resetButton.getText().equals("Abbrechen")) {            
             model.getCurrentSimulation().reload();
+            timer.stop();
             levelLaden();
             anstossButton.setText("Anstoß!");
         }

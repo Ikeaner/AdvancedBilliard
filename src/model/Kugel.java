@@ -29,7 +29,7 @@ public class Kugel {
     private static double[] masse = new double[6];
     private static double[] radius = new double[6];
     Kollision col = new Kollision();
-    private boolean bereitsBerechnet = false;
+    public static boolean bereitsBerechnet = false;
     private Point2D noChange = new Point2D(0, 0);
     private int material;
     private Simulation sim;
@@ -201,6 +201,7 @@ public class Kugel {
     public void stossWinKraft(double winkel, double stoKra, double radiW) {
         xx[0] = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
         yy[0] = cos(Math.toRadians(winkel));
+        position[0] = new Point2D(model.getCurrentSimulation().getKugeln().get(0).getX, model.getCurrentSimulation().getKugeln().get(0).getY);
         radius[0] = radiW;
         masse[0] = Masse(radiW);
         xx[0] = xx[0] * stoKra / 10;
