@@ -97,7 +97,7 @@ public class Kugel {
     }
 
     public void setPosition(int i, double x, double y) {
-        position[i].add(x, y);
+        position[i] = new Point2D(x, y);
     }
 
     public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra, double radiSlider) {
@@ -201,7 +201,6 @@ public class Kugel {
     public void stossWinKraft(double winkel, double stoKra, double radiW) {
         xx[0] = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
         yy[0] = cos(Math.toRadians(winkel));
-        position[0] = new Point2D(model.getCurrentSimulation().getKugeln().get(0).getX, model.getCurrentSimulation().getKugeln().get(0).getY);
         radius[0] = radiW;
         masse[0] = Masse(radiW);
         xx[0] = xx[0] * stoKra / 10;

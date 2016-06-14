@@ -113,11 +113,11 @@ public class Simulation {
     }
 
     private void ladeObjekte1() {
-        kugeln.add(stosskugel);
-
+        
+        Kugel stosskugel = new Kugel(150, 300, 1, this, 0);
         Kugel k1 = new Kugel(100, 150, 30, this, 1);
         Kugel k2 = new Kugel(200, 100, 25, this, 2);
-
+        kugeln.add(stosskugel);
         kugeln.add(k1);
         kugeln.add(k2);
 
@@ -161,12 +161,12 @@ public class Simulation {
     }
 
     private void ladeObjekte2() {
-        kugeln.add(stosskugel);
-
+        
+        Kugel stosskugel = new Kugel(150, 300, 1, this, 0);
         Kugel k1 = new Kugel(100, 150, 30, this, 1);
         Kugel k2 = new Kugel(200, 100, 25, this, 2);
         Kugel k3 = new Kugel(600, 300, 30, this, 3);
-
+        kugeln.add(stosskugel);
         kugeln.add(k1);
         kugeln.add(k2);
         kugeln.add(k3);        
@@ -174,13 +174,14 @@ public class Simulation {
     }
 
     private void ladeObjekte3() {
-        kugeln.add(stosskugel);
-
+        
+        Kugel stosskugel = new Kugel(150, 300, 1, this, 0);
         Kugel k1 = new Kugel(100, 150, 30, this, 1);
         Kugel k2 = new Kugel(200, 100, 25, this, 2);
         Kugel k3 = new Kugel(600, 300, 30, this, 3);
         Kugel k4 = new Kugel(300, 300, 25, this, 4);
         Kugel k5 = new Kugel(400, 400, 20, this, 5);
+        kugeln.add(stosskugel);
         kugeln.add(k1);
         kugeln.add(k2);
         kugeln.add(k3);
