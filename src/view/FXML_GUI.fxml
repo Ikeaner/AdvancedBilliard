@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -24,7 +30,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.FXML_GUIController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.FXML_GUIController">
     <children>
         <BorderPane layoutX="236.0" layoutY="85.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: sandalbrown;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <right>
@@ -142,7 +148,7 @@
                                                         <Insets top="10.0" />
                                                     </VBox.margin>
                                                 </Button>
-                                                <Button disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: red;" text="Zurücksetzen" textFill="WHITE">
+                                                <Button fx:id="resetButton" disable="true" mnemonicParsing="false" onAction="#reset" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: red;" text="Zurücksetzen" textFill="WHITE">
                                                     <VBox.margin>
                                                         <Insets top="10.0" />
                                                     </VBox.margin>

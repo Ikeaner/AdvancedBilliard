@@ -40,7 +40,7 @@ public class Simulation {
                 int rad = l.getRad();
 
                 if (Math.sqrt(Math.pow((centerX - posX), 2) + Math.pow((centerY - posY), 2)) < rad) {
-                    
+
                     if (k.getRad() == l.getRad()) {
                         System.out.println("in hole");
                         k.setXx(kugeln.indexOf(k), 0);
@@ -48,15 +48,13 @@ public class Simulation {
                         k.setPosition(kugeln.indexOf(k), 1500, 1500);
                         k.setIsInHole(true);
                         k.setIsInRightHole(true);
-                    }
-                    else if(k.getRad() < l.getRad()) {
+                    } else if (k.getRad() < l.getRad()) {
                         System.out.println("wrong hole");
                         k.setXx(kugeln.indexOf(k), 0);
                         k.setYy(kugeln.indexOf(k), 0);
                         k.setPosition(kugeln.indexOf(k), 1500, 1500);
                         k.setIsInHole(true);
-                    }
-                    else if(k.getRad() > l.getRad()) {
+                    } else if (k.getRad() > l.getRad()) {
                         System.out.println("over hole");
                     }
                 }
@@ -64,10 +62,9 @@ public class Simulation {
         }
 
     }
-    
-    public void checkStatus()
-    {
-        
+
+    public void checkStatus() {
+
     }
 
     public String getID() {
@@ -141,6 +138,25 @@ public class Simulation {
 
     public void setHindernisse(ArrayList<Objekt> hindernisse) {
         this.hindernisse = hindernisse;
+    }
+
+    public void reload() {
+        kugeln.clear();
+        löcher.clear();
+        hindernisse.clear();
+        switch (ID) {
+            case "1":
+                ladeObjekte1();
+                break;
+
+            case "2":
+                ladeObjekte2();
+                break;
+
+            case "3":
+                ladeObjekte3();
+                break;
+        }
     }
 
     private void ladeObjekte2() {

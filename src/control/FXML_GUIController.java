@@ -77,6 +77,7 @@ public class FXML_GUIController implements Initializable, Observer {
 
     private AB_Model model;
 
+    private Timeline timer;
     private ArrayList<Circle> circles = new ArrayList<Circle>();
     private ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
     private ArrayList<Circle> holes = new ArrayList<Circle>();
@@ -108,6 +109,8 @@ public class FXML_GUIController implements Initializable, Observer {
 
     @FXML
     private Slider WindSlider;
+    @FXML
+    private Button resetButton;
 
     //Initialisiert den Controller. Erstellt ein model und fügt diesen Controller als Observer hinzu.
     @Override
@@ -178,38 +181,60 @@ public class FXML_GUIController implements Initializable, Observer {
     //Anstoß. Startet einen Timer und führt jedes Frame move() aus. 
     @FXML
     private void anstoss(ActionEvent event) {
+        if (anstossButton.getText().equals("Anstoß!")) {
+            model.getCurrentSimulation().getKugeln().get(0).setRad(groSlider.valueProperty().intValue());
+            System.out.println("Anstoß!");
 
-        model.getCurrentSimulation().getKugeln().get(0).setRad(groSlider.valueProperty().intValue());
-        System.out.println("Anstoß!");
+            EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    //move(model.getCurrentSimulation().getStosskugel());
 
-        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //move(model.getCurrentSimulation().getStosskugel());
-
-                for (Kugel k : model.getCurrentSimulation().getKugeln()) {
-                    move(k);
+                    for (Kugel k : model.getCurrentSimulation().getKugeln()) {
+                        move(k);
+                    }
+                    model.getCurrentSimulation().checkLöcher();
+                    model.getCurrentSimulation().checkStatus();
                 }
-                model.getCurrentSimulation().checkLöcher();
-                model.getCurrentSimulation().checkStatus();
-            }
-        };
-        KeyFrame f = new KeyFrame(Duration.millis(1.66), handler);
-        Timeline timer = new Timeline(f);
-        timer.setCycleCount(Timeline.INDEFINITE);
-        timer.play();
+            };
+            KeyFrame f = new KeyFrame(Duration.millis(1.66), handler);
+            timer = new Timeline(f);
+            timer.setCycleCount(Timeline.INDEFINITE);
+            timer.playFromStart();
 
-        anstossButton.setDisable(true);
-        groSlider.setDisable(true);
-        stoKraSlider.setDisable(true);
-        stoWinSlider.setDisable(true);
-        frameRateSlider.setDisable(true);
-        WindSlider.setDisable(true);
-        sim1.setDisable(true);
-        sim2.setDisable(true);
-        sim3.setDisable(true);
-        for (ChoiceBox c : cbxs) {
-            c.setDisable(true);
+            groSlider.setDisable(true);
+            stoKraSlider.setDisable(true);
+            stoWinSlider.setDisable(true);
+            frameRateSlider.setDisable(true);
+            WindSlider.setDisable(true);
+            sim1.setDisable(true);
+            sim2.setDisable(true);
+            sim3.setDisable(true);
+            for (ChoiceBox c : cbxs) {
+                c.setDisable(true);
+            }
+
+            resetButton.setText("Abbrechen");
+            resetButton.setDisable(false);
+            anstossButton.setText("Anhalten");
+        } else if (anstossButton.getText().equals("Anhalten")) {
+            timer.pause();
+            anstossButton.setText("Weiterspielen");
+        } else if (anstossButton.getText().equals("Weiterspielen")) {
+            timer.play();
+            anstossButton.setText("Anhalten");
+        }
+    }
+
+    @FXML
+    private void reset() {
+        if (resetButton.getText().equals("Zurücksetzen")) {
+            levelLaden();
+        } else if (resetButton.getText().equals("Abbrechen")) {
+            timer.stop();
+            model.getCurrentSimulation().reload();
+            levelLaden();
+            anstossButton.setText("Anstoß!");
         }
     }
 
@@ -268,6 +293,17 @@ public class FXML_GUIController implements Initializable, Observer {
 
         simNameLabel.setText("Simulation " + model.getCurrentSimulation().toString());
         einstellungsFenster.setText("Simulation " + model.getCurrentSimulation().toString() + " Einstellungen");
+
+        for (Loch l : model.getCurrentSimulation().getLöcher()) {
+
+            int posX = l.getPosX();
+            int posY = l.getPosY();
+            int rad = l.getRad();
+            Circle c = new Circle(posX, posY, rad);
+
+            holes.add(c);
+            playPane.getChildren().add(c);
+        }
 
         //Erstellt einen Kreis für jede Kugel
         for (Kugel k : model.getCurrentSimulation().getKugeln()) {
@@ -439,17 +475,6 @@ public class FXML_GUIController implements Initializable, Observer {
             hindernisGrid.add(cbx, 1, (num2 * 2) + 1);
 
             num2++;
-        }
-
-        for (Loch l : model.getCurrentSimulation().getLöcher()) {
-
-            int posX = l.getPosX();
-            int posY = l.getPosY();
-            int rad = l.getRad();
-            Circle c = new Circle(posX, posY, rad);
-
-            holes.add(c);
-            playPane.getChildren().add(c);
         }
 
         anstossButton.setDisable(false);
