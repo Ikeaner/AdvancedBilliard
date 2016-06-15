@@ -81,9 +81,9 @@ public class FXML_GUIController implements Initializable, Observer {
     private ArrayList<Circle> circles = new ArrayList<Circle>();
     private ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
     private ArrayList<Circle> holes = new ArrayList<Circle>();
-    private ArrayList<ChoiceBox> cbxs = new ArrayList<ChoiceBox>();    
-    
-    private ObservableList<String> materialien = FXCollections.observableArrayList("Standard", "Holz", "Eisen");
+    private ArrayList<ChoiceBox> cbxs = new ArrayList<ChoiceBox>();
+
+    private ObservableList<String> materialien = FXCollections.observableArrayList("Standard", "Holz", "Glas", "Keramik", "Gummi");
 
     @FXML
     private MenuItem sim1;
@@ -256,7 +256,7 @@ public class FXML_GUIController implements Initializable, Observer {
         timer.stop();
         levelLaden();
         anstossButton.setText("Anstoß!");
-        
+
         //versuche++;
     }
 
@@ -402,21 +402,34 @@ public class FXML_GUIController implements Initializable, Observer {
                         System.out.println(new_value.toString());
 
                         switch (new_value.intValue()) {
+                            //Standard
                             case 0:
                                 c.setFill(model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).getColor());
-                                model.getCurrentSimulation().setMat(0,0.35,1,circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(0, 0.35, 1, circles.indexOf(c));
                                 break;
+                            //Holz
                             case 1:
                                 c.setFill(Color.BROWN);
-                                model.getCurrentSimulation().setMat(1,0.025,0.8,circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(1, 0.025, 0.8, circles.indexOf(c));
                                 break;
+                            //Glas
                             case 2:
-                                c.setFill(Color.GRAY);
-                                model.getCurrentSimulation().setMat(2,0.015,7.85,circles.indexOf(c));
+                                c.setFill(Color.LIGHTBLUE);
+                                model.getCurrentSimulation().setMat(2, 0.015, 2.55, circles.indexOf(c));
+                                break;
+                            //Keramik
+                            case 3:
+                                c.setFill(Color.LIGHTGREY);
+                                model.getCurrentSimulation().setMat(3, 0.030, 3.0, circles.indexOf(c));
+                                break;
+                            //Gummi
+                            case 4:
+                                c.setFill(Color.PINK);
+                                model.getCurrentSimulation().setMat(4, 0.035, 0.94, circles.indexOf(c));
                                 break;
                         }
                         model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).setMaterial(new_value.intValue());
-                        model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).calcMass(circles.indexOf(c),0);
+                        model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).calcMass(circles.indexOf(c), 0);
                     }
                 });
 
@@ -440,23 +453,36 @@ public class FXML_GUIController implements Initializable, Observer {
                 System.out.println(new_value.toString());
 
                 switch (new_value.intValue()) {
+                    //Standard
                     case 0:
-                        anstossCircle.setFill(Color.WHITE);
-                        model.getCurrentSimulation().setMat(0,0.035,1,0);
+                        anstossCircle.setFill(model.getCurrentSimulation().getKugeln().get(0).getColor());
+                        model.getCurrentSimulation().setMat(0, 0.35, 1, 0);
                         break;
+                    //Holz
                     case 1:
                         anstossCircle.setFill(Color.BROWN);
-                        model.getCurrentSimulation().setMat(1,0.015,0.8,0);
+                        model.getCurrentSimulation().setMat(1, 0.025, 0.8, 0);
                         break;
+                    //Glas
                     case 2:
-                        anstossCircle.setFill(Color.GRAY);
-                        model.getCurrentSimulation().setMat(2,0.005,2.55,0);
+                        anstossCircle.setFill(Color.LIGHTBLUE);
+                        model.getCurrentSimulation().setMat(2, 0.015, 2.55, 0);
+                        break;
+                    //Keramik
+                    case 3:
+                        anstossCircle.setFill(Color.LIGHTGREY);
+                        model.getCurrentSimulation().setMat(3, 0.030, 3.0, 0);
+                        break;
+                    //Gummi
+                    case 4:
+                        anstossCircle.setFill(Color.PINK);
+                        model.getCurrentSimulation().setMat(4, 0.035, 0.94, 0);
                         break;
                 }
                 model.getCurrentSimulation().getKugeln().get(0).setMaterial(new_value.intValue());
-                
+
                 double radiSlider = getRadi(0);
-                model.getCurrentSimulation().getKugeln().get(0).calcMass(0,radiSlider);
+                model.getCurrentSimulation().getKugeln().get(0).calcMass(0, radiSlider);
             }
         });
         cbxs.add(anstossKugelMat);
@@ -568,7 +594,6 @@ public class FXML_GUIController implements Initializable, Observer {
             return 0;
         }
     }
-    
 
     //öffnet den Saver
     /*
