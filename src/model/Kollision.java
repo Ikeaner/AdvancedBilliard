@@ -62,10 +62,11 @@ public class Kollision {
             speed2 = 0.0001;
         }
         double rVektor  = Math.atan2(yy ,xx );
+        double rVektor2  = Math.atan2(yy2 ,xx2 );
         double ablenkungX  = speed1*Math.cos(rVektor-colAngle);
         double ablenkungY  = speed1*Math.sin(rVektor-colAngle);        
-        double ablenkungX2 = speed2*Math.cos(rVektor-colAngle);
-        double ablenkungY2 = speed2*Math.sin(rVektor-colAngle);
+        double ablenkungX2 = speed2*Math.cos(rVektor2-colAngle);
+        double ablenkungY2 = speed2*Math.sin(rVektor2-colAngle);
         System.out.println(masse1+"   "+masse2);
         double speedX = (ablenkungX *(masse1-masse2)+ (2* masse2*ablenkungX2)) / (masse1 + masse2);
         double speedY = (ablenkungY *(masse1-masse2)+ (2* masse2*ablenkungY2)) / (masse1 + masse2);
