@@ -39,7 +39,7 @@ public class Kugel {
     private boolean isInHole = false;
     private boolean isInRightHole = false;
 
-    public Kugel(int x, int y, int r, Simulation s, int index) {
+    public Kugel(int x, int y, int r, Simulation s, int index,double mat,double matV2) {
         rad = r;
         posX = x;
         posY = y;
@@ -48,8 +48,8 @@ public class Kugel {
         richtung[index] = new Point2D(0, 0);
         radius[index] = r;
         sim = s;
-        rollReib[index] = Reibung(r);
-        masse[index] = Masse(r);
+        rollReib[index] = Reibung(r,mat,matV2);
+        masse[index] = Masse(r,matV2);
     }
 
     public boolean isInHole() {
@@ -101,9 +101,9 @@ public class Kugel {
     }
 
     public void bewegen(Point2D anstoss, double radi, double stoWi, double stoKra, double radiSlider) {
-
+        
         if (bereitsBerechnet == false) {
-            stossWinKraft(stoWi, stoKra, radiSlider);
+            stossWinKraft(stoWi, stoKra, radiSlider,sim.getMatV2(0));
         }
         thisLoop:
         for (int i = 0; i < sim.getKugeln().size(); i++) {
@@ -138,6 +138,11 @@ public class Kugel {
                 xx[i] = xx[i] * -1;
                 //System.out.println("Links bumm");
             }
+            if (position[i].getX() - radius[i] > 1300 && geschwindigkeit > 0 && xx[i] < 0) {
+                xx[i] = 0;
+                yy[i] = 0;
+                //System.out.println("Links bumm");
+            }
         }
 
         for (int i = 0; i < sim.getKugeln().size(); i++) {
@@ -157,25 +162,35 @@ public class Kugel {
         }
     }
 
-    public double Reibung(double radi) {
+    public double Reibung(double radi,double mat,double matV2) {
         double pi = 1.333333333333333333 * Math.PI;
         double vol = pi * Math.pow(radi, 3);
         //System.out.println(mass);
-        double mass = (0.5 * vol) / 1000;
+        double mass = (mat * vol) / 1000;
         //System.out.println(mass);
         double Fn = (mass * Math.pow(9.81, 1));
         //System.out.println(Fn);
-        double Rn = Fn * 0.025;
+        double Rn = Fn * mat;
         //System.out.println(Rn);
         return Rn;
     }
 
-    public double Masse(double radi) {
+    public double Masse(double radi,double matV2) {
         double pi = 1.333333333333333333 * Math.PI;
-        double vol = pi * Math.pow(radi, 3);
-        //System.out.println(mass);
-        double mass = (2 * vol) / 1000;
+        double vol = pi * Math.pow(radi, 3);       
+        double mass = (matV2 * vol) / 1000;
+        System.out.println(mass);
         return mass;
+    }
+    public void calcMass(int i,double radi){
+        double materi = sim.getMatV2(i);
+        if (i != 0){
+        masse[i] = Masse(radius[i],materi);
+        }
+        else{
+            
+        masse[0] = Masse(radi,materi);
+        }
     }
 
     public int getRad() {
@@ -198,11 +213,11 @@ public class Kugel {
         return position[x];
     }
 
-    public void stossWinKraft(double winkel, double stoKra, double radiW) {
+    public void stossWinKraft(double winkel, double stoKra, double radiW,double matV2) {
         xx[0] = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
         yy[0] = cos(Math.toRadians(winkel));
         radius[0] = radiW;
-        masse[0] = Masse(radiW);
+        masse[0] = Masse(radiW,matV2);
         xx[0] = xx[0] * stoKra / 10;
         yy[0] = yy[0] * stoKra / 10;
         xx[1] = 0;

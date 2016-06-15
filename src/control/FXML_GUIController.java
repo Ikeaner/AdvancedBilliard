@@ -404,15 +404,19 @@ public class FXML_GUIController implements Initializable, Observer {
                         switch (new_value.intValue()) {
                             case 0:
                                 c.setFill(model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).getColor());
+                                model.getCurrentSimulation().setMat(0,0.035,1,circles.indexOf(c));
                                 break;
                             case 1:
                                 c.setFill(Color.BROWN);
+                                model.getCurrentSimulation().setMat(1,0.015,0.8,circles.indexOf(c));
                                 break;
                             case 2:
                                 c.setFill(Color.GRAY);
+                                model.getCurrentSimulation().setMat(2,0.005,7.85,circles.indexOf(c));
                                 break;
                         }
                         model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).setMaterial(new_value.intValue());
+                        model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).calcMass(circles.indexOf(c),0);
                     }
                 });
 
@@ -438,15 +442,21 @@ public class FXML_GUIController implements Initializable, Observer {
                 switch (new_value.intValue()) {
                     case 0:
                         anstossCircle.setFill(Color.WHITE);
+                        model.getCurrentSimulation().setMat(0,0.035,1,0);
                         break;
                     case 1:
                         anstossCircle.setFill(Color.BROWN);
+                        model.getCurrentSimulation().setMat(1,0.015,0.8,0);
                         break;
                     case 2:
                         anstossCircle.setFill(Color.GRAY);
+                        model.getCurrentSimulation().setMat(2,0.005,7.85,0);
                         break;
                 }
-                model.getCurrentSimulation().getKugeln().get(circles.indexOf(anstossCircle)).setMaterial(new_value.intValue());
+                model.getCurrentSimulation().getKugeln().get(0).setMaterial(new_value.intValue());
+                
+                double radiSlider = getRadi(0);
+                model.getCurrentSimulation().getKugeln().get(0).calcMass(0,radiSlider);
             }
         });
         cbxs.add(anstossKugelMat);

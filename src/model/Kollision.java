@@ -58,12 +58,15 @@ public class Kollision {
         System.out.println(Math.toDegrees(colAngle)+"      "+colAngle);
         double speed1 = Math.sqrt(xx*xx+yy*yy);
         double speed2 = Math.sqrt(xx2*xx2+yy2*yy2);
+        if (speed2 == 0){
+            speed2 = 0.0001;
+        }
         double rVektor  = Math.atan2(yy ,xx );
         double ablenkungX  = speed1*Math.cos(rVektor-colAngle);
         double ablenkungY  = speed1*Math.sin(rVektor-colAngle);        
         double ablenkungX2 = speed2*Math.cos(rVektor-colAngle);
         double ablenkungY2 = speed2*Math.sin(rVektor-colAngle);
-        //System.out.println(masse1+"   "+masse2);
+        System.out.println(masse1+"   "+masse2);
         double speedX = (ablenkungX *(masse1-masse2)+ (2* masse2*ablenkungX2)) / (masse1 + masse2);
         double speedY = (ablenkungY *(masse1-masse2)+ (2* masse2*ablenkungY2)) / (masse1 + masse2);
         double speedX2 = (ablenkungX2 *(masse2-masse1)+ (2* masse1*ablenkungX)) / (masse1 + masse2);

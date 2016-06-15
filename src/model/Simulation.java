@@ -23,6 +23,8 @@ public class Simulation {
     private ArrayList<Loch> löcher = new ArrayList<Loch>();
 
     private int status;
+    private static double[] mat = new double[6];
+    private static double[] matV2 = new double[6];
 
     public int getStatus() {
         return status;
@@ -110,7 +112,7 @@ public class Simulation {
         this.löcher = löcher;
     }
 
-    private Kugel stosskugel = new Kugel(150, 300, 1, this, 0);
+    private Kugel stosskugel = new Kugel(150, 300, 1, this, 0,mat[0],matV2[0]);
 
     public Kugel getStosskugel() {
         return stosskugel;
@@ -122,6 +124,10 @@ public class Simulation {
 
     public Simulation(int i) {
 
+        for (int a=0;a<mat.length;a++){
+            mat[a] = 0.035;
+            matV2[a] = 1;
+        }
         switch (i) {
             case 1:
                 ladeObjekte1();
@@ -141,9 +147,9 @@ public class Simulation {
 
     private void ladeObjekte1() {
 
-        Kugel stosskugel = new Kugel(150, 300, 1, this, 0);
-        Kugel k1 = new Kugel(100, 150, 30, this, 1);
-        Kugel k2 = new Kugel(200, 100, 25, this, 2);
+        Kugel stosskugel = new Kugel(150, 300, 1, this, 0,mat[0],matV2[0]);
+        Kugel k1 = new Kugel(100, 150, 30, this, 1,mat[1],matV2[1]);
+        Kugel k2 = new Kugel(200, 100, 25, this, 2,mat[2],matV2[2]);
         kugeln.add(stosskugel);
         kugeln.add(k1);
         kugeln.add(k2);
@@ -189,10 +195,10 @@ public class Simulation {
 
     private void ladeObjekte2() {
 
-        Kugel stosskugel = new Kugel(150, 300, 1, this, 0);
-        Kugel k1 = new Kugel(100, 150, 30, this, 1);
-        Kugel k2 = new Kugel(200, 100, 25, this, 2);
-        Kugel k3 = new Kugel(600, 300, 30, this, 3);
+        Kugel stosskugel = new Kugel(150, 300, 1, this, 0,mat[0],matV2[0]);
+        Kugel k1 = new Kugel(100, 150, 30, this, 1,mat[1],matV2[1]);
+        Kugel k2 = new Kugel(200, 100, 25, this, 2,mat[2],matV2[2]);
+        Kugel k3 = new Kugel(600, 300, 30, this, 3,mat[3],matV2[3]);
         kugeln.add(stosskugel);
         kugeln.add(k1);
         kugeln.add(k2);
@@ -202,12 +208,12 @@ public class Simulation {
 
     private void ladeObjekte3() {
 
-        Kugel stosskugel = new Kugel(150, 300, 1, this, 0);
-        Kugel k1 = new Kugel(100, 150, 30, this, 1);
-        Kugel k2 = new Kugel(200, 100, 25, this, 2);
-        Kugel k3 = new Kugel(600, 300, 30, this, 3);
-        Kugel k4 = new Kugel(300, 300, 25, this, 4);
-        Kugel k5 = new Kugel(400, 400, 20, this, 5);
+        Kugel stosskugel = new Kugel(150, 300, 1, this, 0,mat[0],matV2[0]);
+        Kugel k1 = new Kugel(100, 150, 30, this, 1,mat[1],matV2[1]);
+        Kugel k2 = new Kugel(200, 100, 25, this, 2,mat[2],matV2[2]);
+        Kugel k3 = new Kugel(600, 300, 30, this, 3,mat[3],matV2[3]);
+        Kugel k4 = new Kugel(300, 300, 25, this, 4,mat[4],matV2[4]);
+        Kugel k5 = new Kugel(400, 400, 20, this, 5,mat[5],matV2[5]);
         kugeln.add(stosskugel);
         kugeln.add(k1);
         kugeln.add(k2);
@@ -219,6 +225,28 @@ public class Simulation {
 
     public ArrayList<Kugel> getKugeln() {
         return kugeln;
+    }
+    public double getMat(int i){
+        return mat[i];
+    }
+    public double getMatV2(int i){
+        return matV2[i];
+    }
+    public void setMat(int i,double a,double m,int circle){
+        switch (i) {
+                            case 0:
+                              mat[circle] = a;
+                              matV2[circle] = m;
+                                break;
+                            case 1:
+                              mat[circle] = a;
+                              matV2[circle] = m;
+                                break;
+                            case 2:
+                              mat[circle] = a;
+                              matV2[circle] = m;
+                                break;
+                        }
     }
 
     @Override
