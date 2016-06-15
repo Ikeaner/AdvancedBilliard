@@ -103,14 +103,10 @@ public class FXML_GUIController implements Initializable, Observer {
     private TitledPane einstellungsFenster;
     @FXML
     private ChoiceBox anstossKugelMat;
-
-    @FXML
-    private Slider frameRateSlider;
-
-    @FXML
-    private Slider WindSlider;
     @FXML
     private Button resetButton;
+    @FXML
+    private Label versucheLabel;
 
     //Initialisiert den Controller. Erstellt ein model und fügt diesen Controller als Observer hinzu.
     @Override
@@ -139,17 +135,6 @@ public class FXML_GUIController implements Initializable, Observer {
         stoKraSlider.setMax(20);
         stoKraSlider.setMin(1);
         stoKraSliAnz.textProperty().bindBidirectional(stoKraSlider.valueProperty(), NumberFormat.getNumberInstance());
-
-        frameRateSlider.setValue(1);
-        frameRateSlider.setMax(1000);
-        frameRateSlider.setMin(1);
-        //frameRateSlider.textProperty().bindBidirectional(stoKraSlider.valueProperty(), NumberFormat.getNumberInstance());
-
-        WindSlider.setValue(1);
-        WindSlider.setMax(200);
-        WindSlider.setMin(0);
-        //WindSlider.textProperty().bindBidirectional(stoKraSlider.valueProperty(), NumberFormat.getNumberInstance());
-
     }
 
 //Methode des Observer Modells. Momentan: Levelwechsel.
@@ -211,8 +196,6 @@ public class FXML_GUIController implements Initializable, Observer {
             groSlider.setDisable(true);
             stoKraSlider.setDisable(true);
             stoWinSlider.setDisable(true);
-            frameRateSlider.setDisable(true);
-            WindSlider.setDisable(true);
             sim1.setDisable(true);
             sim2.setDisable(true);
             sim3.setDisable(true);
@@ -256,8 +239,12 @@ public class FXML_GUIController implements Initializable, Observer {
         timer.stop();
         levelLaden();
         anstossButton.setText("Anstoß!");
-
-        //versuche++;
+        resetButton.setText("Zurücksetzen");
+        model.getCurrentSimulation().plusEinsVersuch();
+        versucheLabel.setText("Versuche: " + Integer.toString(model.getCurrentSimulation().getVersuche()));
+        sim1.setDisable(false);
+        sim2.setDisable(false);
+        sim3.setDisable(false);
     }
 
     @FXML
@@ -269,6 +256,13 @@ public class FXML_GUIController implements Initializable, Observer {
             timer.stop();
             levelLaden();
             anstossButton.setText("Anstoß!");
+            resetButton.setText("Zurücksetzen");
+            model.getCurrentSimulation().plusEinsVersuch();
+            versucheLabel.setText("Versuche: " + Integer.toString(model.getCurrentSimulation().getVersuche()));
+
+            sim1.setDisable(false);
+            sim2.setDisable(false);
+            sim3.setDisable(false);
         }
     }
 
@@ -314,6 +308,10 @@ public class FXML_GUIController implements Initializable, Observer {
 
     private void levelLaden() {
         System.out.println("level geladen");
+
+        versucheLabel.setText("Versuche: " + Integer.toString(model.getCurrentSimulation().getVersuche()));
+
+        System.out.println("Versuche: " + Integer.toString(model.getCurrentSimulation().getVersuche()));
 
         model.setPreviousSimulation(model.getCurrentSimulation());
 
@@ -551,8 +549,6 @@ public class FXML_GUIController implements Initializable, Observer {
         groSlider.setDisable(false);
         stoKraSlider.setDisable(false);
         stoWinSlider.setDisable(false);
-        frameRateSlider.setDisable(false);
-        WindSlider.setDisable(false);
     }
 
     public final double getRadi() {

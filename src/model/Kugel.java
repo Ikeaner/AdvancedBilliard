@@ -35,7 +35,6 @@ public class Kugel {
     private Simulation sim;
     private Color color;
     private int index;
-
     private boolean isInHole = false;
     private boolean isInRightHole = false;
 

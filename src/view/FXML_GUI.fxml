@@ -70,26 +70,6 @@
                                                         </ScrollPane>
                                                     </content>
                                                 </Tab>
-                                    <Tab text="Simulation">
-                                       <content>
-                                          <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Label prefHeight="27.0" prefWidth="86.0" text="Framerate">
-                                                   <font>
-                                                      <Font size="18.0" />
-                                                   </font>
-                                                </Label>
-                                                <Slider fx:id="frameRateSlider" disable="true" />
-                                                <Label prefHeight="27.0" prefWidth="47.0" text="Wind">
-                                                   <font>
-                                                      <Font size="18.0" />
-                                                   </font>
-                                                </Label>
-                                                <Slider fx:id="WindSlider" disable="true" />
-                                             </children>
-                                          </VBox>
-                                       </content>
-                                    </Tab>
                                             </tabs>
                                         </TabPane>
                                     </content>
@@ -182,7 +162,7 @@
                             <right>
                                 <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                     <children>
-                                        <Label text="Versuche:" textFill="WHITE">
+                                        <Label fx:id="versucheLabel" text="Versuche: 0" textFill="WHITE">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
