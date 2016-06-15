@@ -405,27 +405,27 @@ public class FXML_GUIController implements Initializable, Observer {
                             //Standard
                             case 0:
                                 c.setFill(model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).getColor());
-                                model.getCurrentSimulation().setMat(0, 0.35, 1, circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(0.35, 1, circles.indexOf(c));
                                 break;
                             //Holz
                             case 1:
                                 c.setFill(Color.BROWN);
-                                model.getCurrentSimulation().setMat(1, 0.025, 0.8, circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(0.025, 0.8, circles.indexOf(c));
                                 break;
                             //Glas
                             case 2:
                                 c.setFill(Color.LIGHTBLUE);
-                                model.getCurrentSimulation().setMat(2, 0.015, 2.55, circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(0.015, 2.55, circles.indexOf(c));
                                 break;
                             //Keramik
                             case 3:
                                 c.setFill(Color.LIGHTGREY);
-                                model.getCurrentSimulation().setMat(3, 0.030, 3.0, circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(0.030, 3.0, circles.indexOf(c));
                                 break;
                             //Gummi
                             case 4:
                                 c.setFill(Color.PINK);
-                                model.getCurrentSimulation().setMat(4, 0.035, 0.94, circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(0.035, 0.94, circles.indexOf(c));
                                 break;
                         }
                         model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).setMaterial(new_value.intValue());
@@ -456,27 +456,27 @@ public class FXML_GUIController implements Initializable, Observer {
                     //Standard
                     case 0:
                         anstossCircle.setFill(model.getCurrentSimulation().getKugeln().get(0).getColor());
-                        model.getCurrentSimulation().setMat(0, 0.35, 1, 0);
+                        model.getCurrentSimulation().setMat(0.35, 1, 0);
                         break;
                     //Holz
                     case 1:
                         anstossCircle.setFill(Color.BROWN);
-                        model.getCurrentSimulation().setMat(1, 0.025, 0.8, 0);
+                        model.getCurrentSimulation().setMat(0.025, 0.8, 0);
                         break;
                     //Glas
                     case 2:
                         anstossCircle.setFill(Color.LIGHTBLUE);
-                        model.getCurrentSimulation().setMat(2, 0.015, 2.55, 0);
+                        model.getCurrentSimulation().setMat(0.015, 2.55, 0);
                         break;
                     //Keramik
                     case 3:
                         anstossCircle.setFill(Color.LIGHTGREY);
-                        model.getCurrentSimulation().setMat(3, 0.030, 3.0, 0);
+                        model.getCurrentSimulation().setMat(0.030, 3.0, 0);
                         break;
                     //Gummi
                     case 4:
                         anstossCircle.setFill(Color.PINK);
-                        model.getCurrentSimulation().setMat(4, 0.035, 0.94, 0);
+                        model.getCurrentSimulation().setMat(0.035, 0.94, 0);
                         break;
                 }
                 model.getCurrentSimulation().getKugeln().get(0).setMaterial(new_value.intValue());

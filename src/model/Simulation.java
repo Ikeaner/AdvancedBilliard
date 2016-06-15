@@ -232,21 +232,11 @@ public class Simulation {
     public double getMatV2(int i){
         return matV2[i];
     }
-    public void setMat(int i,double a,double m,int circle){
-        switch (i) {
-                            case 0:
-                              mat[circle] = a;
-                              matV2[circle] = m;
-                                break;
-                            case 1:
-                              mat[circle] = a;
-                              matV2[circle] = m;
-                                break;
-                            case 2:
-                              mat[circle] = a;
-                              matV2[circle] = m;
-                                break;
-                        }
+    public void setMat(double a,double m,int circle){
+
+        mat[circle] = a;
+        matV2[circle] = m;
+
     }
 
     @Override
