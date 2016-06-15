@@ -20,7 +20,7 @@ public class Kugel {
     private int posX;
     private int posY;
     int colBall;
-    private double geschwindigkeit = 1;
+    private double[] geschwindigkeit = new double[6];
     private static Point2D[] richtung = new Point2D[6];
     private static Point2D[] position = new Point2D[6];
     private double[] xx = new double[6];
@@ -111,6 +111,8 @@ public class Kugel {
                 if (a != i) {
                     double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], position[a].getX(), position[a].getY(), radius[a], xx[i], yy[i], xx[a], yy[a], i, a, masse[i], masse[a]);
                     if (ablenkung[0] != 0) {
+                        geschwindigkeit[i] = geschwindigkeit[i] - (geschwindigkeit[i]*0.25);
+                        geschwindigkeit[a] = geschwindigkeit[i];
                         xx[i] = ablenkung[0];
                         yy[i] = ablenkung[1];
                         xx[a] = ablenkung[2] * -1;
@@ -122,23 +124,27 @@ public class Kugel {
             }
         }
         for (int i = 0; i < sim.getKugeln().size(); i++) {
-            if (position[i].getY() > 480 - radius[i] && geschwindigkeit > 0 && yy[i] > 0) {
+            if (position[i].getY() > 480 - radius[i] && geschwindigkeit[i] > 0 && yy[i] > 0) {
                 yy[i] = yy[i] * -1;
+                 geschwindigkeit[i] = geschwindigkeit[i] - (geschwindigkeit[i]*0.25);
                 //System.out.println("Unten bumm");
             }
-            if (position[i].getY() - radius[i] <= 20 && geschwindigkeit > 0 && yy[i] < 0) {
+            if (position[i].getY() - radius[i] <= 20 && geschwindigkeit[i] > 0 && yy[i] < 0) {
                 yy[i] = yy[i] * -1;
+                 geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.25);
                 //System.out.println("Oben bumm");
             }
-            if (position[i].getX() > 730 - radius[i] && geschwindigkeit > 0 && xx[i] > 0) {
+            if (position[i].getX() > 730 - radius[i] && geschwindigkeit[i] > 0 && xx[i] > 0) {
                 xx[i] = xx[i] * -1;
+                 geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.1);
                 //System.out.println("Rechts bumm");
             }
-            if (position[i].getX() - radius[i] <= 20 && geschwindigkeit > 0 && xx[i] < 0) {
+            if (position[i].getX() - radius[i] <= 20 && geschwindigkeit[i] > 0 && xx[i] < 0) {
                 xx[i] = xx[i] * -1;
+                geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.1);
                 //System.out.println("Links bumm");
             }
-            if (position[i].getX() - radius[i] > 1300 && geschwindigkeit > 0 && xx[i] < 0) {
+            if (position[i].getX() - radius[i] > 1300 && geschwindigkeit[i] > 0 && xx[i] < 0) {
                 xx[i] = 0;
                 yy[i] = 0;
                 //System.out.println("Links bumm");
@@ -147,24 +153,19 @@ public class Kugel {
 
         for (int i = 0; i < sim.getKugeln().size(); i++) {
             richtung[i] = new Point2D(xx[i], yy[i]);
+            double tempDecelaration = (rollReib[i] / masse[i])*1.66;
+            geschwindigkeit[i] = geschwindigkeit[i] - tempDecelaration; 
+            if (geschwindigkeit[i]<=0){
+                geschwindigkeit[i] = 0;
+            }
+            position[i] = position[i].add(richtung[i].multiply(geschwindigkeit[i]));
         }
-
-        if (geschwindigkeit < 0.005) {
-            geschwindigkeit = 0;
-        } else {
-            double bremswirkung = 1 * 0.9999;
-            //double bremswirkung = 1;
-            geschwindigkeit = geschwindigkeit * bremswirkung;
-        }
-
-        for (int i = 0; i < sim.getKugeln().size(); i++) {
-            position[i] = position[i].add(richtung[i].multiply(geschwindigkeit));
-        }
+         
     }
 
     public double Reibung(double radi,double mat,double matV2) {
         double pi = 1.333333333333333333 * Math.PI;
-        double vol = pi * Math.pow(radi, 3);
+        double vol = pi * Math.pow((radi*0.1), 3);
         //System.out.println(mass);
         double mass = (mat * vol) / 1000;
         //System.out.println(mass);
@@ -177,7 +178,7 @@ public class Kugel {
 
     public double Masse(double radi,double matV2) {
         double pi = 1.333333333333333333 * Math.PI;
-        double vol = pi * Math.pow(radi, 3);       
+        double vol = pi * Math.pow((radi*0.1), 3);       
         double mass = (matV2 * vol) / 1000;
         System.out.println(mass);
         return mass;
@@ -230,6 +231,13 @@ public class Kugel {
         yy[4] = 0;
         xx[5] = 0;
         yy[5] = 0;
+        geschwindigkeit[0] = 1;
+        geschwindigkeit[1] = 1;
+        geschwindigkeit[2] = 1;
+        geschwindigkeit[3] = 1;
+        geschwindigkeit[4] = 1;
+        geschwindigkeit[5] = 1;
+        
 
         bereitsBerechnet = true;
     }

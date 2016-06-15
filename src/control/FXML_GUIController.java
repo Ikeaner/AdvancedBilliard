@@ -404,15 +404,15 @@ public class FXML_GUIController implements Initializable, Observer {
                         switch (new_value.intValue()) {
                             case 0:
                                 c.setFill(model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).getColor());
-                                model.getCurrentSimulation().setMat(0,0.035,1,circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(0,0.35,1,circles.indexOf(c));
                                 break;
                             case 1:
                                 c.setFill(Color.BROWN);
-                                model.getCurrentSimulation().setMat(1,0.015,0.8,circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(1,0.025,0.8,circles.indexOf(c));
                                 break;
                             case 2:
                                 c.setFill(Color.GRAY);
-                                model.getCurrentSimulation().setMat(2,0.005,7.85,circles.indexOf(c));
+                                model.getCurrentSimulation().setMat(2,0.015,7.85,circles.indexOf(c));
                                 break;
                         }
                         model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).setMaterial(new_value.intValue());
@@ -450,7 +450,7 @@ public class FXML_GUIController implements Initializable, Observer {
                         break;
                     case 2:
                         anstossCircle.setFill(Color.GRAY);
-                        model.getCurrentSimulation().setMat(2,0.005,7.85,0);
+                        model.getCurrentSimulation().setMat(2,0.005,2.55,0);
                         break;
                 }
                 model.getCurrentSimulation().getKugeln().get(0).setMaterial(new_value.intValue());
@@ -568,6 +568,7 @@ public class FXML_GUIController implements Initializable, Observer {
             return 0;
         }
     }
+    
 
     //öffnet den Saver
     /*
