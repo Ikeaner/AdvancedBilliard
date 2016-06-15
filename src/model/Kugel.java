@@ -136,12 +136,12 @@ public class Kugel {
             }
             if (position[i].getX() > 730 - radius[i] && geschwindigkeit[i] > 0 && xx[i] > 0) {
                 xx[i] = xx[i] * -1;
-                 geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.1);
+                 geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.25);
                 //System.out.println("Rechts bumm");
             }
             if (position[i].getX() - radius[i] <= 20 && geschwindigkeit[i] > 0 && xx[i] < 0) {
                 xx[i] = xx[i] * -1;
-                geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.1);
+                geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.25);
                 //System.out.println("Links bumm");
             }
             if (position[i].getX() - radius[i] > 1300 && geschwindigkeit[i] > 0 && xx[i] < 0) {
