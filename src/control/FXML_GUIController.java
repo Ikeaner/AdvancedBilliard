@@ -210,10 +210,17 @@ public class FXML_GUIController implements Initializable, Observer {
     //Erstellt einen Alarm der dabei ausgegeben wird
     public void gewonnen() {
         timer.stop();
+        model.getCurrentSimulation().plusEinsVersuch();
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Level " + model.getCurrentSimulation().toString() + " geschafft!");
         alert.setHeaderText(null);
-        alert.setContentText("Sie haben das Level geschafft! Hierfür haben Sie " + " Versuche benötigt.");
+        if (model.getCurrentSimulation().getVersuche() == 1) {
+            alert.setContentText("Sie haben das Level geschafft! Hierfür haben Sie einen Versuch benötigt.");
+        }
+        else
+        {
+            alert.setContentText("Sie haben das Level geschafft! Hierfür haben Sie " + Integer.toString(model.getCurrentSimulation().getVersuche()) + " Versuche benötigt.");
+        }
         alert.show();
     }
 

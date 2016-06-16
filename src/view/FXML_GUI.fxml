@@ -182,18 +182,18 @@
                     </top>
                     <center>
                         <ScrollPane fx:id="scrollPane" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: rgb(95,60,20);" BorderPane.alignment="CENTER">
-                           <content>
-                        <StackPane style="-fx-background-color: rgb(95,60,20);">
-                           <children>
-                                         <Pane fx:id="playPane" layoutX="129.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: GREEN; -fx-border-color: rgb(60,35,20); -fx-border-width: 20; -fx-border-radius: 25; -fx-background-radius: 35;" />
-                           </children>
-                        </StackPane>
-                           </content>
+                            <content>
+                                <StackPane style="-fx-background-color: rgb(95,60,20);">
+                                    <children>
+                                        <Pane fx:id="playPane" layoutX="129.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: GREEN; -fx-border-color: rgb(60,35,20); -fx-border-width: 20; -fx-border-radius: 25; -fx-background-radius: 35;" />
+                                    </children>
+                                </StackPane>
+                            </content>
                         </ScrollPane>
                     </center>
                 </BorderPane>
             </center>
-         <top>
+            <top>
                 <MenuBar BorderPane.alignment="CENTER">
                     <menus>
                         <Menu mnemonicParsing="false" text="Advanced Billiard">
@@ -216,7 +216,7 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-         </top>
+            </top>
         </BorderPane>
     </children>
 </AnchorPane>
