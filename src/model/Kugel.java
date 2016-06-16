@@ -38,7 +38,7 @@ public class Kugel {
     private boolean isInHole = false;
     private boolean isInRightHole = false;
 
-    public Kugel(int x, int y, int r, Simulation s, int index,double mat,double matV2) {
+    public Kugel(int x, int y, int r, Simulation s, int index, double mat, double matV2) {
         //die aus der Simulation weitergegebenen Werte werden in Variablen und Arrays abgespeichert die mit einem Index versehen sind um diese den Kugeln zu ordnen zu können
         rad = r;
         posX = x;
@@ -49,11 +49,9 @@ public class Kugel {
         radius[index] = r;
         sim = s;
         //berechnet die Reibungskraft und die Masse der Kugeln anhand der weitergegebenen Daten und speichert diese in mit Index versehenen Arrays ab
-        rollReib[index] = Reibung(r,mat,matV2);
-        masse[index] = Masse(r,matV2);
+        rollReib[index] = Reibung(r, mat, matV2);
+        masse[index] = Masse(r, matV2);
     }
-
-
 
     public void setPosition(int i, double x, double y) {
         position[i] = new Point2D(x, y);
@@ -63,7 +61,7 @@ public class Kugel {
         //in dieser Methode werden die Anfangswerte für die Kugeln festgelegt wie z.B. deren Anfangsgeschwindigkeit, der Winkel in der sie angestoßen werden usw.
         //außerdem wird dies nur ein mal am Anfang ausgeführt um im Spielverlauf die dann veränderten Werte nicht zu verfälsche (bereitsBerechnet)
         if (bereitsBerechnet == false) {
-            stossWinKraft(stoWi, stoKra, radiSlider,sim.getMatV2(0));
+            stossWinKraft(stoWi, stoKra, radiSlider, sim.getMatV2(0));
         }
         //in diesen doppelten Schleifen werden die Kugel Kollisionen abgefragt. Hierzu läuft er die Menge der Kugeln mit einem Index durch
         //Beispiel: Kugel mit index 0 wird auf kollision mit Kugel index 1, dann 2, dann 3 etc geprüft
@@ -78,7 +76,7 @@ public class Kugel {
                     //und 2. und 3. index die der zweiten Kugel angeben
                     double ablenkung[] = col.checkKollision(position[i].getX(), position[i].getY(), radius[i], position[a].getX(), position[a].getY(), radius[a], xx[i], yy[i], xx[a], yy[a], i, a, masse[i], masse[a]);
                     if (ablenkung[0] != 0) {
-                        geschwindigkeit[i] = geschwindigkeit[i] - (geschwindigkeit[i]*0.1);
+                        geschwindigkeit[i] = geschwindigkeit[i] - (geschwindigkeit[i] * 0.1);
                         geschwindigkeit[a] = geschwindigkeit[i];
                         xx[i] = ablenkung[0];
                         yy[i] = ablenkung[1];
@@ -93,40 +91,39 @@ public class Kugel {
         }
         //Abfrage für Hindernisse (Rechteck) berechnet Kollision der aktuellen Kugel mit dem Hindernis
         for (int i = 0; i < sim.getKugeln().size(); i++) {
-            for (Hindernisse h:sim.getHindernisse()){
-        int coll = col.rectCol(position[i].getX(), position[i].getY(), radius[i],h.getPosX(),h.getPosY(),h.getDimX(),h.getDimY());
-        if (coll == 1){
-        yy[i] = yy[i] *-1;
-        break;
-        }
-        if (coll == 2){
-        xx[i] = xx[i] *-1;
-        break;
-        }
+            for (Hindernisse h : sim.getHindernisse()) {
+                int coll = col.rectCol(position[i].getX(), position[i].getY(), radius[i], h.getPosX(), h.getPosY(), h.getDimX(), h.getDimY());
+                if (coll == 1) {
+                    yy[i] = yy[i] * -1;
+                    break;
+                }
+                if (coll == 2) {
+                    xx[i] = xx[i] * -1;
+                    break;
+                }
             }
         }
-        
-        
+
         //hier wird die Kollision mit dem Rand für jede einzelne Kugel geprüft. Ist diese vorhanden wird die Kugel gleich den eintrittswinkel abgelenkt
         for (int i = 0; i < sim.getKugeln().size(); i++) {
             if (position[i].getY() > 480 - radius[i] && geschwindigkeit[i] > 0 && yy[i] > 0) {
                 yy[i] = yy[i] * -1;
-                 geschwindigkeit[i] = geschwindigkeit[i] - (geschwindigkeit[i]*0.1);
+                geschwindigkeit[i] = geschwindigkeit[i] - (geschwindigkeit[i] * 0.1);
                 //System.out.println("Unten bumm");
             }
             if (position[i].getY() - radius[i] <= 20 && geschwindigkeit[i] > 0 && yy[i] < 0) {
                 yy[i] = yy[i] * -1;
-                 geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.1);
+                geschwindigkeit[i] = geschwindigkeit[i] - (geschwindigkeit[i] * 0.1);
                 //System.out.println("Oben bumm");
             }
             if (position[i].getX() > 730 - radius[i] && geschwindigkeit[i] > 0 && xx[i] > 0) {
                 xx[i] = xx[i] * -1;
-                 geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.1);
+                geschwindigkeit[i] = geschwindigkeit[i] - (geschwindigkeit[i] * 0.1);
                 //System.out.println("Rechts bumm");
             }
             if (position[i].getX() - radius[i] <= 20 && geschwindigkeit[i] > 0 && xx[i] < 0) {
                 xx[i] = xx[i] * -1;
-                geschwindigkeit[i] = geschwindigkeit[i]- (geschwindigkeit[i]*0.1);
+                geschwindigkeit[i] = geschwindigkeit[i] - (geschwindigkeit[i] * 0.1);
                 //System.out.println("Links bumm");
             }
             if (position[i].getX() - radius[i] > 1300 && geschwindigkeit[i] > 0 && xx[i] < 0) {
@@ -140,20 +137,21 @@ public class Kugel {
         //die dann berechnete Beschleunigung wird auf die Bewegung und aktuelle Position der Kugel drauf gerechnet
         for (int i = 0; i < sim.getKugeln().size(); i++) {
             richtung[i] = new Point2D(xx[i], yy[i]);
-            double tempDecelaration = (rollReib[i] / masse[i])*1.66;
-            geschwindigkeit[i] = geschwindigkeit[i] - tempDecelaration; 
-            if (geschwindigkeit[i]<=0){
+            double tempDecelaration = (rollReib[i] / masse[i]) * 1.66;
+            geschwindigkeit[i] = geschwindigkeit[i] - tempDecelaration;
+            if (geschwindigkeit[i] <= 0) {
                 geschwindigkeit[i] = 0;
             }
             position[i] = position[i].add(richtung[i].multiply(geschwindigkeit[i]));
         }
-         
+
     }
+
     //in dieser Methode wird erst das Volumen, dann die Masse und anschließend die Reibungskraft berechnet
     //und als return an die Methode die sie aufruft zurückgegeben um diesen Wert dann in dem Array abzuspeichern
-    public double Reibung(double radi,double mat,double matV2) {
+    public double Reibung(double radi, double mat, double matV2) {
         double pi = 1.333333333333333333 * Math.PI;
-        double vol = pi * Math.pow((radi*0.1), 3);
+        double vol = pi * Math.pow((radi * 0.1), 3);
         //System.out.println(mass);
         double mass = (mat * vol) / 1000;
         //System.out.println(mass);
@@ -163,23 +161,24 @@ public class Kugel {
         //System.out.println(Rn);
         return Rn;
     }
+
     //gleicher Fall wie oben, nur dass diesmal schon bei der Masse aufgehört wird und ein return die Masse zum abspeichern zurückgibt
-    public double Masse(double radi,double matV2) {
+    public double Masse(double radi, double matV2) {
         double pi = 1.333333333333333333 * Math.PI;
-        double vol = pi * Math.pow((radi*0.1), 3);       
+        double vol = pi * Math.pow((radi * 0.1), 3);
         double mass = (matV2 * vol) / 1000;
         System.out.println(mass);
         return mass;
     }
+
     //in dieser Methode wird ein erneuter Aufruf zur neuberechnung der Masse gestartet für den Fall, dass ein anderes Material ausgewählt wurde
-    public void calcMass(int i,double radi){
+    public void calcMass(int i, double radi) {
         double materi = sim.getMatV2(i);
-        if (i != 0){
-        masse[i] = Masse(radius[i],materi);
-        }
-        else{
-            
-        masse[0] = Masse(radi,materi);
+        if (i != 0) {
+            masse[i] = Masse(radius[i], materi);
+        } else {
+
+            masse[0] = Masse(radi, materi);
         }
     }
 
@@ -202,12 +201,13 @@ public class Kugel {
     public Point2D getPosition(int x) {
         return position[x];
     }
+
     //hier werden wie vorher schon beschrieben die Arrays und Stoßkraft/Winkel initiiert
-    public void stossWinKraft(double winkel, double stoKra, double radiW,double matV2) {
+    public void stossWinKraft(double winkel, double stoKra, double radiW, double matV2) {
         xx[0] = sin(Math.toRadians(winkel)); //Math.toRadians grad in rad da cos in rad rechnet
         yy[0] = cos(Math.toRadians(winkel));
         radius[0] = radiW;
-        masse[0] = Masse(radiW,matV2);
+        masse[0] = Masse(radiW, matV2);
         xx[0] = xx[0] * stoKra / 10;
         yy[0] = yy[0] * stoKra / 10;
         xx[1] = 0;
@@ -226,16 +226,15 @@ public class Kugel {
         geschwindigkeit[3] = 1;
         geschwindigkeit[4] = 1;
         geschwindigkeit[5] = 1;
-        
 
         bereitsBerechnet = true;
     }
-    
-        public boolean isInHole() {
+
+    public boolean isInHole() {
         return isInHole;
     }
-    
-        //getter und setter
+
+    //getter und setter
     public void setIsInHole(boolean isInHole) {
         this.isInHole = isInHole;
     }

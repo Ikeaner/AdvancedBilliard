@@ -216,9 +216,7 @@ public class FXML_GUIController implements Initializable, Observer {
         alert.setHeaderText(null);
         if (model.getCurrentSimulation().getVersuche() == 1) {
             alert.setContentText("Sie haben das Level geschafft! Hierfür haben Sie einen Versuch benötigt.");
-        }
-        else
-        {
+        } else {
             alert.setContentText("Sie haben das Level geschafft! Hierfür haben Sie " + Integer.toString(model.getCurrentSimulation().getVersuche()) + " Versuche benötigt.");
         }
         alert.show();

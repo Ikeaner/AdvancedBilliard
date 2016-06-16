@@ -12,6 +12,7 @@ import javafx.geometry.Point2D;
  * @author Tom
  */
 public class Loch {
+
     //nur getter und setter
     private int posX;
     private int posY;
@@ -40,12 +41,11 @@ public class Loch {
     public void setRad(int rad) {
         this.rad = rad;
     }
-    
-    public Loch(int posX, int posY, int rad)
-    {
+
+    public Loch(int posX, int posY, int rad) {
         this.posX = posX;
         this.posY = posY;
         this.rad = rad;
-        
+
     }
 }
