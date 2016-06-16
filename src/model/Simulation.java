@@ -182,7 +182,7 @@ public class Simulation {
         this.hindernisse = hindernisse;
     }
 
-    public void reload() {
+    public void load() {
         kugeln.clear();
         löcher.clear();
         hindernisse.clear();

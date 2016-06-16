@@ -235,7 +235,7 @@ public class FXML_GUIController implements Initializable, Observer {
 
         alert.show();
 
-        model.getCurrentSimulation().reload();
+        model.getCurrentSimulation().load();
         timer.stop();
         levelLaden();
         anstossButton.setText("Anstoß!");
@@ -252,7 +252,7 @@ public class FXML_GUIController implements Initializable, Observer {
         if (resetButton.getText().equals("Zurücksetzen")) {
             levelLaden();
         } else if (resetButton.getText().equals("Abbrechen")) {
-            model.getCurrentSimulation().reload();
+            model.getCurrentSimulation().load();
             timer.stop();
             levelLaden();
             anstossButton.setText("Anstoß!");
@@ -313,6 +313,7 @@ public class FXML_GUIController implements Initializable, Observer {
 
         System.out.println("Versuche: " + Integer.toString(model.getCurrentSimulation().getVersuche()));
 
+        model.getCurrentSimulation().load();
         model.setPreviousSimulation(model.getCurrentSimulation());
 
         circles.clear();
