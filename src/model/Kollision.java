@@ -5,14 +5,7 @@
  */
 package model;
 
-import static com.sun.javafx.util.Utils.clamp;
 import control.FXML_GUIController;
-import java.awt.Rectangle;
-import static java.lang.Math.abs;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-import java.lang.reflect.Array;
-import javafx.geometry.Point2D;
 
 /**
  *
@@ -85,7 +78,7 @@ public class Kollision {
     }
     
     public int rectCol(double wPosX,double wPosY,double wRad,double rectX,double rectY,double rectW, double rectH){
- 
+    //berechnung der Kollision mit dem Rechteck
     if(wPosX > rectX-wRad&& wPosX < rectX+rectW+wRad){
        
         if (wPosY > rectY-(wRad*0.99)){

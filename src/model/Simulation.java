@@ -167,6 +167,7 @@ public class Simulation {
 
         löcher.add(l1);
         löcher.add(l2);
+        //setzt den boolean der verhindert das bei erneutem durchlauf alle Werte neu berechnet werden wieder auf false um beim Reset alles wieder neu auf den Anfang zu setzen
         Kugel.bereitsBerechnet = false;
 
         //Objekt o1 = new Objekt("WAND", 300, -100, 50, 100); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
@@ -270,7 +271,7 @@ public class Simulation {
     }
 
     public void setMat(double a, double m, int circle) {
-
+        //setzt die Materialarrays mit index gleich den Werten die aus dem Controller übergeben werden
         mat[circle] = a;
         matV2[circle] = m;
 

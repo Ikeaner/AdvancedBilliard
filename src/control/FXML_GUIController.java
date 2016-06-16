@@ -403,6 +403,8 @@ public class FXML_GUIController implements Initializable, Observer {
                             //Holz
                             case 1:
                                 c.setFill(Color.BROWN);
+                                //in diesen Aufrufen werden die Werte an den setter übergeben, je nachdem welches Material man ausgewählt hat
+                                //Beispiel: braun, material holz mit: reibung 0.025, dichte: 0.8 und dem index der kugel die diese Werte bekommt
                                 model.getCurrentSimulation().setMat(0.025, 0.8, circles.indexOf(c));
                                 break;
                             //Glas
@@ -422,6 +424,7 @@ public class FXML_GUIController implements Initializable, Observer {
                                 break;
                         }
                         model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).setMaterial(new_value.intValue());
+                        //ruft die methode zum neu berechnen der Masse auf damit die neuen Werte fürs ausgewählte Material übernommen werden
                         model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).calcMass(circles.indexOf(c), 0);
                     }
                 });

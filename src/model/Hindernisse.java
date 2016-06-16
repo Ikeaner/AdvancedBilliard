@@ -10,7 +10,7 @@ package model;
  * @author Tom
  */
 public class Hindernisse {
-
+    //getter und setter
     private String art;
     private int posX;
     private int posY;

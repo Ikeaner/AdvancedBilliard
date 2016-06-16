@@ -53,49 +53,7 @@ public class Kugel {
         masse[index] = Masse(r,matV2);
     }
 
-    public boolean isInHole() {
-        return isInHole;
-    }
 
-    public void setIsInHole(boolean isInHole) {
-        this.isInHole = isInHole;
-    }
-
-    public boolean isInRightHole() {
-        return isInRightHole;
-    }
-
-    public void setIsInRightHole(boolean isInRightHole) {
-        this.isInRightHole = isInRightHole;
-    }
-
-    public void setXx(int i, double d) {
-        xx[i] = d;
-    }
-
-    public void setYy(int i, double d) {
-        yy[i] = d;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public int getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(int material) {
-        //0 = Standard
-        //1 = Holz
-        //2 = Eisen
-        this.material = material;
-        System.out.println(Integer.toString(material));
-    }
 
     public void setPosition(int i, double x, double y) {
         position[i] = new Point2D(x, y);
@@ -271,5 +229,50 @@ public class Kugel {
         
 
         bereitsBerechnet = true;
+    }
+    
+        public boolean isInHole() {
+        return isInHole;
+    }
+    
+        //getter und setter
+    public void setIsInHole(boolean isInHole) {
+        this.isInHole = isInHole;
+    }
+
+    public boolean isInRightHole() {
+        return isInRightHole;
+    }
+
+    public void setIsInRightHole(boolean isInRightHole) {
+        this.isInRightHole = isInRightHole;
+    }
+
+    public void setXx(int i, double d) {
+        xx[i] = d;
+    }
+
+    public void setYy(int i, double d) {
+        yy[i] = d;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public int getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(int material) {
+        //0 = Standard
+        //1 = Holz
+        //2 = Eisen
+        this.material = material;
+        System.out.println(Integer.toString(material));
     }
 }
