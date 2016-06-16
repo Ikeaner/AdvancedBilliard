@@ -198,8 +198,6 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Advanced Billiard">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Speichern" />
-                                <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Laden" />
                                 <MenuItem fx:id="termButton" mnemonicParsing="false" onAction="#terminieren" text="Beenden" />
                             </items>
                         </Menu>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package control;
 
 import javafx.geometry.Point2D;
@@ -74,17 +69,6 @@ public class FXML_GUIController implements Initializable, Observer {
     private Label stoKraSliAnz;
     @FXML
     private GridPane kugelGrid;
-
-    private AB_Model model;
-
-    private Timeline timer;
-    private ArrayList<Circle> circles = new ArrayList<Circle>();
-    private ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
-    private ArrayList<Circle> holes = new ArrayList<Circle>();
-    private ArrayList<ChoiceBox> cbxs = new ArrayList<ChoiceBox>();
-
-    private ObservableList<String> materialien = FXCollections.observableArrayList("Standard", "Holz", "Glas", "Keramik", "Gummi");
-
     @FXML
     private MenuItem sim1;
     @FXML
@@ -108,7 +92,16 @@ public class FXML_GUIController implements Initializable, Observer {
     @FXML
     private Label versucheLabel;
 
+    private AB_Model model;
+    private Timeline timer;
+    private ArrayList<Circle> circles = new ArrayList<Circle>();
+    private ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
+    private ArrayList<Circle> holes = new ArrayList<Circle>();
+    private ArrayList<ChoiceBox> cbxs = new ArrayList<ChoiceBox>();
+    private ObservableList<String> materialien = FXCollections.observableArrayList("Standard", "Holz", "Glas", "Keramik", "Gummi");
+
     //Initialisiert den Controller. Erstellt ein model und fügt diesen Controller als Observer hinzu.
+    //Führt notwendige Methoden für die FXML Datei aus.
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         model = new AB_Model();
@@ -120,7 +113,6 @@ public class FXML_GUIController implements Initializable, Observer {
 
     //initialisiert Slider. Setzt ihre maximalen und minimalen Werte und verbindet die Anzeigefelder.
     private void initSliders() {
-
         groSlider.setValue(5);
         groSlider.setMax(50);
         groSlider.setMin(1);
@@ -137,7 +129,7 @@ public class FXML_GUIController implements Initializable, Observer {
         stoKraSliAnz.textProperty().bindBidirectional(stoKraSlider.valueProperty(), NumberFormat.getNumberInstance());
     }
 
-//Methode des Observer Modells. Momentan: Levelwechsel.
+    //Methode des Observer Modells. Wird beim Levelwechsel aufgerufen.
     @Override
     public void update(Observable ABModel, Object obj) {
 
@@ -170,17 +162,16 @@ public class FXML_GUIController implements Initializable, Observer {
             model.getCurrentSimulation().getKugeln().get(0).setRad(groSlider.valueProperty().intValue());
             System.out.println("Anstoß!");
 
+            //handle() wird in jedem Frame ausgeführt
             EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    //move(model.getCurrentSimulation().getStosskugel());
-
                     for (Kugel k : model.getCurrentSimulation().getKugeln()) {
                         move(k);
                     }
+                    //Überprüft den Status der Simulation und beendet bei bedarf den Vorgang
                     model.getCurrentSimulation().checkLöcher();
                     int i = model.getCurrentSimulation().checkStatus();
-
                     if (i == 1) {
                         gewonnen();
                     } else if (i == 2) {
@@ -193,6 +184,7 @@ public class FXML_GUIController implements Initializable, Observer {
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.playFromStart();
 
+            //Ändert das GUI während die Simulation läut
             groSlider.setDisable(true);
             stoKraSlider.setDisable(true);
             stoWinSlider.setDisable(true);
@@ -202,7 +194,6 @@ public class FXML_GUIController implements Initializable, Observer {
             for (ChoiceBox c : cbxs) {
                 c.setDisable(true);
             }
-
             resetButton.setText("Abbrechen");
             resetButton.setDisable(false);
             anstossButton.setText("Anhalten");
@@ -215,16 +206,19 @@ public class FXML_GUIController implements Initializable, Observer {
         }
     }
 
+    //Funktion wird ausgeführt, wenn das Level geschafft wurde
+    //Erstellt einen Alarm der dabei ausgegeben wird
     public void gewonnen() {
         timer.stop();
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Level " + model.getCurrentSimulation().toString() + " geschafft!");
         alert.setHeaderText(null);
         alert.setContentText("Sie haben das Level geschafft! Hierfür haben Sie " + " Versuche benötigt.");
-
         alert.show();
     }
 
+    //Funktion wird ausgeführt, wenn eine Kugel in ein falsches Loch fällt
+    //Dabei wird ein Alarm ausgegeben und die Simulation zurückgesetzt
     public void falschesLoch() {
         timer.stop();
 
@@ -232,11 +226,9 @@ public class FXML_GUIController implements Initializable, Observer {
         alert.setTitle("Level " + model.getCurrentSimulation().toString() + " nicht geschafft...");
         alert.setHeaderText(null);
         alert.setContentText("Eine Kugel ist in ein falsches Loch gefallen. Achten Sie darauf, dass Kugeln in gleich große Löcher fallen!");
-
         alert.show();
 
         model.getCurrentSimulation().load();
-        timer.stop();
         levelLaden();
         anstossButton.setText("Anstoß!");
         resetButton.setText("Zurücksetzen");
@@ -247,6 +239,7 @@ public class FXML_GUIController implements Initializable, Observer {
         sim3.setDisable(false);
     }
 
+    //setzt das Level zurück oder bricht eine laufende Simulation ab
     @FXML
     private void reset() {
         if (resetButton.getText().equals("Zurücksetzen")) {
@@ -266,9 +259,8 @@ public class FXML_GUIController implements Initializable, Observer {
         }
     }
 
-    //bewegt die Kugel und updated die beiden kreis positionen.
+    //bewegt die Kugel und updated die Kreis Positionen.
     public void move(Kugel k) {
-
         int index = model.getCurrentSimulation().getKugeln().indexOf(k);
         Point2D anstoss = new Point2D(1, 0);
         double radi = getRadi(index);
@@ -287,15 +279,7 @@ public class FXML_GUIController implements Initializable, Observer {
         Platform.exit();
     }
 
-    //öffnet den LoaderF
-    @FXML
-    private void loadFile(ActionEvent event) {
-        System.out.println("loadfile");
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Lade deinen Spielstand");
-        fileChooser.showOpenDialog(root.getScene().getWindow());
-    }
-
+//Funktion für den "Über" Button, der Informationen über das Programm ausgibt
     @FXML
     private void about(ActionEvent event) {
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -306,16 +290,27 @@ public class FXML_GUIController implements Initializable, Observer {
         alert.showAndWait();
     }
 
+    //Zeigt das Tutorial an
+    @FXML
+    private void tutorial(ActionEvent event) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Tutorial...");
+        alert.setHeaderText("Kleine Information");
+        alert.setContentText("1. Wähle die Simulation unter Simulation. \n2. Wähle die Materialien auf der rechten Seite. \n3. Stelle die weiße Kugel ein. \n4. Anstoßen und Spaß haben");
+
+        alert.showAndWait();
+    }
+
+    //Lädt das Level und setzt alles in der GUI auf den Standard
     private void levelLaden() {
-        System.out.println("level geladen");
-
+        //System.out.println("level geladen");
         versucheLabel.setText("Versuche: " + Integer.toString(model.getCurrentSimulation().getVersuche()));
-
-        System.out.println("Versuche: " + Integer.toString(model.getCurrentSimulation().getVersuche()));
+        //System.out.println("Versuche: " + Integer.toString(model.getCurrentSimulation().getVersuche()));
 
         model.getCurrentSimulation().load();
         model.setPreviousSimulation(model.getCurrentSimulation());
 
+        //Setzt die Momentanen Dinge auf dem GUI zurück
         circles.clear();
         rectangles.clear();
         holes.clear();
@@ -324,9 +319,11 @@ public class FXML_GUIController implements Initializable, Observer {
         kugelGrid.getChildren().clear();
         hindernisGrid.getChildren().clear();
 
+        //Setzt Simulation Nummern auf die korrekte Zahl
         simNameLabel.setText("Simulation " + model.getCurrentSimulation().toString());
         einstellungsFenster.setText("Simulation " + model.getCurrentSimulation().toString() + " Einstellungen");
 
+        //Erstellt einen Kreis für jedes Loch
         for (Loch l : model.getCurrentSimulation().getLöcher()) {
 
             int posX = l.getPosX();
@@ -348,20 +345,17 @@ public class FXML_GUIController implements Initializable, Observer {
             circles.add(c);
             playPane.getChildren().add(c);
         }
+
         //Gibt den Kreisen Farbe je nach ihrer Nummer
         int num = 0;
         for (Circle c : circles) {
-
             Circle cEins = null;
-
             if (num != 0) {
                 cEins = new Circle(30);
             } else {
                 //bindet den Radius der weißen Kugel an den Sliderwert
                 c.radiusProperty().bind(groSlider.valueProperty());
-
             }
-
             switch (num) {
                 case (0):
                     c.setFill(Color.WHITE);
@@ -391,6 +385,7 @@ public class FXML_GUIController implements Initializable, Observer {
 
             kugelGrid.setVgap(5);
 
+            //Erstellt die Material Auswähler für jede Kugel und fügt diese der GUI hinzu
             if (num != 0) {
                 Label beschreibung = new Label("Material");
                 ChoiceBox cbx = new ChoiceBox(materialien);
@@ -398,10 +393,9 @@ public class FXML_GUIController implements Initializable, Observer {
                 cbx.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue ov, Number value, Number new_value) {
-                        System.out.println(new_value.toString());
-
+                        //System.out.println(new_value.toString());
                         switch (new_value.intValue()) {
-                            //Standard
+                            //Standard Material
                             case 0:
                                 c.setFill(model.getCurrentSimulation().getKugeln().get(circles.indexOf(c)).getColor());
                                 model.getCurrentSimulation().setMat(0.35, 1, circles.indexOf(c));
@@ -441,7 +435,7 @@ public class FXML_GUIController implements Initializable, Observer {
             num++;
         }
 
-        //enabled den Material Picker für Anstosskugel
+        //erstellt den Material Auswähler für die Anstosskugel
         Circle anstossCircle = circles.get(0);
         anstossKugelMat.setDisable(false);
         anstossKugelMat.setItems(materialien);
@@ -449,8 +443,7 @@ public class FXML_GUIController implements Initializable, Observer {
         anstossKugelMat.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue ov, Number value, Number new_value) {
-                System.out.println(new_value.toString());
-
+                //System.out.println(new_value.toString());
                 switch (new_value.intValue()) {
                     //Standard
                     case 0:
@@ -479,7 +472,6 @@ public class FXML_GUIController implements Initializable, Observer {
                         break;
                 }
                 model.getCurrentSimulation().getKugeln().get(0).setMaterial(new_value.intValue());
-
                 double radiSlider = getRadi(0);
                 model.getCurrentSimulation().getKugeln().get(0).calcMass(0, radiSlider);
             }
@@ -488,7 +480,6 @@ public class FXML_GUIController implements Initializable, Observer {
 
         //Erstellt ein Rechteck für jedes Hindernis
         for (Objekt o : model.getCurrentSimulation().getHindernisse()) {
-
             int posX = o.getPosX();
             int posY = o.getPosY();
             int width = o.getDimX();
@@ -501,7 +492,8 @@ public class FXML_GUIController implements Initializable, Observer {
             playPane.getChildren().add(r);
         }
 
-        //Gibt den Rechtecken die Holz Farbe
+        //Gibt den Rechtecken die Holz Farbe und erstellt die jeweiligen Material Auswähler
+        //Leider hat das Material noch keine Auswirkungen auf die Simulation und ist bis jetzt nur kosmetisch.
         int num2 = 0;
         hindernisGrid.setVgap(5);
         for (Rectangle r : rectangles) {
@@ -522,14 +514,25 @@ public class FXML_GUIController implements Initializable, Observer {
                     System.out.println(new_value.toString());
 
                     switch (new_value.intValue()) {
+                        //Standard
                         case 0:
                             r.setFill(Color.WHITE);
                             break;
+                        //Holz
                         case 1:
                             r.setFill(Color.BROWN);
                             break;
+                        //Glas
                         case 2:
-                            r.setFill(Color.GRAY);
+                            r.setFill(Color.LIGHTBLUE);
+                            break;
+                        //Keramik
+                        case 3:
+                            r.setFill(Color.LIGHTGREY);
+                            break;
+                        //Gummi
+                        case 4:
+                            r.setFill(Color.PINK);
                             break;
                     }
                     model.getCurrentSimulation().getHindernisse().get(rectangles.indexOf(r)).setMaterial(new_value.intValue());
@@ -552,6 +555,7 @@ public class FXML_GUIController implements Initializable, Observer {
         stoWinSlider.setDisable(false);
     }
 
+    //Getter und Setter
     public final double getRadi() {
 
         return groSlider.valueProperty().get();
@@ -573,7 +577,6 @@ public class FXML_GUIController implements Initializable, Observer {
         } else {
             return model.getCurrentSimulation().getKugeln().get(x).getRad();
         }
-
     }
 
     public final double getStoWi(int x) {
@@ -590,25 +593,24 @@ public class FXML_GUIController implements Initializable, Observer {
         } else {
             return 0;
         }
+
+        /* Speichern und Laden wurden leider nicht vervollständigt
+    //öffnet den Loader
+    @FXML
+    private void loadFile(ActionEvent event) {
+        System.out.println("loadfile");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Lade deinen Spielstand");
+        fileChooser.showOpenDialog(root.getScene().getWindow());
     }
 
     //öffnet den Saver
-    /*
     private void saveFile(ActionEvent event) {
         System.out.println("saveFile");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Speichere deinen Spielstand");
         File file = fileChooser.showSaveDialog(root.getScene().getWindow());
     }
-     */
-
-    @FXML
-    private void tutorial(ActionEvent event) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Tutorial...");
-        alert.setHeaderText("Kleine Information");
-        alert.setContentText("1. Wähle die Simulation unter Simulation. \n2. Wähle die Materialien auf der rechten Seite. \n3. Stelle die weiße Kugel ein. \n4. Anstoßen und Spaß haben");
-
-        alert.showAndWait();
+         */
     }
 }
