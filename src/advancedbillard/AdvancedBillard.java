@@ -24,6 +24,7 @@ public class AdvancedBillard extends Application {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
+        stage.setTitle("Advanced Billiard");
         stage.show();
     }
 
