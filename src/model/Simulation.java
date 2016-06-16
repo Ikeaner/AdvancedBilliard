@@ -19,7 +19,7 @@ public class Simulation {
     private String ID;
 
     private ArrayList<Kugel> kugeln = new ArrayList<Kugel>();
-    private ArrayList<Objekt> hindernisse = new ArrayList<Objekt>();
+    private ArrayList<Hindernisse> hindernisse = new ArrayList<Hindernisse>();
     private ArrayList<Loch> löcher = new ArrayList<Loch>();
 
     private int status;
@@ -174,11 +174,11 @@ public class Simulation {
         //hindernisse.add(o1);
     }
 
-    public ArrayList<Objekt> getHindernisse() {
+    public ArrayList<Hindernisse> getHindernisse() {
         return hindernisse;
     }
 
-    public void setHindernisse(ArrayList<Objekt> hindernisse) {
+    public void setHindernisse(ArrayList<Hindernisse> hindernisse) {
         this.hindernisse = hindernisse;
     }
 
@@ -222,7 +222,7 @@ public class Simulation {
         
         Kugel.bereitsBerechnet = false;
         
-        Objekt o1 = new Objekt("WAND", 200, 275, 50, 200); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
+        Hindernisse o1 = new Hindernisse("WAND", 200, 275, 50, 200); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
 
         hindernisse.add(o1);
     }

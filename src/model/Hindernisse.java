@@ -9,7 +9,7 @@ package model;
  *
  * @author Tom
  */
-public class Objekt {
+public class Hindernisse {
 
     private String art;
     private int posX;
@@ -70,7 +70,7 @@ public class Objekt {
         this.dimY = dimY;
     }
 
-    public Objekt(String art, int posX, int posY, int dimX, int dimY) {
+    public Hindernisse(String art, int posX, int posY, int dimX, int dimY) {
         this.art = art;
         this.posX = posX;
         this.posY = posY;
