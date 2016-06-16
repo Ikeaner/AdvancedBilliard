@@ -39,7 +39,7 @@ import javafx.util.Duration;
 import model.AB_Model;
 import model.Kugel;
 import model.Loch;
-import model.Objekt;
+import model.Hindernisse;
 
 /**
  *
@@ -479,7 +479,8 @@ public class FXML_GUIController implements Initializable, Observer {
         cbxs.add(anstossKugelMat);
 
         //Erstellt ein Rechteck für jedes Hindernis
-        for (Objekt o : model.getCurrentSimulation().getHindernisse()) {
+        for (Hindernisse o : model.getCurrentSimulation().getHindernisse()) {
+
             int posX = o.getPosX();
             int posY = o.getPosY();
             int width = o.getDimX();
