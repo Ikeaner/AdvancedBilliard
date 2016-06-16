@@ -222,7 +222,7 @@ public class Simulation {
         
         Kugel.bereitsBerechnet = false;
         
-        Hindernisse o1 = new Hindernisse("WAND", 200, 275, 50, 200); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
+        Hindernisse o1 = new Hindernisse("WAND", 225, 275, 50, 200); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
 
         hindernisse.add(o1);
     }
