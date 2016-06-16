@@ -162,16 +162,16 @@ public class Simulation {
         kugeln.add(k1);
         kugeln.add(k2);
 
-        Loch l1 = new Loch(500, 200, k1.getRad());
-        Loch l2 = new Loch(300, 300, k2.getRad());
+        Loch l1 = new Loch(50, 100, k1.getRad());
+        Loch l2 = new Loch(500, 200, k2.getRad());
 
         löcher.add(l1);
         löcher.add(l2);
         Kugel.bereitsBerechnet = false;
 
-        Objekt o1 = new Objekt("WAND", 300, -100, 50, 100); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
+        //Objekt o1 = new Objekt("WAND", 300, -100, 50, 100); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
 
-        hindernisse.add(o1);
+        //hindernisse.add(o1);
     }
 
     public ArrayList<Objekt> getHindernisse() {
@@ -204,30 +204,56 @@ public class Simulation {
     private void ladeObjekte2() {
 
         Kugel stosskugel = new Kugel(150, 300, 1, this, 0, mat[0], matV2[0]);
-        Kugel k1 = new Kugel(100, 150, 30, this, 1, mat[1], matV2[1]);
-        Kugel k2 = new Kugel(200, 100, 25, this, 2, mat[2], matV2[2]);
+        Kugel k1 = new Kugel(75, 370, 30, this, 1, mat[1], matV2[1]);
+        Kugel k2 = new Kugel(250, 200, 25, this, 2, mat[2], matV2[2]);
         Kugel k3 = new Kugel(600, 300, 30, this, 3, mat[3], matV2[3]);
         kugeln.add(stosskugel);
         kugeln.add(k1);
         kugeln.add(k2);
         kugeln.add(k3);
+        
+        Loch l1 = new Loch(100, 450, k1.getRad());
+        Loch l2 = new Loch(200, 100, k2.getRad());
+        Loch l3 = new Loch(500, 200, k3.getRad());
+
+        löcher.add(l1);
+        löcher.add(l2);
+        löcher.add(l3);
+        
         Kugel.bereitsBerechnet = false;
+        
+        Objekt o1 = new Objekt("WAND", 200, 275, 50, 200); //Recheck y Kordinate, x Kordinate -nach rechts bei Winkel bezogen auf das gedrehte Rechteck
+
+        hindernisse.add(o1);
     }
 
     private void ladeObjekte3() {
 
         Kugel stosskugel = new Kugel(150, 300, 1, this, 0, mat[0], matV2[0]);
-        Kugel k1 = new Kugel(100, 150, 30, this, 1, mat[1], matV2[1]);
-        Kugel k2 = new Kugel(200, 100, 25, this, 2, mat[2], matV2[2]);
-        Kugel k3 = new Kugel(600, 300, 30, this, 3, mat[3], matV2[3]);
-        Kugel k4 = new Kugel(300, 300, 25, this, 4, mat[4], matV2[4]);
-        Kugel k5 = new Kugel(400, 400, 20, this, 5, mat[5], matV2[5]);
+        Kugel k1 = new Kugel(250, 300, 30, this, 1, mat[1], matV2[1]);
+        Kugel k2 = new Kugel(350, 300, 25, this, 2, mat[2], matV2[2]);
+        Kugel k3 = new Kugel(430, 300, 20, this, 3, mat[3], matV2[3]);
+        Kugel k4 = new Kugel(550, 300, 25, this, 4, mat[4], matV2[4]);
+        Kugel k5 = new Kugel(650, 300, 20, this, 5, mat[5], matV2[5]);
         kugeln.add(stosskugel);
         kugeln.add(k1);
         kugeln.add(k2);
         kugeln.add(k3);
         kugeln.add(k4);
         kugeln.add(k5);
+        
+        Loch l1 = new Loch(400, 400, k1.getRad());
+        Loch l2 = new Loch(400, 50, k2.getRad());
+        Loch l3 = new Loch(50, 300, k3.getRad());
+        Loch l4 = new Loch(600, 150, k2.getRad());
+        Loch l5 = new Loch(700, 250, k3.getRad());
+
+        löcher.add(l1);
+        löcher.add(l2);
+        löcher.add(l3);
+        löcher.add(l4);
+        löcher.add(l5);
+        
         Kugel.bereitsBerechnet = false;
     }
 

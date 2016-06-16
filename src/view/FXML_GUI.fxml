@@ -212,7 +212,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Hilfe">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Tutorial" />
+                                <MenuItem mnemonicParsing="false" onAction="#tutorial" text="Tutorial" />
                                 <MenuItem mnemonicParsing="false" onAction="#about" text="Über..." />
                             </items>
                         </Menu>

@@ -493,7 +493,7 @@ public class FXML_GUIController implements Initializable, Observer {
             int width = o.getDimX();
             int height = o.getDimY();
             Rectangle r = new Rectangle(posX, posY, width, height);
-            r.getTransforms().add(new Rotate(45, 0, 0)); //Drehen Drehachse linke Ecke
+            r.getTransforms().add(new Rotate(0, 0, 0)); //Drehen Drehachse linke Ecke
             r.setArcHeight(5);
             r.setArcWidth(5);
             rectangles.add(r);
@@ -600,4 +600,14 @@ public class FXML_GUIController implements Initializable, Observer {
         File file = fileChooser.showSaveDialog(root.getScene().getWindow());
     }
      */
+
+    @FXML
+    private void tutorial(ActionEvent event) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Tutorial...");
+        alert.setHeaderText("Kleine Information");
+        alert.setContentText("1. Wähle die Simulation unter Simulation. \n2. Wähle die Materialien auf der rechten Seite. \n3. Stelle die weiße Kugel ein. \n4. Anstoßen und Spaß haben");
+
+        alert.showAndWait();
+    }
 }
