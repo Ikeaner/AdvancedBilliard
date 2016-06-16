@@ -133,6 +133,7 @@ public class Kugel {
                 }
             }
         }
+        //Abfrage für Hindernisse (Rechteck) berechnet Kollision der aktuellen Kugel mit dem Hindernis
         for (int i = 0; i < sim.getKugeln().size(); i++) {
             for (Hindernisse h:sim.getHindernisse()){
         int coll = col.rectCol(position[i].getX(), position[i].getY(), radius[i],h.getPosX(),h.getPosY(),h.getDimX(),h.getDimY());
